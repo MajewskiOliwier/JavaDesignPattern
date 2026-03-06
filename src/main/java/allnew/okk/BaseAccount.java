@@ -1,3 +1,5 @@
+package allnew.okk;
+
 public abstract class BaseAccount{
     protected String email;
     protected String password;

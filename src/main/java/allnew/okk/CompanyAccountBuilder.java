@@ -1,8 +1,12 @@
-public class CompanyAccountBuilder extends AccountBuilder{
+package allnew.okk;
+
+public class CompanyAccountBuilder extends AccountBuilder<CompanyAccountBuilder>{
     private String legalName;
     private String vatNumber;
-    
-    public CompanyAccountBuilder(){
+
+    @Override
+    protected CompanyAccountBuilder self() {
+        return this;
     }
 
     public CompanyAccountBuilder setLegalName(String legalName){

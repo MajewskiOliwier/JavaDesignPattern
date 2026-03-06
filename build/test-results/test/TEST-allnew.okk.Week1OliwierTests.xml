@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="allnew.okk.Week1OliwierTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-03-06T19:10:43.852Z" hostname="DESKTOP-3JNGKVA" time="0.026">
+  <properties/>
+  <testcase name="testBuildAndFactoryForCreatingPrivateAccount()" classname="allnew.okk.Week1OliwierTests" time="0.013"/>
+  <testcase name="testBuildAndFactoryForCreatingCompanyAccount()" classname="allnew.okk.Week1OliwierTests" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

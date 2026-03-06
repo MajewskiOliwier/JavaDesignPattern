@@ -1,13 +1,20 @@
-public class PrivateAccountBuilder extends AccountBuilder{
+package allnew.okk;
+
+public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>{
     private String name;
     private String surname;
 
-    public PrivateAccountBuilder setName(String name){
+    @Override
+    protected PrivateAccountBuilder self() {
+        return this;
+    }
+
+    public PrivateAccountBuilder Name(String name){
         this.name = name;
         return this;
     }
 
-    public PrivateAccountBuilder setSurname(String surname){
+    public PrivateAccountBuilder Surname(String surname){
         this.surname = surname;
         return this;
     }

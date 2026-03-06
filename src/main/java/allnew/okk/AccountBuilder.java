@@ -1,14 +1,21 @@
-public static class AccountBuilder{
-    private String email;
-    private String password;
+package allnew.okk;
 
-    public AccountBuilder email(String email){
+public abstract class AccountBuilder <T extends  AccountBuilder<T>>{
+    protected String email;
+    protected String password;
+
+    protected abstract T self();
+
+    public T Email(String email){
         this.email = email;
-        return this;
+        return self();
     }
 
-    public AccountBuilder password(String password){
+    public T Password(String password){
         this.password = password;
-        return this;
+        return self();
     }
+
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
 }
