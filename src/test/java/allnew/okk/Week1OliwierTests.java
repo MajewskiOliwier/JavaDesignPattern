@@ -86,4 +86,31 @@ class Week1OliwierTests {
             assertEquals("1234567890", c.getVatNumber());
         }
     }
+
+    @Test
+    void TestPrototypeCompanyAccount(){
+        CompanyAccount template = AccountFactory.createCompanyAccount()
+                .Email("week1@gmail.com")
+                .Password("pass123!")
+                .setLegalName("COMPANY1WEEK")
+                .setVatNumber("1234567890")
+                .build();
+
+        CompanyAccount subAccount = (CompanyAccount) template.clone()
+                .Email("week1_2@gmail.com")
+                .Password("pass321!")
+                .build();
+
+        assertNotNull(template);
+        assertEquals("week1@gmail.com", template.email);
+        assertEquals("pass123!", template.password);
+        assertEquals("COMPANY1WEEK", template.getLegalName());
+        assertEquals("1234567890", template.getVatNumber());
+
+        assertNotNull(subAccount);
+        assertEquals("week1_2@gmail.com", subAccount.email);
+        assertEquals("pass321!", subAccount.password);
+        assertEquals("COMPANY1WEEK", subAccount.getLegalName());
+        assertEquals("1234567890", subAccount.getVatNumber());
+    }
 }
