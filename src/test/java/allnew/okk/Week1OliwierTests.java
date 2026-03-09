@@ -1,5 +1,9 @@
 package allnew.okk;
 
+import allnew.okk.account.Factory.AccountFactory;
+import allnew.okk.account.Prototype.CompanyAccount;
+import allnew.okk.account.Prototype.PrivateAccount;
+import allnew.okk.account.Singleton.CurrentSession;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,8 +19,8 @@ class Week1OliwierTests {
                 .build();
 
         assertNotNull(account);
-        assertEquals("week1@gmail.com", account.email);
-        assertEquals("pass123!", account.password);
+        assertEquals("week1@gmail.com", account.GetEmail());
+        assertEquals("pass123!", account.GetPassword());
         assertEquals("Oliwier", account.getName());
         assertEquals("Majewski", account.getSurname());
         assertEquals(0, account.getSavedMoney());
@@ -32,10 +36,10 @@ class Week1OliwierTests {
                 .build();
 
         assertNotNull(account);
-        assertEquals("week1@gmail.com", account.email);
-        assertEquals("pass123!", account.password);
-        assertEquals("COMPANY1WEEK", account.getLegalName());
-        assertEquals("1234567890", account.getVatNumber());
+        assertEquals("week1@gmail.com", account.GetEmail());
+        assertEquals("pass123!", account.GetPassword());
+        assertEquals("COMPANY1WEEK", account.GetLegalName());
+        assertEquals("1234567890", account.GetVatNumber());
     }
 
     @Test
@@ -55,8 +59,8 @@ class Week1OliwierTests {
 
             PrivateAccount p = CurrentSession.getInstance().getAsPrivate();
 
-            assertEquals("week1@gmail.com", p.email);
-            assertEquals("pass123!", p.password);
+            assertEquals("week1@gmail.com", p.GetEmail());
+            assertEquals("pass123!", p.GetPassword());
             assertEquals("Oliwier", p.getName());
             assertEquals("Majewski", p.getSurname());
             assertEquals(0, p.getSavedMoney());
@@ -80,10 +84,10 @@ class Week1OliwierTests {
 
             CompanyAccount c = CurrentSession.getInstance().getAsCompany();
 
-            assertEquals("week1@gmail.com", c.email);
-            assertEquals("pass123!", c.password);
-            assertEquals("COMPANY1WEEK", c.getLegalName());
-            assertEquals("1234567890", c.getVatNumber());
+            assertEquals("week1@gmail.com", c.GetEmail());
+            assertEquals("pass123!", c.GetPassword());
+            assertEquals("COMPANY1WEEK", c.GetLegalName());
+            assertEquals("1234567890", c.GetVatNumber());
         }
     }
 
@@ -102,15 +106,15 @@ class Week1OliwierTests {
                 .build();
 
         assertNotNull(template);
-        assertEquals("week1@gmail.com", template.email);
-        assertEquals("pass123!", template.password);
-        assertEquals("COMPANY1WEEK", template.getLegalName());
-        assertEquals("1234567890", template.getVatNumber());
+        assertEquals("week1@gmail.com", template.GetEmail());
+        assertEquals("pass123!", template.GetPassword());
+        assertEquals("COMPANY1WEEK", template.GetLegalName());
+        assertEquals("1234567890", template.GetVatNumber());
 
         assertNotNull(subAccount);
-        assertEquals("week1_2@gmail.com", subAccount.email);
-        assertEquals("pass321!", subAccount.password);
-        assertEquals("COMPANY1WEEK", subAccount.getLegalName());
-        assertEquals("1234567890", subAccount.getVatNumber());
+        assertEquals("week1_2@gmail.com", subAccount.GetEmail());
+        assertEquals("pass321!", subAccount.GetPassword());
+        assertEquals("COMPANY1WEEK", subAccount.GetLegalName());
+        assertEquals("1234567890", subAccount.GetVatNumber());
     }
 }

@@ -1,4 +1,6 @@
-package allnew.okk;
+package allnew.okk.account.Builder;
+
+import allnew.okk.account.Prototype.PrivateAccount;
 
 public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>{
     private String name;

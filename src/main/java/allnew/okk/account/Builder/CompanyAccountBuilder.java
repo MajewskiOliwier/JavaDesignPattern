@@ -1,4 +1,6 @@
-package allnew.okk;
+package allnew.okk.account.Builder;
+
+import allnew.okk.account.Prototype.CompanyAccount;
 
 public class CompanyAccountBuilder extends AccountBuilder<CompanyAccountBuilder>{
     private String legalName;

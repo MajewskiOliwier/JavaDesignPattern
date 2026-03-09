@@ -1,4 +1,8 @@
-package allnew.okk;
+package allnew.okk.account.Singleton;
+
+import allnew.okk.account.Prototype.BaseAccount;
+import allnew.okk.account.Prototype.CompanyAccount;
+import allnew.okk.account.Prototype.PrivateAccount;
 
 public class CurrentSession {
     private static CurrentSession instance;

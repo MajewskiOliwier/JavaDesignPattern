@@ -1,4 +1,7 @@
-package allnew.okk;
+package allnew.okk.account.Factory;
+
+import allnew.okk.account.Builder.CompanyAccountBuilder;
+import allnew.okk.account.Builder.PrivateAccountBuilder;
 
 public class AccountFactory{
     public static PrivateAccountBuilder createPrivateAccount(){

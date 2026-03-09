@@ -1,4 +1,4 @@
-package allnew.okk;
+package allnew.okk.account.Prototype;
 
 public class PrivateAccount extends BaseAccount{
     private String name;

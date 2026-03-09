@@ -1,17 +1,15 @@
-package allnew.okk;
+package allnew.okk.account.Prototype;
 
 public abstract class BaseAccount {
     protected String email;
     protected String password;
 
+    public String GetEmail() { return email; }
+    public String GetPassword() { return password; }
+
     protected BaseAccount(String email, String password){
         this.email = email;
         this.password = password;
-    }
-
-    protected BaseAccount(BaseAccount other) {
-        this.email = other.email;
-        this.password = other.password;
     }
 
     @Override
