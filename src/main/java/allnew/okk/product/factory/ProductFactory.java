@@ -2,9 +2,6 @@ package allnew.okk.product.factory;
 
 import allnew.okk.product.model.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class ProductFactory {
     private static final ProductFactory instance = new ProductFactory();

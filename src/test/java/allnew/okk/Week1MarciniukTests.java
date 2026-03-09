@@ -105,7 +105,7 @@ class Week1MarciniukTests {
         assertEquals(original.getSellerContact(), clone.getSellerContact());
     }
     @Test
-    void testProductServiceDuplicationToRepository() throws CloneNotSupportedException {
+    void testProductServiceDuplicationToRepository(){
         ProductRepository repository = ProductRepository.getInstance();
         ProductService service = ProductService.getInstance();
 

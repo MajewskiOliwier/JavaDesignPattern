@@ -1,8 +1,6 @@
 package allnew.okk.product.repository;
 
-import allnew.okk.PrivateAccountBuilder;
 import allnew.okk.product.model.BaseProduct;
-import allnew.okk.product.model.PrivateProduct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
