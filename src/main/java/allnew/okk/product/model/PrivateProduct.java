@@ -1,0 +1,71 @@
+package allnew.okk.product.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+// Klasa reprezentująca produkt sprzedawany przez prywatnego sprzedawcę
+@Getter
+public class PrivateProduct extends BaseProduct {
+    private final String sellerName;
+    @Setter
+    private String sellerContact;
+
+    public PrivateProduct(Builder b) {
+        super(b);
+        this.sellerName = b.sellerName;
+        this.sellerContact = b.sellerContact;
+    }
+
+    public static class Builder extends BaseProduct.Builder<Builder> {
+        private String sellerName;
+        private String sellerContact;
+
+        public Builder setSellerName(String sellerName) {
+            this.sellerName = sellerName;
+            return this;
+        }
+
+        public Builder setSellerContact(String sellerContact) {
+            this.sellerContact = sellerContact;
+            return this;
+        }
+
+        @Override
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public PrivateProduct build() {
+            return new PrivateProduct(this);
+        }
+    }
+
+    public Builder toBuilder() {
+        return new Builder()
+                .setName(getName())
+                .setDescription(getDescription())
+                .setPrice(getPrice())
+                .setCategory(getCategory())
+                .setCondition(getCondition())
+                .setSellerName(sellerName)
+                .setSellerContact(sellerContact);
+    }
+
+    @Override
+    public PrivateProduct clone() {
+        try {
+            // Zrzutowany na PrivateProduct
+            return (PrivateProduct) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                ", sellerName: " + sellerName + "\n" +
+                ", sellerContact: " + sellerContact;
+    }
+}
