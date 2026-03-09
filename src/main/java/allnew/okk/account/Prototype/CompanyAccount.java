@@ -9,8 +9,8 @@ public class CompanyAccount extends BaseAccount {
     public String GetLegalName() { return legalName; }
     public String GetVatNumber() { return vatNumber; }
 
-    public CompanyAccount(String email, String password, String legalName, String vatNumber){
-        super(email, password);
+    public CompanyAccount(String email, String password, String legalName, String vatNumber, String adress, String phone){
+        super(email, password, adress, phone);
         this.legalName = legalName;
         this.vatNumber = vatNumber;
     }
@@ -25,8 +25,10 @@ public class CompanyAccount extends BaseAccount {
         CompanyAccountBuilder builder = new CompanyAccountBuilder();
         builder.SetEmail(this.email);
         builder.SetPassword(this.password);
-        builder.setLegalName(this.legalName);
-        builder.setVatNumber(this.vatNumber);
+        builder.SetAdress(this.adress);
+        builder.SetPhone(this.phone);
+        builder.SetLegalName(this.legalName);
+        builder.SetVatNumber(this.vatNumber);
         return builder;
     }
 }

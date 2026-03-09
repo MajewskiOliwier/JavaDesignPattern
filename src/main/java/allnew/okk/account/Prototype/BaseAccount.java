@@ -3,13 +3,19 @@ package allnew.okk.account.Prototype;
 public abstract class BaseAccount {
     protected String email;
     protected String password;
+    protected String adress;
+    protected String phone;
 
     public String GetEmail() { return email; }
     public String GetPassword() { return password; }
+    public String GetAdress() { return adress; }
+    public String GetPhone() { return phone; }
 
-    protected BaseAccount(String email, String password){
+    protected BaseAccount(String email, String password, String adress, String phone){
         this.email = email;
         this.password = password;
+        this.adress = adress;
+        this.phone = phone;
     }
 
     @Override

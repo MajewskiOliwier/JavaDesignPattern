@@ -7,7 +7,7 @@ public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>
     private String surname;
 
     @Override
-    protected PrivateAccountBuilder self() {
+    protected PrivateAccountBuilder Self() {
         return this;
     }
 
@@ -23,6 +23,6 @@ public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>
 
     public PrivateAccount build(){
         //to validate
-       return new PrivateAccount(email, password, name, surname);
+       return new PrivateAccount(email, password, name, surname, adress, phone);
     }
 }

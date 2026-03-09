@@ -5,12 +5,12 @@ public class PrivateAccount extends BaseAccount{
     private String surname;
     private float savedMoney = 0;
 
-    public String getName() { return name; }
-    public String getSurname() { return surname; }
-    public float getSavedMoney() { return savedMoney; }
+    public String GetName() { return name; }
+    public String GetSurname() { return surname; }
+    public float GetSavedMoney() { return savedMoney; }
 
-    public PrivateAccount(String email, String password, String name, String surname){
-        super(email, password);
+    public PrivateAccount(String email, String password, String name, String surname, String adress, String phone){
+        super(email, password, adress, phone);
         this.name = name;
         this.surname = surname;
         this.savedMoney = 0;

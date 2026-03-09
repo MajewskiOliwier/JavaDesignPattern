@@ -21,9 +21,9 @@ class Week1OliwierTests {
         assertNotNull(account);
         assertEquals("week1@gmail.com", account.GetEmail());
         assertEquals("pass123!", account.GetPassword());
-        assertEquals("Oliwier", account.getName());
-        assertEquals("Majewski", account.getSurname());
-        assertEquals(0, account.getSavedMoney());
+        assertEquals("Oliwier", account.GetName());
+        assertEquals("Majewski", account.GetSurname());
+        assertEquals(0, account.GetSavedMoney());
     }
 
     @Test
@@ -31,9 +31,9 @@ class Week1OliwierTests {
         CompanyAccount account = AccountFactory.createCompanyAccount()
                 .Email("week1@gmail.com")
                 .Password("pass123!")
-                .setLegalName("COMPANY1WEEK")
-                .setVatNumber("1234567890")
-                .build();
+                .SetLegalName("COMPANY1WEEK")
+                .SetVatNumber("1234567890")
+                .Build();
 
         assertNotNull(account);
         assertEquals("week1@gmail.com", account.GetEmail());
@@ -61,9 +61,9 @@ class Week1OliwierTests {
 
             assertEquals("week1@gmail.com", p.GetEmail());
             assertEquals("pass123!", p.GetPassword());
-            assertEquals("Oliwier", p.getName());
-            assertEquals("Majewski", p.getSurname());
-            assertEquals(0, p.getSavedMoney());
+            assertEquals("Oliwier", p.GetName());
+            assertEquals("Majewski", p.GetSurname());
+            assertEquals(0, p.GetSavedMoney());
         }
     }
     
@@ -72,9 +72,9 @@ class Week1OliwierTests {
         CompanyAccount account = AccountFactory.createCompanyAccount()
                 .Email("week1@gmail.com")
                 .Password("pass123!")
-                .setLegalName("COMPANY1WEEK")
-                .setVatNumber("1234567890")
-                .build();
+                .SetLegalName("COMPANY1WEEK")
+                .SetVatNumber("1234567890")
+                .Build();
 
         CurrentSession.getInstance().login(account);
 
@@ -96,14 +96,14 @@ class Week1OliwierTests {
         CompanyAccount template = AccountFactory.createCompanyAccount()
                 .Email("week1@gmail.com")
                 .Password("pass123!")
-                .setLegalName("COMPANY1WEEK")
-                .setVatNumber("1234567890")
-                .build();
+                .SetLegalName("COMPANY1WEEK")
+                .SetVatNumber("1234567890")
+                .Build();
 
         CompanyAccount subAccount = (CompanyAccount) template.clone()
                 .Email("week1_2@gmail.com")
                 .Password("pass321!")
-                .build();
+                .Build();
 
         assertNotNull(template);
         assertEquals("week1@gmail.com", template.GetEmail());
