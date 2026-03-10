@@ -1,5 +1,6 @@
-package allnew.okk.shop.model;
+package allnew.okk.shop;
 
+import allnew.okk.shop.model.OnlineShop;
 import allnew.okk.shop.repository.ShopRepository;
 import allnew.okk.shop.service.ShopService;
 import org.junit.jupiter.api.BeforeEach;
