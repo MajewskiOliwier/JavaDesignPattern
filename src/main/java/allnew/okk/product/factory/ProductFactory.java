@@ -2,8 +2,10 @@ package allnew.okk.product.factory;
 
 import allnew.okk.product.model.*;
 
-
+//Tydzień 2, Wzorzec Singleton 1
+// Implementacja fabryki produktów jako Singletona, z metodami tworzącymi domyślne instancje produktów.
 public class ProductFactory {
+    // Singleton - jedna instancja fabryki dla całej aplikacji
     private static final ProductFactory instance = new ProductFactory();
 
     // konstruktor tworzący prototypy produktów
@@ -15,7 +17,7 @@ public class ProductFactory {
         return instance;
     }
 
-
+    // Tydzień 2, Wzorzec Factory Method 1
     // metody do tworzenia produktów, korzystające z builderów, z domyślnymi wartościami
     public PrivateProduct createPrivateProduct(){
         return new PrivateProduct.Builder()
@@ -29,6 +31,7 @@ public class ProductFactory {
                 .build();
     }
 
+    // metoda do tworzenia produktów firmowych, korzystająca z buildera, z domyślnymi wartościami
     public CompanyProduct createCompanyProduct(){
         return new CompanyProduct.Builder()
                 .setName("Default Company Product")
@@ -40,6 +43,7 @@ public class ProductFactory {
                 .setCompanyContact("Default Contact")
                 .build();
     }
-
+    // Koniec, Tydzień 2, Wzorzec Factory Method
 
 }
+// Koniec, Tydzień 2, Wzorzec Singleton 1

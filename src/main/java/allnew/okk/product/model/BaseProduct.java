@@ -21,8 +21,8 @@ public abstract class BaseProduct  implements Cloneable{
         this.condition = b.condition;
     }
 
-    // Bazowa klasa Builder, z domyślnymi wartościami dla wszystkich właściwości
-    // Generyczna, aby umożliwić poprawne wykorzystanie w klasach dziedziczących
+    // Tydzień 2, Wzorzec Builder 1
+    // Implementacja wzorca Builder dla produktów, z domyślnymi wartościami i generycznym typowaniem, umożliwiającym łatwe tworzenie różnych typów produktów z różnymi właściwościami.
     public abstract static class Builder<T extends Builder<T>> {
         private String name = "Default Name";
         private String description = "Default Description";
@@ -57,8 +57,9 @@ public abstract class BaseProduct  implements Cloneable{
         protected abstract T self();
         public abstract BaseProduct build();
     }
+    // Koniec, Tydzień 2, Wzorzec Builder 1
 
-    // Implementacja metody clone() do tworzenia kopii obiektu
+    // Tydzień 2, Wzorzec Prototype 1
     @Override
     public BaseProduct clone() throws CloneNotSupportedException {
         try {
@@ -67,6 +68,7 @@ public abstract class BaseProduct  implements Cloneable{
             throw new AssertionError();
         }
     }
+    // Koniec, Tydzień 2, Wzorzec Prototype 1
 
     public String toString(){
         return "Name: " + name + "\n" +

@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Tydzień 2, Wzorzec Singleton 2
 // repozytorium produktów, implementujące wzorzec singleton, przechowujące produkty w pamięci
 public class ProductRepository{
+    // Singleton - prywatna statyczna instancja klasy oraz prywatny konstruktor
     private final static ProductRepository instance = new ProductRepository();
     private final Map<String, BaseProduct> products = new HashMap<>();
     private int nextId = 1;
@@ -57,3 +59,4 @@ public class ProductRepository{
 
 
 }
+// Koniec, Tydzień 2, Wzorzec Singleton 2

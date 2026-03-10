@@ -1,5 +1,6 @@
 package allnew.okk.account.Prototype;
 
+// Tydzień 2, Wzorzec Prototype 1
 //Jest to klasa abstrakcji a nie interfejs z uwagi na istnienie wspólnych pol i metod dla oby typów kont
 public abstract class BaseAccount {
     protected String email;
@@ -18,6 +19,7 @@ public abstract class BaseAccount {
         this.adress = adress;
         this.phone = phone;
     }
+    // Koniec, Tydzień 2, Wzorzec Prototype 1
 
     @Override
     public String toString(){

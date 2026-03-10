@@ -1,5 +1,7 @@
 package allnew.okk.account.Prototype;
 
+
+// Tydzień 2, Wzorzec Prototype 4
 //klasa reprezentujaca konto prywatne
 public class PrivateAccount extends BaseAccount{
     private String name;
@@ -16,6 +18,8 @@ public class PrivateAccount extends BaseAccount{
         this.surname = surname;
         this.savedMoney = 0;
     }
+    // Koniec, Tydzień 2, Wzorzec Prototype 4
+
 
     @Override
     public String toString(){

@@ -3,7 +3,8 @@ package allnew.okk.product.model;
 import lombok.Getter;
 import lombok.Setter;
 
-// Klasa reprezentująca produkt sprzedawany przez prywatnego sprzedawcę
+
+// Klasa reprezentująca produkt prywatny, dziedzicząca po BaseProduct
 @Getter
 public class PrivateProduct extends BaseProduct {
     private final String sellerName;
@@ -15,7 +16,8 @@ public class PrivateProduct extends BaseProduct {
         this.sellerName = b.sellerName;
         this.sellerContact = b.sellerContact;
     }
-
+    // Tydzień 2, Wzorzec Builder 3
+    // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
         private String sellerName;
         private String sellerContact;
@@ -40,6 +42,7 @@ public class PrivateProduct extends BaseProduct {
             return new PrivateProduct(this);
         }
     }
+    // Koniec, Tydzień 2, Wzorzec Builder 3
 
     public Builder toBuilder() {
         return new Builder()
@@ -52,6 +55,7 @@ public class PrivateProduct extends BaseProduct {
                 .setSellerContact(sellerContact);
     }
 
+    // Tydzień 2, Wzorzec Prototype 3
     @Override
     public PrivateProduct clone() {
         try {
@@ -61,6 +65,7 @@ public class PrivateProduct extends BaseProduct {
             throw new AssertionError();
         }
     }
+    // Koniec, Tydzień 2, Wzorzec Prototype 3
 
     @Override
     public String toString() {
@@ -69,3 +74,4 @@ public class PrivateProduct extends BaseProduct {
                 ", sellerContact: " + sellerContact;
     }
 }
+

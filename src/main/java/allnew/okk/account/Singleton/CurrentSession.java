@@ -4,9 +4,11 @@ import allnew.okk.account.Prototype.BaseAccount;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
 
+// Tydzień 2, Wzorzec Singleton 1
 // klasa zarzązdzajaca logowaniem, rejestracaja i sesja dla użytkownika
 // jest ona singletonem z uwagi na prywatny konstruktor i jej jedną statyczna instancje
 public class CurrentSession {
+    // Singleton - jedna instancja klasy dla całej aplikacji, prywatny konstruktor oraz metoda do uzyskania tej instancji
     private static CurrentSession instance;
     private BaseAccount loggedAccount;
 
@@ -55,3 +57,4 @@ public class CurrentSession {
         throw new IllegalStateException("Logged account is not a CompanyAccount");
     }
 }
+// Koniec, Tydzień 2, Wzorzec Singleton 1

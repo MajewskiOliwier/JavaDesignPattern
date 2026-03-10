@@ -2,6 +2,7 @@ package allnew.okk.account.Builder;
 
 import allnew.okk.account.Prototype.CompanyAccount;
 
+// Tydzień 2, Wzorzec Builder 1
 //klasa implementujaca klase abstrakcji dla której parametr generyczny T jest CompanyAccountBuilder (ta klasa)
 public class CompanyAccountBuilder extends AccountBuilder<CompanyAccountBuilder>{
     private String legalName;
@@ -30,3 +31,4 @@ public class CompanyAccountBuilder extends AccountBuilder<CompanyAccountBuilder>
        return new CompanyAccount(email, password, legalName, vatNumber, adress, phone);
     }
 }
+// Koniec, Tydzień 2, Wzorzec Builder 1

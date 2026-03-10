@@ -3,6 +3,8 @@ package allnew.okk.product.model;
 import lombok.Getter;
 import lombok.Setter;
 
+
+// Klasa reprezentująca produkt firmowy, dziedzicząca po BaseProduct
 @Getter
 public class CompanyProduct extends BaseProduct {
     private final String companyName;
@@ -23,7 +25,8 @@ public class CompanyProduct extends BaseProduct {
         this.REGON = b.REGON;
     }
 
-
+    // Tydzień 2, Wzorzec Builder 2
+    // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
         private String companyName;
         private String companyAddress;
@@ -73,6 +76,7 @@ public class CompanyProduct extends BaseProduct {
             return new CompanyProduct(this);
         }
     }
+    // Koniec, Tydzień 2, Wzorzec Builder 2
 
     public Builder toBuilder() {
         return new Builder()
@@ -89,6 +93,7 @@ public class CompanyProduct extends BaseProduct {
                 .setREGON(REGON);
     }
 
+    // Tydzień 2, Wzorzec Prototype 2
     @Override
     public CompanyProduct clone() {
         try {
@@ -98,6 +103,7 @@ public class CompanyProduct extends BaseProduct {
             throw new AssertionError();
         }
     }
+    // Koniec, Tydzień 2, Wzorzec Prototype 2
 
     @Override
     public String toString() {
