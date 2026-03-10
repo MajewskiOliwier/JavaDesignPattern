@@ -1,6 +1,11 @@
 package allnew.okk.shop.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 // Bazowa klasa abstrakcyjna implementująca wzorzec Prototype (Cloneable)
+@Getter
+@Setter
 public abstract class BaseShop implements Cloneable {
     private String name;
     private String description;
@@ -10,9 +15,6 @@ public abstract class BaseShop implements Cloneable {
         this.name = builder.name;
         this.description = builder.description;
     }
-
-    public String getName() { return name; }
-    public String getDescription() { return description; }
 
     // Bazowa, generyczna klasa Builder dla sklepów, z domyślnymi wartościami
     public abstract static class Builder<T extends Builder<T>> {
