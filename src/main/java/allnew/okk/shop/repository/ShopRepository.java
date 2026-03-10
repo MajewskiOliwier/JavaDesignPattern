@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// Wzorzec EAGER SINGLETON  - ładowany od początku uruchomienia aplikacji
+// Tydzień 2, Wzorzec Singleton 1
+    // Implementacja wzorca Eager Singleton, gdzie instancja tworzona jest natychmiast przy ładowaniu klasy.
+    // Gwarantuje to dostępność obiektu od momentu uruchomienia aplikacji i prostotę implementacji.
 public class ShopRepository {
 
-    // Statyczna instancja tworzona od razu przy ładowaniu klasy do pamięci jednocześnie z metodą dostępową
+    // Statyczna instancja tworzona jednocześnie z metodą dostępową
     @Getter
     private final static ShopRepository instance = new ShopRepository();
 
@@ -19,7 +21,7 @@ public class ShopRepository {
     private final Map<String, BaseShop> shops = new HashMap<>();
     private int nextId = 1;
 
-    // Prywatny konstruktor - blokuje możliwość użycia "new" na zewnątrz
+    // Prywatny konstruktor - blokuje możliwość stworzenia drugiej instancji repozytorium
     private ShopRepository() {}
 
 
@@ -42,3 +44,5 @@ public class ShopRepository {
         nextId = 1;
     }
 }
+
+// Koniec, Tydzień 2, Wzorzec Singleton 1

@@ -10,14 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ShopSingletonTest {
 
-    // Używamy metody clear(), aby każdy test zaczynał się z czystą bazą testów
-    // Ta metoda uruchamia się automatycznie przed każdym z testów
     @BeforeEach
     public void setUp() {
         ShopRepository.getInstance().clear();
     }
 
-    // Sprawdzenie czy 2 instancje repozytorium wskazują na to samo miejsce w pamięci
     @Test
     public void testShopRepositoryIsSingleton() {
         // Pobieramy instancję dwa razy
@@ -27,7 +24,6 @@ public class ShopSingletonTest {
         assertSame(instance1, instance2, "Obie instancje ShopRepository powinny być tym samym obiektem w pamięci!");
     }
 
-    // Sprawdzenie czy 2 instancje serwisu wskazują na to samo miejsce w pamięci
     @Test
     public void testShopServiceIsSingleton() {
         ShopService instance1 = ShopService.getInstance();

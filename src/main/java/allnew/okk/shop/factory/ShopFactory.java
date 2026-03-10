@@ -4,14 +4,23 @@ import allnew.okk.shop.model.OnlineShop;
 import allnew.okk.shop.model.PhysicalShop;
 import lombok.Getter;
 
+
+// Tydzień 2, Wzorzec Singleton 3
+// Implementacja fabryki jako Singletona.
+// Zapewnia jeden centralny punkt tworzenia obiektów w aplikacji.
 public class ShopFactory {
 
     @Getter
     private static final ShopFactory instance = new ShopFactory();
 
     private ShopFactory() {}
+    // Koniec, Tydzień 2, Wzorzec Singleton 3
 
-    // Fabryka przyjmująca parametry dla sklepu internetowego
+    // Tydzień 2, Wzorzec Factory 1
+    // Wzorzec Simple Factory z parametrami, inicjalizuje obiekty przez Buildery.
+    // Pozwala na tworzenie różnych typów sklepów (Online/Physical) za pomocą czytelnych metod.
+
+    // Fabryka przyjmująca parametry dla sklepu online
     public OnlineShop createOnlineShop(String name, String description, String websiteUrl) {
         return new OnlineShop.Builder()
                 .setName(name)
@@ -28,4 +37,6 @@ public class ShopFactory {
                 .setAddress(address)
                 .build();
     }
+    // Koniec, Tydzień 2, Wzorzec Factory 1
+
 }

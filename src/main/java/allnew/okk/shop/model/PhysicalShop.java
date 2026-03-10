@@ -1,5 +1,7 @@
 package allnew.okk.shop.model;
 
+// Tydzień 2, Wzorzec Prototype 3
+// Implementacja klonowania dla klasy PhysicalShop.
 public class PhysicalShop extends BaseShop {
     private String address;
 
@@ -10,8 +12,9 @@ public class PhysicalShop extends BaseShop {
 
     public String getAddress() { return address; }
 
-    // Builder dla sklepu fizycznego dziedziczący po bazowym Builderze
-    public static class Builder extends BaseShop.Builder<Builder> {
+    // Tydzień 2, Wzorzec Builder 3
+    // Rozszerzenie buildera o pole address specyficzne dla sklepu stacjonarnego.
+     public static class Builder extends BaseShop.Builder<Builder> {
         private String address;
 
         public Builder setAddress(String address) {
@@ -29,6 +32,7 @@ public class PhysicalShop extends BaseShop {
             return new PhysicalShop(this);
         }
     }
+    // Koniec, Tydzień 2, Wzorzec Builder 3
 
     @Override
     public PhysicalShop clone() {
@@ -39,3 +43,5 @@ public class PhysicalShop extends BaseShop {
         }
     }
 }
+
+// Koniec, Tydzień 2, Wzorzec Prototype 3
