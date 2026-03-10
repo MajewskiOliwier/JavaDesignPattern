@@ -1,5 +1,6 @@
 package allnew.okk.account.Prototype;
 
+//klasa reprezentujaca konto prywatne
 public class PrivateAccount extends BaseAccount{
     private String name;
     private String surname;

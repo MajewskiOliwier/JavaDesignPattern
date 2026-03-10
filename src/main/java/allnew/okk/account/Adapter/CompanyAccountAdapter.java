@@ -2,6 +2,7 @@ package allnew.okk.account.Adapter;
 
 import allnew.okk.account.Prototype.CompanyAccount;
 
+//klasa implementujaca interfejs adaptera
 public class CompanyAccountAdapter implements AccountDisplayable{
     private CompanyAccount companyAccount;
 
@@ -9,6 +10,7 @@ public class CompanyAccountAdapter implements AccountDisplayable{
         this.companyAccount = companyAccount;
     }
 
+    //implementacje metod wykorzystanych w adapterze platnosci w celu unikniecia użycia instanceOf w celu wywołania metody unikalnej dla tej klasy
     @Override
     public String GetDisplayName() {
         return companyAccount.GetLegalName();

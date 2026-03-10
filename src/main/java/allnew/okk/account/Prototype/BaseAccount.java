@@ -1,5 +1,6 @@
 package allnew.okk.account.Prototype;
 
+//Jest to klasa abstrakcji a nie interfejs z uwagi na istnienie wspólnych pol i metod dla oby typów kont
 public abstract class BaseAccount {
     protected String email;
     protected String password;

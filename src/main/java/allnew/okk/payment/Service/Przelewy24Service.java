@@ -1,4 +1,4 @@
-package allnew.okk.payment.Adapter.Service;
+package allnew.okk.payment.Service;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
 

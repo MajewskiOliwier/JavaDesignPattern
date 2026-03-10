@@ -9,6 +9,7 @@ public class PrivateAccountAdapter implements AccountDisplayable{
         this.privateAccount = account;
     }
 
+    //implementacje metod wykorzystanych w adapterze platnosci w celu unikniecia użycia instanceOf w celu wywołania metody unikalnej dla tej klasy
     @Override
     public String GetDisplayName() {
         return privateAccount.GetName() + " "+privateAccount.GetSurname();
@@ -22,9 +23,5 @@ public class PrivateAccountAdapter implements AccountDisplayable{
     @Override
     public String GetAccountType() {
         return "PRIVATE";
-    }
-
-    public PrivateAccount getOriginalAccount() {
-        return privateAccount;
     }
 }

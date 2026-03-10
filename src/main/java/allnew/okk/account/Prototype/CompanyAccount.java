@@ -2,6 +2,7 @@ package allnew.okk.account.Prototype;
 
 import allnew.okk.account.Builder.CompanyAccountBuilder;
 
+//klasa reprezentujaca konto firmowe
 public class CompanyAccount extends BaseAccount {
     private String legalName;
     private String vatNumber;
@@ -20,6 +21,7 @@ public class CompanyAccount extends BaseAccount {
         return "email: "+email+" password: "+password+" legalname: "+legalName+" vatNumber:"+vatNumber;
     }
 
+    //Metoda ta udostepnia metoda umozliwiajaca sklonowanie Konta firmowego tzn. np zrobienie podkonta z innym email i hasłem, zwraca builder który umozliwa nam zamiane tych poszczególnych danych
     @Override
     public CompanyAccountBuilder clone() {
         CompanyAccountBuilder builder = new CompanyAccountBuilder();

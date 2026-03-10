@@ -1,4 +1,4 @@
-package allnew.okk.payment.Adapter.Service;
+package allnew.okk.payment.Service;
 
 public class PayUService {
     public String makeTransaction(float amount, String currency, String nameAndSurname, String email){

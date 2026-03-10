@@ -1,10 +1,10 @@
 package allnew.okk.payment.Adapter;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
-import allnew.okk.payment.Adapter.Service.PayUService;
+import allnew.okk.payment.Service.PayUService;
 
-
-public class PayUAdapter implements  PaymentGateway{
+//konkretna implementacja adaptera dla PAYU
+public class PayUAdapter implements PaymentGateway {
     private PayUService payUService;
     private String lastTranscationID;
 
@@ -12,8 +12,11 @@ public class PayUAdapter implements  PaymentGateway{
         this.payUService = new PayUService();
     }
 
+    //metoda implementujaca proces platnosci
     @Override
     public boolean processPayment(float amount, AccountDisplayable customer, String currency) {
+
+        //dla PAYU przekazuje po interfejsie Adaptera AccountDisplayable nazwe i identyfikator dla tego serwisu
         String transactionID = payUService.makeTransaction(
                 amount,
                 currency,
