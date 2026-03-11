@@ -94,7 +94,7 @@ public class CompanyProduct extends BaseProduct {
     public Builder toBuilder() {
         return new Builder()
                 .setName(getName())
-                .setDescription(getDes cription())
+                .setDescription(getDescription())
                 .setPrice(getPrice())
                 .setCategory(getCategory())
                 .setCondition(getCondition())
