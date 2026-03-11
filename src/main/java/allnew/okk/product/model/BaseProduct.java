@@ -1,12 +1,15 @@
 package allnew.okk.product.model;
 
+import allnew.okk.basket.composite.PurchasableItem;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 // Bazowa klasa produktu, zawierająca wspólne właściwości i metody dla różnych typów produktów
 @Getter
 @Setter
-public abstract class BaseProduct  implements Cloneable{
+public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private String name;
     private String description;
     private double price;
@@ -77,4 +80,14 @@ public abstract class BaseProduct  implements Cloneable{
                 "Category: " + category + "\n" +
                 "Condition: " + condition;
     }
+
+    @Override
+    public double getPrice(){
+        return price;
+    };
+
+    @Override
+    public String getItemName(){
+        return name;
+    };
 }

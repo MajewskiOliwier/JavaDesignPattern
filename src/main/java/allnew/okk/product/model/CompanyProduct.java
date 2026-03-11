@@ -25,6 +25,19 @@ public class CompanyProduct extends BaseProduct {
         this.REGON = b.REGON;
     }
 
+
+    // Tydzień 3, Wzorzec Composite 3
+    @Override
+    public String getSellerName() {
+        return companyName;
+    }
+
+    @Override
+    public String getSellerID() {
+        return NIP;
+    }
+    // Koniec, Tydzień 3, Wzorzec Composite 3
+
     // Tydzień 2, Wzorzec Builder 2
     // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
@@ -81,7 +94,7 @@ public class CompanyProduct extends BaseProduct {
     public Builder toBuilder() {
         return new Builder()
                 .setName(getName())
-                .setDescription(getDescription())
+                .setDescription(getDes cription())
                 .setPrice(getPrice())
                 .setCategory(getCategory())
                 .setCondition(getCondition())

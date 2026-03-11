@@ -16,6 +16,19 @@ public class PrivateProduct extends BaseProduct {
         this.sellerName = b.sellerName;
         this.sellerContact = b.sellerContact;
     }
+
+    // Tydzień 3, Wzorzec Composite 3
+    @Override
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    @Override
+    public String getSellerID() {
+        return sellerName;
+    }
+    // Koniec, Tydzień 3, Wzorzec Composite 3
+
     // Tydzień 2, Wzorzec Builder 3
     // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
