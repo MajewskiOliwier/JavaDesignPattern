@@ -2,6 +2,7 @@ package allnew.okk.payment.Adapter;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Service.PayUService;
+import allnew.okk.payment.Strategy.RefundStrategy;
 
 //konkretna implementacja adaptera dla PAYU
 public class PayUAdapter implements PaymentGateway {
@@ -29,7 +30,16 @@ public class PayUAdapter implements PaymentGateway {
     }
 
     @Override
-    public boolean refund(String transactionID, float amount) {
+    public boolean refund(String transactionID, RefundStrategy refundStrategy) {
+        System.out.println("PayU: Full refund for transaction: " + transactionID);
+        return payUService.returnMoney(transactionID, refundStrategy.getTotalPayedAmount());
+    }
+
+    @Override
+    public boolean refund(String transactionID, RefundStrategy refundStrategy, float amount) {
+        amount = Math.min(amount, refundStrategy.getTotalPayedAmount());
+
+        System.out.println("PayU: Partial refund of " + amount + " for transaction: " + transactionID);
         return payUService.returnMoney(transactionID, amount);
     }
 

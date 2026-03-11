@@ -2,6 +2,7 @@ package allnew.okk.payment.Adapter;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Service.Przelewy24Service;
+import allnew.okk.payment.Strategy.RefundStrategy;
 
 //konkretna implementacja adaptera dla PAYU
 public class Przelewy24Adapter implements PaymentGateway {
@@ -26,7 +27,18 @@ public class Przelewy24Adapter implements PaymentGateway {
     }
 
     @Override
-    public boolean refund(String transactionID, float amount) {
+    public boolean refund(String transactionID, RefundStrategy refundStrategy) {
+        System.out.println("Przelewy24: Full refund for transaction: " + transactionID);
+
+        return przelewy24Service.returnMoney(transactionID, refundStrategy.getTotalPayedAmount());
+    }
+
+    @Override
+    public boolean refund(String transactionID, RefundStrategy refundStrategy, float amount) {
+        amount = Math.min(amount, refundStrategy.getTotalPayedAmount());
+
+        System.out.println("PayU: Partial refund of " + amount + " for transaction: " + transactionID);
+
         return przelewy24Service.returnMoney(transactionID, amount);
     }
 
