@@ -2,6 +2,9 @@ package allnew.okk.payment.Strategy;
 
 import allnew.okk.payment.Adapter.PaymentGateway;
 
+
+// Tydzień 6, Wzorzec Strategy
+//Konkretna implementacja dla wzorca strategi, po jej wywołaniu zwa
 public class FullRefundStrategy implements RefundStrategy{
     float fullAmount = 0;
 

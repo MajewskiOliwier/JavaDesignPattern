@@ -2,6 +2,8 @@ package allnew.okk.product.Decorator;
 
 import allnew.okk.basket.composite.PurchasableItem;
 
+//Tydzień 3, Wzorzec Dekorator 1
+//Jest to klasa abstrakcyjna pozwalająca na implementacje wzorca dekorator
 public abstract class ProductDecorator implements PurchasableItem {
     protected PurchasableItem wrappedItem;
 
@@ -29,3 +31,4 @@ public abstract class ProductDecorator implements PurchasableItem {
         return wrappedItem.getSellerID();
     };
 }
+//Koniec Tydzień 3, Wzorzec Dekorator 1

@@ -4,6 +4,7 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Service.Przelewy24Service;
 import allnew.okk.payment.Strategy.RefundStrategy;
 
+// Tydzień 3, Wzorzec Adapter 1
 //konkretna implementacja adaptera dla PAYU
 public class Przelewy24Adapter implements PaymentGateway {
     private Przelewy24Service przelewy24Service;
@@ -16,6 +17,8 @@ public class Przelewy24Adapter implements PaymentGateway {
     //dla Przelewy24 przekazuje po interfejsie cały Adapter AccountDisplayable i sam serwis wywoła potrzebne metody
     @Override
     public boolean processPayment(float amount, AccountDisplayable customer, String currency) {
+
+        //dla przelewy24 przekazuje po interfejsie Adapter AccountDisplayable po czym serwis robi resztę
         String transactionID = przelewy24Service.makeTransaction(
                 amount,
                 currency,
@@ -47,3 +50,4 @@ public class Przelewy24Adapter implements PaymentGateway {
         return przelewy24Service.checkStatus(transactionID);
     }
 }
+//Koniec Tydzień 3, Wzorzec Adapter 1

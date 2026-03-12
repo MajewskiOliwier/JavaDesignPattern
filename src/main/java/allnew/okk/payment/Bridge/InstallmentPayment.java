@@ -6,6 +6,7 @@ import allnew.okk.payment.Strategy.RefundStrategy;
 
 import java.sql.Ref;
 
+// Tydzień 3, Wzorzec Most 1
 public class InstallmentPayment extends Payment{
     float amountLeft;
     float originalAmount;
@@ -23,6 +24,7 @@ public class InstallmentPayment extends Payment{
         this.originalInstallmentsLeft = originalInstallmentsLeft;
     }
 
+    //Po utworzeniu InstallmentPayment i określeniu orginalnej kwoty do zapłaty obliczana jest pozostała kwota do zapłaty
     @Override
     public boolean pay(float amount, String currency, AccountDisplayable customer) {
         amountLeft -= amount;
@@ -38,3 +40,4 @@ public class InstallmentPayment extends Payment{
         return originalAmount - amountLeft;
     }
 }
+//Koniec Tydzień 3, Wzorzec Most 1

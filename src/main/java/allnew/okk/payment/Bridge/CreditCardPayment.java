@@ -4,6 +4,7 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Adapter.PaymentGateway;
 import allnew.okk.payment.Strategy.RefundStrategy;
 
+// Tydzień 3, Wzorzec Most 1
 public class CreditCardPayment extends Payment{
     String cardNumber;
     String cvv;
@@ -21,3 +22,4 @@ public class CreditCardPayment extends Payment{
         return gateway.processPayment(amount,customer, currency);
     }
 }
+//Koniec Tydzień 3, Wzorzec Adapter 1

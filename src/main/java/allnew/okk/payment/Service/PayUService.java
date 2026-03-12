@@ -1,5 +1,7 @@
 package allnew.okk.payment.Service;
 
+
+//Przykładowy serwis którego nie można modyfikować i do którego potrzebny jest wzorzec adapter
 public class PayUService {
     public String makeTransaction(float amount, String currency, String nameAndSurname, String email){
         System.out.println("PayU: Przetwarzano : "+currency+" "+amount);

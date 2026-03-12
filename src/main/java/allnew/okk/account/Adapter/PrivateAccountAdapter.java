@@ -2,6 +2,7 @@ package allnew.okk.account.Adapter;
 
 import allnew.okk.account.Prototype.PrivateAccount;
 
+// Tydzień 3, Wzorzec Adapter 2
 public class PrivateAccountAdapter implements AccountDisplayable{
     private PrivateAccount privateAccount;
 
@@ -25,3 +26,4 @@ public class PrivateAccountAdapter implements AccountDisplayable{
         return "PRIVATE";
     }
 }
+//Koniec Tydzień 3, Wzorzec Adapter 2

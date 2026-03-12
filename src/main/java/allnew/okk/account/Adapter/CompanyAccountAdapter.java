@@ -2,6 +2,7 @@ package allnew.okk.account.Adapter;
 
 import allnew.okk.account.Prototype.CompanyAccount;
 
+// Tydzień 3, Wzorzec Adapter 2
 //klasa implementujaca interfejs adaptera
 public class CompanyAccountAdapter implements AccountDisplayable{
     private CompanyAccount companyAccount;
@@ -26,3 +27,4 @@ public class CompanyAccountAdapter implements AccountDisplayable{
         return "COMPANY";
     }
 }
+// Koniec Tydzień 3, Wzorzec Adapter 2

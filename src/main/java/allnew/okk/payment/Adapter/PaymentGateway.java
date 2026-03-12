@@ -3,6 +3,8 @@ package allnew.okk.payment.Adapter;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Strategy.RefundStrategy;
 
+
+// Tydzień 3, Wzorzec Adapter 1
 //Interfejs adaptera dla systemu płatnosci
 public interface PaymentGateway {
     boolean processPayment(float amount, AccountDisplayable customer, String currency);
@@ -10,3 +12,4 @@ public interface PaymentGateway {
     boolean refund(String transactionID, RefundStrategy refundStrategy, float amount);
     String getTransactionStatus(String transactionID);
 }
+//Koniec Tydzień 3, Wzorzec Composite 3
