@@ -1,6 +1,7 @@
 package allnew.okk.product.model;
 
 import allnew.okk.basket.composite.PurchasableItem;
+import allnew.okk.product.bridge.TaxPolicy;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private double price;
     private ProductCategory category;
     private ProductCondition condition;
+    private TaxPolicy taxPolicy;
 
     public BaseProduct(Builder<?> b) {
         this.name = b.name;
@@ -22,6 +24,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         this.price = b.price;
         this.category = b.category;
         this.condition = b.condition;
+        this.taxPolicy = b.taxPolicy;
     }
 
     // Tydzień 2, Wzorzec Builder 1
@@ -32,6 +35,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         private double price = 0.0;
         private ProductCategory category = ProductCategory.OTHER;
         private ProductCondition condition = ProductCondition.NONE;
+        private TaxPolicy taxPolicy;
 
         public T setName(String name) {
             this.name = name;
@@ -55,6 +59,11 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
 
         public T setCondition(ProductCondition condition) {
             this.condition = condition;
+            return self();
+        }
+
+        public T setTaxPolicy(TaxPolicy taxPolicy) {
+            this.taxPolicy = taxPolicy;
             return self();
         }
         protected abstract T self();
@@ -90,4 +99,13 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     public String getItemName(){
         return name;
     };
+
+    // Tydzień 3, Wzorzec Bridge 1
+    public double getPriceWithTax() {
+        if (taxPolicy != null) {
+            return taxPolicy.calculateTotalPrice(price);
+        }
+        return price;
+    }
+    // Koniec Tydzień 3, Wzorzec Bridge 1
 }
