@@ -2,6 +2,7 @@ package allnew.okk.shop.model;
 
 import allnew.okk.shop.composite.ShopComponent;
 import allnew.okk.shop.decorator.ShopDisplay;
+import allnew.okk.shop.bridge.NotificationSender;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +14,12 @@ import lombok.Setter;
 public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay {
     private String name;
     private String description;
+    private NotificationSender notificationSender;
 
     public BaseShop(Builder<?> builder) {
         this.name = builder.name;
         this.description = builder.description;
+        this.notificationSender = builder.notificationSender; // ZMIANA
     }
 
     // Tydzień 3, Wzorzec Composite 2
@@ -33,8 +36,8 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     // Koniec, Tydzień 3, Wzorzec Composite 2
 
     // Tydzień 3, Wzorzec Decorator 2
-    // Podstawowa implementacja interfejsu wyjściowego.
-    // Zwraca po prostu czyste dane ze sklepu.
+    // Zwraca czyste dane sklepu.
+    // Wykorzystywane przy dekoratorach.
     @Override
     public String getDisplayName() {
         return this.name;
@@ -47,12 +50,25 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     // Koniec, Tydzień 3, Wzorzec Decorator 2
 
 
+    // Tydzień 3, Wzorzec Bridge 4
+    // Metoda wysyłająca powiadomienie.
+    // Wykorzystuje interfejs, dzięki temu działa zarówno dla SMSów i emaili.
+    public void broadcastPromotion(String promoMessage) {
+        if (notificationSender != null) {
+            notificationSender.sendNotification(this.name, promoMessage);
+        } else {
+            System.out.println("Sklep " + this.name + " nie ma skonfigurowanego systemu powiadomień.");
+        }
+    }
+    // Koniec, Tydzień 3, Wzorzec Bridge 4
+
     // Tydzień 2, Wzorzec Builder 1
     // Generyczny builder z generycznym typowaniem.
     // Dzięki metodzie self() klasy pochodne zwracają własny typ, co umożliwia płynne wywoływanie metod.
     public abstract static class Builder<T extends Builder<T>> {
         private String name = "Default Shop";
         private String description = "Default Description";
+        private NotificationSender notificationSender; // ZMIANA w Builderze
 
         public T setName(String name) {
             this.name = name;
@@ -61,6 +77,11 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
 
         public T setDescription(String description) {
             this.description = description;
+            return self();
+        }
+
+        public T setNotificationSender(NotificationSender sender) {
+            this.notificationSender = sender;
             return self();
         }
 
