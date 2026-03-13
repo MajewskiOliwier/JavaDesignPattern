@@ -2,7 +2,7 @@ package allnew.okk.product.factory;
 
 import allnew.okk.product.model.*;
 
-//Tydzień 2, Wzorzec Singleton 1
+//Week 2, Pattern Singleton 1
 // Implementacja fabryki produktów jako Singletona, z metodami tworzącymi domyślne instancje produktów.
 public class ProductFactory {
     // Singleton - jedna instancja fabryki dla całej aplikacji
@@ -46,4 +46,4 @@ public class ProductFactory {
     // Koniec, Tydzień 2, Wzorzec Factory Method
 
 }
-// Koniec, Tydzień 2, Wzorzec Singleton 1
+// End, Week 2, Pattern Singleton 1

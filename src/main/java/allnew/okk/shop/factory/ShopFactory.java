@@ -5,22 +5,22 @@ import allnew.okk.shop.model.PhysicalShop;
 import lombok.Getter;
 
 
-// Week 2, Singleton Pattern 3
-// Implementation of the factory as a Singleton.
-// Ensures a single central point for object creation in the application.
+//Week 2, Pattern Singleton 3
+// Implementacja fabryki jako Singletona.
+// Zapewnia jeden centralny punkt tworzenia obiektów w aplikacji.
 public class ShopFactory {
 
     @Getter
     private static final ShopFactory instance = new ShopFactory();
 
     private ShopFactory() {}
-    // End of Week 2, Singleton Pattern 3
+    // Koniec, Tydzień 2, Wzorzec Singleton 3
 
-    // Week 2, Factory Pattern 1
-    // Simple Factory pattern with parameters, initializes objects through Builders.
-    // Allows for creating different types of shops (Online/Physical) using readable methods.
+    // Tydzień 2, Wzorzec Factory 1
+    // Wzorzec Simple Factory z parametrami, inicjalizuje obiekty przez Buildery.
+    // Pozwala na tworzenie różnych typów sklepów (Online/Physical) za pomocą czytelnych metod.
 
-    // Factory accepting parameters for an online shop
+    // Fabryka przyjmująca parametry dla sklepu online
     public OnlineShop createOnlineShop(String name, String description, String websiteUrl) {
         return new OnlineShop.Builder()
                 .setName(name)
@@ -29,7 +29,7 @@ public class ShopFactory {
                 .build();
     }
 
-    // Factory accepting parameters for a physical shop
+    // Fabryka przyjmująca parametry dla sklepu stacjonarnego
     public PhysicalShop createPhysicalShop(String name, String description, String address) {
         return new PhysicalShop.Builder()
                 .setName(name)
@@ -37,6 +37,6 @@ public class ShopFactory {
                 .setAddress(address)
                 .build();
     }
-    // End of Week 2, Factory Pattern 1
+    // End Week 2, Pattern Factory 1
 
 }

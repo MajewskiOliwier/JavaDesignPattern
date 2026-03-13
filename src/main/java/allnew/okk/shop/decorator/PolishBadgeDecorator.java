@@ -1,8 +1,8 @@
 package allnew.okk.shop.decorator;
 
-// Week 3, Decorator Pattern 6
-// "Polish Company" Decorator
-// Adds a flag before the shop name
+// Week 3, Pattern Decorator 6
+// Dekorator "Polska firma"
+// Dodaje flagę przed nazwą sklepu
 public class PolishBadgeDecorator extends ShopDecorator {
 
     public PolishBadgeDecorator(ShopDisplay wrappedShop) {
@@ -16,7 +16,7 @@ public class PolishBadgeDecorator extends ShopDecorator {
 
     @Override
     public String getDisplayDescription() {
-        return super.getDisplayDescription() + " (By buying here, you support Polish capital).";
+        return super.getDisplayDescription() + " (Kupując tutaj, wspierasz polski kapitał).";
     }
 }
-// End of Week 3, Decorator Pattern 6
+// End Week 3, Pattern Decorator 6

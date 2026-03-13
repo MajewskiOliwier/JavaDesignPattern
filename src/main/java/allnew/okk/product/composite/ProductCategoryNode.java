@@ -5,7 +5,7 @@ import allnew.okk.basket.composite.PurchasableItem;
 import java.util.ArrayList;
 import java.util.List;
 
-// Tydzień 3, Wzorzec Composite
+// Week 3, Pattern Composite
 public class ProductCategoryNode implements PurchasableItem {
     // Nazwa kategorii, np. "Elektronika", "Odzież", itp.
     private String categoryName;
@@ -73,4 +73,4 @@ public class ProductCategoryNode implements PurchasableItem {
     }
 
 }
-// Koniec Tydzień 3, Wzorzec Composite
+// End Week 3, Pattern Composite

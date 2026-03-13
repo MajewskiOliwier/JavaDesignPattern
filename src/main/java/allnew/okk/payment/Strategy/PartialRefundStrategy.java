@@ -2,6 +2,7 @@ package allnew.okk.payment.Strategy;
 
 import allnew.okk.payment.Adapter.PaymentGateway;
 
+//Week 6, Pattern  Strategy
 public class PartialRefundStrategy implements RefundStrategy {
     float totalAmountPayed = 0;
     float amountToRefund = 0;
@@ -27,3 +28,4 @@ public class PartialRefundStrategy implements RefundStrategy {
         totalAmountPayed += amount;
     }
 }
+//End Week 6, Pattern  Strategy

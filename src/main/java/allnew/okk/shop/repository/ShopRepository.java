@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// Tydzień 2, Wzorzec Singleton 1
+// Week 2, Pattern  Singleton 1
     // Implementacja wzorca Eager Singleton, gdzie instancja tworzona jest natychmiast przy ładowaniu klasy.
     // Gwarantuje to dostępność obiektu od momentu uruchomienia aplikacji i prostotę implementacji.
 public class ShopRepository {
@@ -45,4 +45,4 @@ public class ShopRepository {
     }
 }
 
-// Koniec, Tydzień 2, Wzorzec Singleton 1
+// End Week 2, Pattern  Singleton 1

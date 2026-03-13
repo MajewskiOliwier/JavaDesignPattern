@@ -1,11 +1,11 @@
 package allnew.okk.shop.bridge;
 
-// Week 3, Bridge Pattern 3
-// Concrete implementation - sending messages via SMS.
+// Week 3, Pattern Bridge 3
+// Konkretna implementacja - wysyłanie wiadomości przez SMS.
 public class SmsNotificationSender implements NotificationSender {
     @Override
     public void sendNotification(String shopName, String message) {
-        System.out.println("[SMS] Shop " + shopName + " is sending a message: " + message);
+        System.out.println("[SMS] Sklep " + shopName + " wysyła wiadomość: " + message);
     }
 }
-// End of Week 3, Bridge Pattern 3
+// End Week 3, Pattern Bridge 3

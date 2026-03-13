@@ -3,7 +3,7 @@ package allnew.okk.shop.service;
 import allnew.okk.shop.model.BaseShop;
 import allnew.okk.shop.repository.ShopRepository;
 
-// Tydzień 2, Wzorzec Singleton 2
+// Week 2, Pattern Singleton 2
 // Implementacja wzorca Lazy Singleton z mechanizmem Double-Checked Locking.
 // Zapewnia to bezpieczeństwo wielowątkowe i oszczędność zasobów poprzez tworzenie obiektu dopiero przy pierwszym użyciu.
 public class ShopService {
@@ -29,9 +29,9 @@ public class ShopService {
         }
         return instance;
     }
-    // Koniec, Tydzień 2, Wzorzec Singleton 2
+    // End Week 2, Pattern  Singleton 2
 
-    // Tydzień 2, Wzorzec Prototype 4
+    // Week 2, Pattern  Prototype 4
     // Praktyczne zastosowanie wzorca Prototype do duplikowania obiektów sklepu.
     // Wykorzystuje metodę clone() do tworzenia kopii istniejącego obiektu bez wywoływania konstruktora.
     public void duplicateShop(String shopId) throws CloneNotSupportedException {
