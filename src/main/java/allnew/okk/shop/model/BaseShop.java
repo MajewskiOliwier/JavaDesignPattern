@@ -7,8 +7,8 @@ import allnew.okk.shop.bridge.NotificationSender;
 import lombok.Getter;
 import lombok.Setter;
 
-// Tydzień 2, Wzorzec Prototype 1
-// Implementacja wzorca Prototype poprzez interfejs Cloneable, umożliwiająca tworzenie kopii obiektów sklepów.
+// Week 2, Prototype Pattern 1
+// Implementation of the Prototype pattern via the Cloneable interface, enabling the creation of shop object copies.
 @Getter
 @Setter
 public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay {
@@ -19,25 +19,25 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     public BaseShop(Builder<?> builder) {
         this.name = builder.name;
         this.description = builder.description;
-        this.notificationSender = builder.notificationSender; // ZMIANA
+        this.notificationSender = builder.notificationSender; // CHANGE
     }
 
-    // Tydzień 3, Wzorzec Composite 2
-    // Implementacja metod z interfejsu ShopComponent dla pojedynczego sklepu.
+    // Week 3, Composite Pattern 2
+    // Implementation of ShopComponent interface methods for an individual shop.
     @Override
     public String getDetails() {
-        return "Sklep: " + name + " (" + description + ")";
+        return "Shop: " + name + " (" + description + ")";
     }
 
     @Override
     public int getShopCount() {
-        return 1; // bo pojedynczy sklep zawsze jest jeden
+        return 1; // because an individual shop always counts as one
     }
-    // Koniec, Tydzień 3, Wzorzec Composite 2
+    // End of Week 3, Composite Pattern 2
 
-    // Tydzień 3, Wzorzec Decorator 2
-    // Zwraca czyste dane sklepu.
-    // Wykorzystywane przy dekoratorach.
+    // Week 3, Decorator Pattern 2
+    // Returns raw shop data.
+    // Used by decorators.
     @Override
     public String getDisplayName() {
         return this.name;
@@ -47,28 +47,28 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     public String getDisplayDescription() {
         return this.description;
     }
-    // Koniec, Tydzień 3, Wzorzec Decorator 2
+    // End of Week 3, Decorator Pattern 2
 
 
-    // Tydzień 3, Wzorzec Bridge 4
-    // Metoda wysyłająca powiadomienie.
-    // Wykorzystuje interfejs, dzięki temu działa zarówno dla SMSów i emaili.
+    // Week 3, Bridge Pattern 4
+    // Method for sending notifications.
+    // Utilizes an interface, allowing it to work for both SMS and emails.
     public void broadcastPromotion(String promoMessage) {
         if (notificationSender != null) {
             notificationSender.sendNotification(this.name, promoMessage);
         } else {
-            System.out.println("Sklep " + this.name + " nie ma skonfigurowanego systemu powiadomień.");
+            System.out.println("Shop " + this.name + " does not have a notification system configured.");
         }
     }
-    // Koniec, Tydzień 3, Wzorzec Bridge 4
+    // End of Week 3, Bridge Pattern 4
 
-    // Tydzień 2, Wzorzec Builder 1
-    // Generyczny builder z generycznym typowaniem.
-    // Dzięki metodzie self() klasy pochodne zwracają własny typ, co umożliwia płynne wywoływanie metod.
+    // Week 2, Builder Pattern 1
+    // Generic builder with generic typing.
+    // Thanks to the self() method, derived classes return their own type, enabling fluent method chaining.
     public abstract static class Builder<T extends Builder<T>> {
         private String name = "Default Shop";
         private String description = "Default Description";
-        private NotificationSender notificationSender; // ZMIANA w Builderze
+        private NotificationSender notificationSender; // CHANGE in Builder
 
         public T setName(String name) {
             this.name = name;
@@ -88,15 +88,15 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
         protected abstract T self();
         public abstract BaseShop build();
     }
-    // Koniec, Tydzień 2, Wzorzec Builder 1
+    // End of Week 2, Builder Pattern 1
 
     @Override
     public BaseShop clone() throws CloneNotSupportedException {
         try {
             return (BaseShop) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError("Klonowanie nie powiodło się");
+            throw new AssertionError("Cloning failed");
         }
     }
 }
-// Koniec, Tydzień 2, Wzorzec Prototype 1
+// End of Week 2, Prototype Pattern 1

@@ -1,7 +1,7 @@
 package allnew.okk.shop.model;
 
-// Tydzień 2 , Wzorzec Prototype 2
-// Implementacja klonowania dla klasy OnlineShop.
+// Week 2, Prototype Pattern 2
+// Implementation of cloning for the OnlineShop class.
 public class OnlineShop extends BaseShop {
     private String websiteUrl;
 
@@ -12,8 +12,8 @@ public class OnlineShop extends BaseShop {
 
     public String getWebsiteUrl() { return websiteUrl; }
 
-    // Tydzień 2, Wzorzec Builder 2
-    // Rozszerzenie buildera o pole websiteUrl specyficzne dla sklepu internetowego.
+    // Week 2, Builder Pattern 2
+    // Extension of the builder with the websiteUrl field specific to an online shop.
     public static class Builder extends BaseShop.Builder<Builder> {
         private String websiteUrl;
 
@@ -32,7 +32,7 @@ public class OnlineShop extends BaseShop {
             return new OnlineShop(this);
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Builder 2
+    // End of Week 2, Builder Pattern 2
 
     @Override
     public OnlineShop clone() {
@@ -43,4 +43,4 @@ public class OnlineShop extends BaseShop {
         }
     }
 }
-// Koniec, Tydzień 2, Wzorzec Prototype 2
+// End of Week 2, Prototype Pattern 2

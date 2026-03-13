@@ -1,9 +1,9 @@
 package allnew.okk.shop.bridge;
 
-// Tydzień 3, Wzorzec Bridge 1
-// Interfejs implementacji we wzorcu Bridge.
-// Definiuje, w jaki sposób sklep komunikuje się z klientami.
-public interface  NotificationSender {
+// Week 3, Bridge Pattern 1
+// Implementation interface in the Bridge pattern.
+// Defines how the shop communicates with customers.
+public interface NotificationSender {
     void sendNotification(String shopName, String message);
 }
-// Koniec, Tydzień 3, Wzorzec Bridge 1
+// End of Week 3, Bridge Pattern 1

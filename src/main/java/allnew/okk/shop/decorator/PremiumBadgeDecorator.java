@@ -1,8 +1,8 @@
 package allnew.okk.shop.decorator;
 
-// Tydzień 3, Wzorzec Decorator 4
-// Dekorator "Premium".
-// Dodaje ikonę gwiazdki przed nazwą sklepu.
+// Week 3, Decorator Pattern 4
+// "Premium" Decorator.
+// Adds a star icon before the shop name.
 public class PremiumBadgeDecorator extends ShopDecorator {
 
     public PremiumBadgeDecorator(ShopDisplay wrappedShop) {
@@ -16,7 +16,7 @@ public class PremiumBadgeDecorator extends ShopDecorator {
 
     @Override
     public String getDisplayDescription() {
-        return super.getDisplayDescription() + " (Sklep rangi PREMIUM).";
+        return super.getDisplayDescription() + " (PREMIUM rank shop).";
     }
 }
-// Koniec, Tydzień 3, Wzorzec Decorator 4
+// End of Week 3, Decorator Pattern 4

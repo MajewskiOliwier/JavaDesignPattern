@@ -1,10 +1,10 @@
 package allnew.okk.shop.composite;
 
-// Tydzień 3, Wzorzec Composite 1
-// Wspólny interfejs dla pojedynczych sklepów i całych sieci sklepów.
-// Pozwala klientowi traktować je w ten sam, jednolity sposób.
+// Week 3, Composite Pattern 1
+// Common interface for individual shops and entire shop networks.
+// Allows the client to treat them in a single, uniform way.
 public interface ShopComponent {
     String getDetails();
     int getShopCount();
 }
-// Koniec, Tydzień 3, Wzorzec Composite 1
+// End of Week 3, Composite Pattern 1

@@ -1,7 +1,8 @@
 package allnew.okk.shop.adapter;
 
-// Symulacja zewnętrznego interfejsu firmy kurierskiej (np. InPost, DPD)
-// System kuriera wymaga, aby każdy punkt na mapie posiadał te 3 metody.
+// Week 3, Adapter Pattern 1
+// Simulates an external courier service interface (e.g., InPost, DPD).
+// The courier system requires every map point to implement these three methods.
 public interface CourierShippingPoint {
     String getPointName();
     String getFullAddress();

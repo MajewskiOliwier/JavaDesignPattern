@@ -1,7 +1,7 @@
 package allnew.okk.shop.model;
 
-// Tydzień 2, Wzorzec Prototype 3
-// Implementacja klonowania dla klasy PhysicalShop.
+// Week 2, Prototype Pattern 3
+// Implementation of cloning for the PhysicalShop class.
 public class PhysicalShop extends BaseShop {
     private String address;
     private boolean isDropOffAvailable;
@@ -15,9 +15,9 @@ public class PhysicalShop extends BaseShop {
     public String getAddress() { return address; }
     public boolean isDropOffAvailable() { return isDropOffAvailable; }
 
-    // Tydzień 2, Wzorzec Builder 3
-    // Rozszerzenie buildera o pole address specyficzne dla sklepu stacjonarnego.
-     public static class Builder extends BaseShop.Builder<Builder> {
+    // Week 2, Builder Pattern 3
+    // Extension of the builder with the address field specific to a physical shop.
+    public static class Builder extends BaseShop.Builder<Builder> {
         private String address;
         private boolean isDropOffAvailable = true;
 
@@ -41,7 +41,7 @@ public class PhysicalShop extends BaseShop {
             return new PhysicalShop(this);
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Builder 3
+    // End of Week 2, Builder Pattern 3
 
     @Override
     public PhysicalShop clone() {
@@ -53,4 +53,4 @@ public class PhysicalShop extends BaseShop {
     }
 }
 
-// Koniec, Tydzień 2, Wzorzec Prototype 3
+// End of Week 2, Prototype Pattern 3

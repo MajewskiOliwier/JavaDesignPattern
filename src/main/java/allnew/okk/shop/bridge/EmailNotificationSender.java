@@ -1,11 +1,11 @@
 package allnew.okk.shop.bridge;
 
-// Tydzień 3, Wzorzec Bridge 2
-// Konkretna implementacja - wysyłanie wiadomości mailowo.
+// Week 3, Bridge Pattern 2
+// Concrete implementation - sending messages via email.
 public class EmailNotificationSender implements NotificationSender {
     @Override
     public void sendNotification(String shopName, String message) {
-        System.out.println("[EMAIL] Sklep " + shopName + " wysyła wiadomość: " + message);
+        System.out.println("[EMAIL] Shop " + shopName + " is sending a message: " + message);
     }
 }
-// Koniec, Tydzień 3, Wzorzec Bridge 2
+// End of Week 3, Bridge Pattern 2

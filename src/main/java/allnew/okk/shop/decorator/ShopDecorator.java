@@ -1,8 +1,8 @@
 package allnew.okk.shop.decorator;
 
-// Tydzień 3, Wzorzec Decorator 3
-// Abstrakcyjna klasa dekoratora. Implementuje ten sam interfejs co BaseShop.
-// Przechowuje instancję "owiniętego" obiektu i domyślnie deleguje do niego wszystkie wywołania.
+// Week 3, Decorator Pattern 3
+// Abstract decorator class. Implements the same interface as BaseShop.
+// Stores an instance of the "wrapped" object and delegates all calls to it by default.
 public abstract class ShopDecorator implements ShopDisplay {
     protected ShopDisplay wrappedShop;
 
@@ -20,4 +20,4 @@ public abstract class ShopDecorator implements ShopDisplay {
         return wrappedShop.getDisplayDescription();
     }
 }
-// Koniec, Tydzień 3, Wzorzec Decorator 3
+// End of Week 3, Decorator Pattern 3
