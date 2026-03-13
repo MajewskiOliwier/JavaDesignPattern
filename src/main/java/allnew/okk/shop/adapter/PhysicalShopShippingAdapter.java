@@ -17,19 +17,16 @@ public class PhysicalShopShippingAdapter implements CourierShippingPoint {
     // Tłumaczenie metod z systemu kuriera na metody naszego sklepu
     @Override
     public String getPointName() {
-        // Kurier wymaga nazwy punktu, więc bierzemy nazwę sklepu i dodajemy przedrostek
         return "PUNKT ODBIORU: " + physicalShop.getName();
     }
 
     @Override
     public String getFullAddress() {
-        // Kurier wymaga pełnego adresu, więc przekazujemy adres ze sklepu stacjonarnego
         return physicalShop.getAddress();
     }
 
     @Override
     public boolean isAvailableForDropOff() {
-        // Zakładamy, że z każdego naszego sklepu stacjonarnego kurier może odebrać paczkę
         return physicalShop.isDropOffAvailable();    }
 }
 // Koniec, Tydzień 3, Wzorzec Adapter 1
