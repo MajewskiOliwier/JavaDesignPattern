@@ -1,6 +1,6 @@
 package allnew.okk.shop.decorator;
 
-// Tydzień 3, Wzorzec Decorator 5
+// Week 3, Pattern Decorator 5
 // Dekorator "Verified"
 // Dodaje ikonę przed nazwą sklepu
 public class VerifiedBadgeDecorator extends ShopDecorator {
@@ -19,4 +19,4 @@ public class VerifiedBadgeDecorator extends ShopDecorator {
         return super.getDisplayDescription() + " (Sklep ZWERYFIKOWANY).";
     }
 }
-// Koniec, Tydzień 3, Wzorzec Decorator 5
+// End Week 3, Pattern Decorator 5

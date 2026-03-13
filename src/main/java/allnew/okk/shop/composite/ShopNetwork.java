@@ -3,7 +3,7 @@ package allnew.okk.shop.composite;
 import java.util.ArrayList;
 import java.util.List;
 
-// Tydzień 3, Wzorzec Composite 3
+// Week 3, Pattern Composite 3
 // Klasa reprezentująca Kompozyt (Węzeł) - sieć sklepów lub franczyzę.
 // Może zawierać w sobie pojedyncze sklepy (BaseShop) lub inne sieci (ShopNetwork).
 public class ShopNetwork implements ShopComponent {
@@ -47,4 +47,4 @@ public class ShopNetwork implements ShopComponent {
         return totalCount;
     }
 }
-// Koniec, Tydzień 3, Wzorzec Composite 3
+// End Week 3, Pattern Composite 3

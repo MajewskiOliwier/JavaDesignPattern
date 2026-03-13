@@ -4,7 +4,7 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Service.Przelewy24Service;
 import allnew.okk.payment.Strategy.RefundStrategy;
 
-// Tydzień 3, Wzorzec Adapter 1
+// Week 3, Pattern  Adapter 1
 //konkretna implementacja adaptera dla PAYU
 public class Przelewy24Adapter implements PaymentGateway {
     private Przelewy24Service przelewy24Service;
@@ -50,4 +50,4 @@ public class Przelewy24Adapter implements PaymentGateway {
         return przelewy24Service.checkStatus(transactionID);
     }
 }
-//Koniec Tydzień 3, Wzorzec Adapter 1
+//End Week 3, Pattern  Adapter 1

@@ -1,6 +1,6 @@
 package allnew.okk.shop.bridge;
 
-// Tydzień 3, Wzorzec Bridge 3
+// Week 3, Pattern Bridge 3
 // Konkretna implementacja - wysyłanie wiadomości przez SMS.
 public class SmsNotificationSender implements NotificationSender {
     @Override
@@ -8,4 +8,4 @@ public class SmsNotificationSender implements NotificationSender {
         System.out.println("[SMS] Sklep " + shopName + " wysyła wiadomość: " + message);
     }
 }
-// Koniec, Tydzień 3, Wzorzec Bridge 3
+// End Week 3, Pattern Bridge 3

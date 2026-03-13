@@ -5,7 +5,7 @@ import allnew.okk.shop.model.PhysicalShop;
 import lombok.Getter;
 
 
-// Tydzień 2, Wzorzec Singleton 3
+//Week 2, Pattern Singleton 3
 // Implementacja fabryki jako Singletona.
 // Zapewnia jeden centralny punkt tworzenia obiektów w aplikacji.
 public class ShopFactory {
@@ -37,6 +37,6 @@ public class ShopFactory {
                 .setAddress(address)
                 .build();
     }
-    // Koniec, Tydzień 2, Wzorzec Factory 1
+    // End Week 2, Pattern Factory 1
 
 }

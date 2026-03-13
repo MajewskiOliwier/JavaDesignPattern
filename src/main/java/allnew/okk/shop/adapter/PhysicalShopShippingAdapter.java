@@ -2,7 +2,7 @@ package allnew.okk.shop.adapter;
 
 import allnew.okk.shop.model.PhysicalShop;
 
-// Tydzień 3, Wzorzec Adapter 1
+// Week 3, Pattern Adapter 1
 // Adapter pozwalający traktować sklep stacjonarny jako punkt odbioru paczek dla zewnętrznego systemu kuriera.
 // Tłumaczy metody niekompatybilnego obiektu PhysicalShop na interfejs wymagany przez CourierShippingPoint.
 public class PhysicalShopShippingAdapter implements CourierShippingPoint {
@@ -29,4 +29,4 @@ public class PhysicalShopShippingAdapter implements CourierShippingPoint {
     public boolean isAvailableForDropOff() {
         return physicalShop.isDropOffAvailable();    }
 }
-// Koniec, Tydzień 3, Wzorzec Adapter 1
+// End Week 3, Pattern Adapter 1

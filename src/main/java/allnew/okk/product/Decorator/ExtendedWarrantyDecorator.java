@@ -2,7 +2,7 @@ package allnew.okk.product.Decorator;
 
 import allnew.okk.basket.composite.PurchasableItem;
 
-// Tydzień 3, Wzorzec Dekorator 2
+// Week 3, Pattern Decorator 2
 // Dekorator służący do dodania opcji przedłużonej gwarancji do produktu.
 public class ExtendedWarrantyDecorator extends ProductDecorator {
     private final int warrantyMonths = 12;
@@ -42,4 +42,4 @@ public class ExtendedWarrantyDecorator extends ProductDecorator {
         return wrappedItem.getSellerID();
     }
 }
-// Koniec Tydzień 3, Wzorzec Dekorator 2
+// End Week 3, Pattern Decorator 2

@@ -1,6 +1,6 @@
 package allnew.okk.shop.model;
 
-// Tydzień 2 , Wzorzec Prototype 2
+// Week 2, Pattern Prototype 2
 // Implementacja klonowania dla klasy OnlineShop.
 public class OnlineShop extends BaseShop {
     private String websiteUrl;
@@ -43,4 +43,4 @@ public class OnlineShop extends BaseShop {
         }
     }
 }
-// Koniec, Tydzień 2, Wzorzec Prototype 2
+// End Week 2, Pattern  Prototype 2

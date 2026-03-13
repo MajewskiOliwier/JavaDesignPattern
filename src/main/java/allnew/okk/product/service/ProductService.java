@@ -2,7 +2,7 @@ package allnew.okk.product.service;
 
 import allnew.okk.product.repository.ProductRepository;
 
-// Tydzień 2, Wzorzec Singleton 3
+// Week 2, Pattern Singleton 3
 // klasa singleton odpowiedzialna za zarządzanie produktami, w tym duplikowanie produktów
 public class ProductService {
     private final ProductRepository productRepository = ProductRepository.getInstance();
@@ -15,7 +15,7 @@ public class ProductService {
         return instance;
     }
 
-    // Tydzień 2, Wzorzec Prototype 4
+    // Week 2, Pattern Prototype 4
     public void duplicateProduct(String productId) throws CloneNotSupportedException {
         var originalProduct = productRepository.getProduct(productId);
         if (originalProduct != null) {
@@ -30,7 +30,7 @@ public class ProductService {
             }
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Prototype 4
+    // End Week 2, Pattern Prototype 4
 
 }
-// Koniec, Tydzień 2, Wzorzec Singleton 3
+// End Week 2, Pattern Singleton 3

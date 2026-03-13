@@ -2,11 +2,11 @@ package allnew.okk.product.bridge;
 
 import java.util.List;
 
-// Tydzień 3 , Wzorzec Bridge
+// Week 3 , Pattern Bridge
 public interface TaxPolicy {
     double calculateTax(double price);
     double calculateTotalPrice(double price);
     double getTaxRate();
     String getRegionCode();
 }
-// Koniec Tydzień 3 , Wzorzec Bridge
+// End Week 3 , Pattern Bridge

@@ -2,7 +2,7 @@ package allnew.okk.product.bridge;
 
 import java.util.List;
 
-// Tydzień 3 , Wzorzec Bridge
+// Week 3 , Pattern Bridge
 public class CountryTaxPolicy implements TaxPolicy {
     private String countryCode;
     private double taxRate;
@@ -32,4 +32,4 @@ public class CountryTaxPolicy implements TaxPolicy {
         return taxRate;
     }
 }
-// Koniec Tydzień 3 , Wzorzec Bridge
+// End Week 3 , Pattern Bridge

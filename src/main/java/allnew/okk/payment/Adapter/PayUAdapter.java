@@ -4,7 +4,7 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.payment.Service.PayUService;
 import allnew.okk.payment.Strategy.RefundStrategy;
 
-// Tydzień 3, Wzorzec Adapter 1
+// Week 3, Pattern  Adapter 1
 //konkretna implementacja adaptera dla PAYU
 public class PayUAdapter implements PaymentGateway {
     private PayUService payUService;
@@ -49,4 +49,4 @@ public class PayUAdapter implements PaymentGateway {
         return payUService.checkStatus(transactionID);
     }
 }
-// Koniec Tydzień 3, Wzorzec Adapter 1
+// End Week 3, Pattern Adapter 1
