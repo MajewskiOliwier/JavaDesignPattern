@@ -28,6 +28,10 @@ public class SellerBasket implements PurchasableItem{
         return totalPrice;
     }
 
+    @Override
+    public List<PurchasableItem> getChildren(){
+        return sellerItems;
+    }
 
 
     @Override
