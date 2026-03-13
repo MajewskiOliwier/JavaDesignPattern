@@ -1,5 +1,6 @@
 package allnew.okk.shop.model;
 
+import allnew.okk.shop.composite.ShopComponent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import lombok.Setter;
 // Implementacja wzorca Prototype poprzez interfejs Cloneable, umożliwiająca tworzenie kopii obiektów sklepów.
 @Getter
 @Setter
-public abstract class BaseShop implements Cloneable {
+public abstract class BaseShop implements Cloneable, ShopComponent {
     private String name;
     private String description;
 
@@ -15,6 +16,19 @@ public abstract class BaseShop implements Cloneable {
         this.name = builder.name;
         this.description = builder.description;
     }
+
+    // Tydzień 3, Wzorzec Composite 2
+    // Implementacja metod z interfejsu ShopComponent dla pojedynczego sklepu.
+    @Override
+    public String getDetails() {
+        return "Sklep: " + name + " (" + description + ")";
+    }
+
+    @Override
+    public int getShopCount() {
+        return 1; // bo pojedynczy sklep zawsze jest jeden
+    }
+    // Koniec, Tydzień 3, Wzorzec Composite 2
 
     // Tydzień 2, Wzorzec Builder 1
     // Generyczny builder z generycznym typowaniem.
