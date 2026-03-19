@@ -1,9 +1,10 @@
 package allnew.okk.account.Adapter;
 
+import allnew.okk.account.Mediator.LoyaltyEligilble;
 import allnew.okk.account.Prototype.PrivateAccount;
 
 // Tydzień 3, Wzorzec Adapter 2
-public class PrivateAccountAdapter implements AccountDisplayable{
+public class PrivateAccountAdapter implements AccountDisplayable, LoyaltyEligilble {
     private PrivateAccount privateAccount;
 
     public PrivateAccountAdapter(PrivateAccount account){
@@ -29,6 +30,16 @@ public class PrivateAccountAdapter implements AccountDisplayable{
     @Override
     public boolean hasValidPaymentMethod() {
         return privateAccount.getPaymentGateway() != null;
+    }
+
+    @Override
+    public void addLoyaltyPoints(int points) {
+        privateAccount.addLoyaltyPoints(points);
+    }
+
+    @Override
+    public int getLoyaltyPoints() {
+        return privateAccount.getLoyaltyPoints();
     }
 }
 //Koniec Tydzień 3, Wzorzec Adapter 2

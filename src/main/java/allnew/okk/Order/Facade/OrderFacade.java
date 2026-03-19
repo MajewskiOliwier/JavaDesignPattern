@@ -3,15 +3,14 @@ package allnew.okk.Order.Facade;
 import allnew.okk.Currency.Flyweight.CurrencyFlyweight;
 import allnew.okk.Currency.Flyweight.CurrencyRegistry;
 import allnew.okk.Currency.Flyweight.CurrencyType;
+import allnew.okk.Order.Mediator.CheckoutMediator;
 import allnew.okk.Order.Memento.Order;
 import allnew.okk.Order.Memento.OrderStatusHistory;
 import allnew.okk.Order.OrderStatus;
-import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.account.Mediator.EmptyCheckoutMediator;
+import allnew.okk.account.Mediator.LoyaltyCheckoutMediator;
 import allnew.okk.basket.composite.PurchasableItem;
-import allnew.okk.basket.composite.SellerBasket;
-import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.payment.Adapter.PaymentGateway;
-import allnew.okk.product.model.BaseProduct;
 
 //Week 4, Pattern Facade 1 Oliwier Majewski
 //Week 4, Pattern Facade 1 Oliwier Majewski
@@ -19,11 +18,17 @@ import allnew.okk.product.model.BaseProduct;
 public class OrderFacade {
     private final PaymentGateway paymentGateway;
     private final OrderStatusHistory statusHistory = new OrderStatusHistory();
+    private final CheckoutMediator checkoutMediator;
 
     public OrderFacade(PaymentGateway paymentGateway) {
         this.paymentGateway = paymentGateway;
+        this.checkoutMediator = new EmptyCheckoutMediator();
     }
 
+    public OrderFacade(PaymentGateway paymentGateway, LoyaltyCheckoutMediator checkoutMediator) {
+        this.paymentGateway = paymentGateway;
+        this.checkoutMediator = checkoutMediator;
+    }
 
     //this method is responsible for :
     // * organising items by seller name
@@ -64,6 +69,10 @@ public class OrderFacade {
         order.setStatus(OrderStatus.PAID);
         statusHistory.save(order.saveMemento());
         //End Week 5, Pattern Memento 1 Oliwier Majewski
+
+        //Week 5, Pattern Mediator 1 Oliwier Majewski
+        checkoutMediator.notify(order,order.getStatus());
+        //End Week 5, Pattern Mediator 1 Oliwier Majewski
 
         return true;
     }

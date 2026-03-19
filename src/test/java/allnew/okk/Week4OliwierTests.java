@@ -1,12 +1,15 @@
 package allnew.okk;
 
 import allnew.okk.Order.Facade.OrderFacade;
+import allnew.okk.Order.Mediator.CheckoutMediator;
 import allnew.okk.Order.Memento.Order;
 import allnew.okk.Order.OrderStatus;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.account.Adapter.CompanyAccountAdapter;
 import allnew.okk.account.Adapter.PrivateAccountAdapter;
 import allnew.okk.account.Factory.AccountFactory;
+import allnew.okk.account.Mediator.LoyaltyCheckoutMediator;
+import allnew.okk.account.Mediator.LoyaltyService;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
 import allnew.okk.basket.Command.AddToBasketCommand;
@@ -368,5 +371,53 @@ public class Week4OliwierTests {
         List<PurchasableItem> result = basket.filter(new PriceExpression(100, ComparisonOperator.GT));
 
         assertTrue(result.isEmpty(), "Filter on empty basket should return empty list");
+    }
+
+    // ---------------------------------------------------------------
+    // Mediator Tests
+    // ---------------------------------------------------------------
+
+    PrivateAccountAdapter privateAccountAdapter2 = new PrivateAccountAdapter(privateAccount);
+    LoyaltyCheckoutMediator loyaltyCheckoutMediator = new LoyaltyCheckoutMediator(new LoyaltyService());
+
+    @Test
+    void testLoyaltyPointsAddedForPrivateAccountAfterOrder() {
+        Order order = new Order(buildBasket(), privateAccountAdapter);
+        OrderFacade facade = new OrderFacade(payUAdapter, loyaltyCheckoutMediator);
+
+        facade.placeOrder(order, "PLN");
+
+        PrivateAccountAdapter adapter = privateAccountAdapter2;
+        assertTrue(adapter.getLoyaltyPoints() > 0,"Private account should have loyalty points after successful order");
+    }
+
+    @Test
+    void testLoyaltyPointsEqualFloorOfOrderTotal() {
+        Order order = new Order(buildBasket(), privateAccountAdapter); // Order has total value of 305PLN and with the rate of 0.5 pts for 1 PLN
+        OrderFacade facade = new OrderFacade(payUAdapter, loyaltyCheckoutMediator);
+
+        facade.placeOrder(order, "PLN");
+
+        PrivateAccountAdapter adapter = (PrivateAccountAdapter) privateAccountAdapter;
+        assertEquals(152, adapter.getLoyaltyPoints(),"Loyalty points should be floor of (305.00 PLN * 0.5) = 152 points");
+    }
+
+    @Test
+    void testCompanyAccountDoesNotReceiveLoyaltyPoints() {
+        Order order = new Order(buildBasket(), companyAccountAdapter);
+        OrderFacade facade = new OrderFacade(payUAdapter, loyaltyCheckoutMediator);
+
+        assertDoesNotThrow(() -> facade.placeOrder(order, "PLN"),"Company account should be silently skipped by mediator without throwing");
+    }
+
+    @Test
+    void testNoOpMediatorDoesNotAffectLoyaltyPoints() {
+        Order order = new Order(buildBasket(), privateAccountAdapter);
+        OrderFacade facade = new OrderFacade(payUAdapter); // default constructor does not uses the NoOpCheckoutMediator
+
+        facade.placeOrder(order, "PLN");
+
+        PrivateAccountAdapter adapter = (PrivateAccountAdapter) privateAccountAdapter;
+        assertEquals(0, adapter.getLoyaltyPoints(),"NoOp mediator should not add any loyalty points");
     }
 }
