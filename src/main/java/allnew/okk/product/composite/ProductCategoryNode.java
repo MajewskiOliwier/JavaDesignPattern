@@ -1,6 +1,7 @@
 package allnew.okk.product.composite;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Visitor.BasketVisitor;
 import allnew.okk.basket.composite.PurchasableItem;
 
 import java.util.ArrayList;
@@ -53,6 +54,11 @@ public class ProductCategoryNode implements PurchasableItem {
     public List<PurchasableItem> getChildren() {
         return children;
     }
+
+    //Week 6, Pattern Visitor Oliwier Majewski
+    @Override
+    public void accept(BasketVisitor visitor) {}
+    //End Week 6, Pattern Visitor Oliwier Majewski
 
     public List<PurchasableItem> getAllProducts() {
         List<PurchasableItem> allProducts = new ArrayList<>(children);

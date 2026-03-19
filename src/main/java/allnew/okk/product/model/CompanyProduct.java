@@ -1,6 +1,7 @@
 package allnew.okk.product.model;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Visitor.BasketVisitor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +38,13 @@ public class CompanyProduct extends BaseProduct {
     public String getSellerID() {
         return NIP;
     }
+
+    //Week 6, Pattern Visitor Oliwier Majewski
+    @Override
+    public void accept(BasketVisitor visitor) {
+        visitor.visit(this);
+    }
+    //End Week 6, Pattern Visitor Oliwier Majewski
 
     // Koniec, Tydzień 3, Wzorzec Composite 3
 

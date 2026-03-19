@@ -1,5 +1,6 @@
 package allnew.okk.product.model;
 
+import allnew.okk.basket.Visitor.BasketVisitor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ public class PrivateProduct extends BaseProduct {
         this.sellerContact = b.sellerContact;
     }
 
-    // Tydzień 3, Wzorzec Composite 3
+    // Week 3, Pattern Composite 3
     @Override
     public String getSellerName() {
         return sellerName;
@@ -27,9 +28,18 @@ public class PrivateProduct extends BaseProduct {
     public String getSellerID() {
         return sellerName;
     }
-    // Koniec, Tydzień 3, Wzorzec Composite 3
 
-    // Tydzień 2, Wzorzec Builder 3
+    //Week 6, Pattern Visitor Oliwier Majewski
+    //method that allows Visitor design patter to traverse the Composite baskets and in this case get this product
+    @Override
+    public void accept(BasketVisitor visitor) {
+        visitor.visit(this);
+    }
+    //End Week 6, Pattern Visitor Oliwier Majewski
+
+    // End Week 3, Pattern Composite 3
+
+    // Week 2, Pattern  Builder 3
     // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
         private String sellerName;
@@ -55,7 +65,7 @@ public class PrivateProduct extends BaseProduct {
             return new PrivateProduct(this);
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Builder 3
+    // End Week 2, Pattern  Builder 3
 
     public Builder toBuilder() {
         return new Builder()
@@ -69,7 +79,7 @@ public class PrivateProduct extends BaseProduct {
                 .setSellerContact(sellerContact);
     }
 
-    // Tydzień 2, Wzorzec Prototype 3
+    // Week 2, Pattern  Prototype 3
     @Override
     public PrivateProduct clone() {
         try {
@@ -79,7 +89,7 @@ public class PrivateProduct extends BaseProduct {
             throw new AssertionError();
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Prototype 3
+    // Week 2, Pattern Prototype 3
 
     @Override
     public String toString() {

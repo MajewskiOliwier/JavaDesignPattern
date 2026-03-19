@@ -1,6 +1,7 @@
 package allnew.okk.product.Decorator;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Visitor.BasketVisitor;
 import allnew.okk.basket.composite.PurchasableItem;
 
 //Week  3, Pattern Decorator 1  Oliwier Majewski
@@ -36,5 +37,12 @@ public abstract class ProductDecorator implements PurchasableItem {
     public AccountDisplayable getSellerAccount() {
         return wrappedItem.getSellerAccount();
     }
+
+    //Week 6, Pattern Visitor Oliwier Majewski
+    @Override
+    public void accept(BasketVisitor visitor) {
+        wrappedItem.accept(visitor);
+    }
+    //End Week 6, Pattern Visitor Oliwier Majewski
 }
 //End Week 3, Pattern Decorator 1

@@ -1,6 +1,7 @@
 package allnew.okk.basket.composite;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Visitor.BasketVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,16 @@ public class SellerBasket implements PurchasableItem{
     public List<PurchasableItem> getChildren(){
         return sellerItems;
     }
+
+    //Week 6, Pattern Visitor Oliwier Majewski
+    @Override
+    public void accept(BasketVisitor visitor) {
+        visitor.visit(this);
+        for (PurchasableItem item : sellerItems) {
+            item.accept(visitor);
+        }
+    }
+    //End Week 6, Pattern Visitor Oliwier Majewski
 
 
     @Override

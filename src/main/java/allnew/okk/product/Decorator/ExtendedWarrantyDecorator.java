@@ -1,6 +1,7 @@
 package allnew.okk.product.Decorator;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Visitor.BasketVisitor;
 import allnew.okk.basket.composite.PurchasableItem;
 
 // Week 3, Pattern Decorator 2
@@ -42,5 +43,12 @@ public class ExtendedWarrantyDecorator extends ProductDecorator {
     public String getSellerID() {
         return wrappedItem.getSellerID();
     }
+
+    //Week 6, Pattern Visitor Oliwier Majewski
+    @Override
+    public void accept(BasketVisitor visitor) {
+        wrappedItem.accept(visitor);
+    }
+    //End Week 6, Pattern Visitor Oliwier Majewski
 }
 // End Week 3, Pattern Decorator 2

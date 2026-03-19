@@ -4,6 +4,7 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.Command.BasketCommand;
 import allnew.okk.basket.Interpreter.BasketInterpreterExpression;
 import allnew.okk.basket.Iterator.BasketIterator;
+import allnew.okk.basket.Visitor.BasketVisitor;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,6 +56,17 @@ public class ShoppingBasket implements PurchasableItem, Iterable<PurchasableItem
     public List<PurchasableItem> getChildren() {
         return items;
     }
+
+
+    //Week 6, Pattern Visitor Oliwier Majewski
+    @Override
+    public void accept(BasketVisitor visitor) {
+        visitor.visit(this);
+        for(PurchasableItem item : items){
+            item.accept(visitor);
+        }
+    }
+    //End Week 6, Pattern Visitor Oliwier Majewski
 
     public void OrganizeBySeller(){
         Map<String, List<PurchasableItem>> groupedBySeller = items.stream()
