@@ -2,6 +2,7 @@ package allnew.okk.basket.composite;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.Command.BasketCommand;
+import allnew.okk.basket.Interpreter.BasketInterpreterExpression;
 import allnew.okk.basket.Iterator.BasketIterator;
 
 import java.util.*;
@@ -102,5 +103,11 @@ public class ShoppingBasket implements PurchasableItem, Iterable<PurchasableItem
         items.remove(item);
     }
     //End Week 5, Pattern Command 1 Oliwier Majewski
+
+    //Week 5, Pattern Interpreter 1 Oliwier Majewski
+    public List<PurchasableItem> filter(BasketInterpreterExpression expression) {
+        return items.stream().filter(expression::evaluate).toList();
+    }
+    //End Week 5, Pattern Interpreter 1 Oliwier Majewski
 }
 //End Week 3, Pattern Composite Oliwier Majewski

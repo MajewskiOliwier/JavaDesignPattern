@@ -11,6 +11,7 @@ import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
 import allnew.okk.basket.Command.AddToBasketCommand;
 import allnew.okk.basket.Command.RemoveLastProductFromBasketCommand;
+import allnew.okk.basket.Interpreter.*;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.payment.Adapter.PayUAdapter;
@@ -19,6 +20,8 @@ import allnew.okk.product.model.CompanyProduct;
 import allnew.okk.product.model.PrivateProduct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -152,7 +155,6 @@ public class Week4OliwierTests {
     // Commanbd Tests
     // ---------------------------------------------------------------
 
-
     CompanyProduct laptop;
     CompanyProduct laptop2;
     PrivateProduct chleb;
@@ -281,5 +283,90 @@ public class Week4OliwierTests {
         basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
         basket.executeCommand(new RemoveLastProductFromBasketCommand(basket, laptop));
         assertEquals(3, basket.historySize(), "History size should match the number of executed commands");
+    }
+
+    // ---------------------------------------------------------------
+    // Interpreter Tests
+    // ---------------------------------------------------------------
+
+
+    @Test
+    void testPriceExpressionGTFiltersCorrectly() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop())); // 199.00
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));  // 50.00
+
+        List<PurchasableItem> result = basket.filter(new PriceExpression(100, ComparisonOperator.GT));
+
+        assertEquals(1, result.size(), "Only laptop should pass GT 100 filter");
+    }
+
+    @Test
+    void testPriceExpressionLTFiltersCorrectly() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop())); // 199.00
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));  // 50.00
+
+        List<PurchasableItem> result = basket.filter(new PriceExpression(100, ComparisonOperator.LT));
+
+        assertEquals(1, result.size(), "Only chleb should pass LT 100 filter");
+    }
+
+    @Test
+    void testSellerExpressionFiltersCorrectly() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop()));
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
+
+        List<PurchasableItem> result = basket.filter(new SellerNameContainExpression("Asus"));
+
+        assertEquals(1, result.size(), "Only Asus product should pass seller filter");
+    }
+
+    @Test
+    void testItemNameContainsExpressionFiltersCorrectly() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop()));
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
+
+        List<PurchasableItem> result = basket.filter(new ItemNameContainExpression("Lap"));
+
+        assertEquals(1, result.size(), "Only Laptop should pass name contains 'Lap' filter");
+    }
+
+    @Test
+    void testAndExpressionCombinesTwoFilters() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop())); // Asus, 199.00
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));  // Oliwier, 50.00
+
+        BasketInterpreterExpression query = new AndExpression(
+                new SellerNameContainExpression("Asus"),
+                new PriceExpression(100, ComparisonOperator.GT)
+        );
+
+        List<PurchasableItem> result = basket.filter(query);
+
+        assertEquals(1, result.size(), "Only Asus laptop over 100 PLN should pass AND filter");
+    }
+
+    @Test
+    void testFilterReturnsEmptyWhenNothingMatches() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop()));
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
+
+        List<PurchasableItem> result = basket.filter(new SellerNameContainExpression("Nike"));
+
+        assertTrue(result.isEmpty(), "Filter should return empty list when no items match");
+    }
+
+    @Test
+    void testFilterOnEmptyBasketReturnsEmptyList() {
+        ShoppingBasket basket = new ShoppingBasket();
+
+        List<PurchasableItem> result = basket.filter(new PriceExpression(100, ComparisonOperator.GT));
+
+        assertTrue(result.isEmpty(), "Filter on empty basket should return empty list");
     }
 }
