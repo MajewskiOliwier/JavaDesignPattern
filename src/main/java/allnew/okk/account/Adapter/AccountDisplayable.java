@@ -5,4 +5,5 @@ public interface AccountDisplayable {
     String GetDisplayName();
     String GetIdentifier();
     String GetAccountType();
+    boolean hasValidPaymentMethod();
 }

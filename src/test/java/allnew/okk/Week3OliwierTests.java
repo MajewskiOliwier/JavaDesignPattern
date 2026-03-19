@@ -3,6 +3,7 @@ package allnew.okk;
 import allnew.okk.Currency.Flyweight.CurrencyRegistry;
 import allnew.okk.Currency.Flyweight.CurrencyType;
 import allnew.okk.Order.Facade.OrderFacade;
+import allnew.okk.Order.Proxy.OrderFacadeProxy;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.account.Adapter.CompanyAccountAdapter;
 import allnew.okk.account.Adapter.PrivateAccountAdapter;
@@ -184,5 +185,54 @@ class Week3OliwierTests {
         var flyweight = CurrencyRegistry.get(CurrencyType.USD);
         float converted = flyweight.convert(395.0f);
         assertEquals(100.0f, converted, 0.01f, "395 PLN should convert to ~100 USD at rate 3.95");
+    }
+
+
+    // ---------------------------------------------------------------
+    // Proxy Tests
+    // ---------------------------------------------------------------
+
+    OrderFacadeProxy proxy = new OrderFacadeProxy(new OrderFacade(new PayUAdapter()));
+    OrderFacadeProxy proxyPrzelewy = new OrderFacadeProxy(new OrderFacade(new Przelewy24Adapter()));
+
+    PrivateAccount accountWithPayment = AccountFactory.createPrivateAccount()
+            .Name("Oliwier")
+            .Surname("Majewski")
+            .Email("test@gmail.com")
+            .build();
+    { //this is instance Initializer block that will run after the Account factory gives us the private account
+        accountWithPayment.setPaymentGateway(new PayUAdapter());
+    }
+    AccountDisplayable validAccount = new PrivateAccountAdapter(accountWithPayment);
+
+    PrivateAccount accountWithoutPayment = AccountFactory.createPrivateAccount()
+            .Name("Jan")
+            .Surname("Kowalski")
+            .Email("jan@gmail.com")
+            .build();
+    AccountDisplayable invalidAccount = new PrivateAccountAdapter(accountWithoutPayment); //it is invalid as the PaymentGateway is not specified which should return false
+
+    @Test
+    void testProxyAllowsOrderWhenAccountHasValidPaymentMethod() {
+        boolean result = proxy.placeOrder(buildBasket(), validAccount, "PLN");
+        assertTrue(result, "Proxy should allow placeOrder when account has a valid payment method");
+    }
+
+    @Test
+    void testProxyAllowsOrderWithPrzelewy24WhenAccountHasValidPaymentMethod() {
+        boolean result = proxyPrzelewy.placeOrder(buildBasket(), validAccount, "PLN");
+        assertTrue(result, "Proxy should allow placeOrder with Przelewy24 when account has a valid payment method");
+    }
+
+    @Test
+    void testProxyAllowsOrderWithEUR() {
+        boolean result = proxy.placeOrder(buildBasket(), validAccount, "EUR");
+        assertTrue(result, "Proxy should allow placeOrder with EUR currency");
+    }
+
+    @Test
+    void testProxyAllowsOrderWithUSD() {
+        boolean result = proxy.placeOrder(buildBasket(), validAccount, "USD");
+        assertTrue(result, "Proxy should allow placeOrder with USD currency");
     }
 }

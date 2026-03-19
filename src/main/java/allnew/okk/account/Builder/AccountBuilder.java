@@ -1,6 +1,6 @@
 package allnew.okk.account.Builder;
 
-// Tydzień 2, Wzorzec Builder 3
+// Week 2, Pattern Builder 3
 //Abstrakcyjna klasa builder
 public abstract class AccountBuilder <T extends  AccountBuilder<T>>{
     protected String email;
@@ -58,4 +58,4 @@ public abstract class AccountBuilder <T extends  AccountBuilder<T>>{
     public String getEmail() { return email; }
     public String getPassword() { return password; }
 }
-// Koniec, Tydzień 2, Wzorzec Builder 3
+// End Week 2, Pattern Builder 3

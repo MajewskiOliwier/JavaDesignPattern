@@ -4,7 +4,7 @@ import allnew.okk.account.Prototype.BaseAccount;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
 
-// Tydzień 2, Wzorzec Singleton 1
+// Week 2, Pattern Singleton 1
 // klasa zarzązdzajaca logowaniem, rejestracaja i sesja dla użytkownika
 // jest ona singletonem z uwagi na prywatny konstruktor i jej jedną statyczna instancje
 public class CurrentSession {
@@ -57,4 +57,4 @@ public class CurrentSession {
         throw new IllegalStateException("Logged account is not a CompanyAccount");
     }
 }
-// Koniec, Tydzień 2, Wzorzec Singleton 1
+//End Week 2, Pattern Singleton 1

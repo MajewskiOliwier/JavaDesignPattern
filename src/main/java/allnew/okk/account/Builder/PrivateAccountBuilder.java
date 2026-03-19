@@ -2,7 +2,7 @@ package allnew.okk.account.Builder;
 
 import allnew.okk.account.Prototype.PrivateAccount;
 
-// Tydzień 2, Wzorzec Builder 2
+// Week 2, Pattern Builder 2
 //klasa implementujaca klase abstrakcji dla której parametr generyczny T jest PrivateAccountBuilder (ta klasa)
 public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>{
     private String name;
@@ -32,4 +32,4 @@ public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>
        return new PrivateAccount(email, password, name, surname, adress, phone);
     }
 }
-// Koniec, Tydzień 2, Wzorzec Builder 2
+// Week 2, Pattern Builder 2

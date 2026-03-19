@@ -6,7 +6,7 @@ import allnew.okk.account.Builder.PrivateAccountBuilder;
 //Klasa Factory udostępniająca 2 metody umożliwiające utworzenie konta prywatnego lub firmowego
 public class AccountFactory{
 
-    // Tydzień 2, Wzorzec Factory 2
+    // Week 2, Pattern Factory 2
     public static PrivateAccountBuilder createPrivateAccount(){
         return new PrivateAccountBuilder();
     }
@@ -14,5 +14,5 @@ public class AccountFactory{
     public static CompanyAccountBuilder createCompanyAccount(){
         return new CompanyAccountBuilder();
     }
-    // Koniec, Tydzień 2, Wzorzec Factory 2
+    // End Week 2, Pattern Factory 2
 }

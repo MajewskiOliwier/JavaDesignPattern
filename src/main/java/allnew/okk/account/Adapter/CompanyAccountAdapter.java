@@ -26,5 +26,10 @@ public class CompanyAccountAdapter implements AccountDisplayable{
     public String GetAccountType() {
         return "COMPANY";
     }
+
+    @Override
+    public boolean hasValidPaymentMethod() {
+        return companyAccount.getPaymentGateway() != null;
+    }
 }
 // Koniec Tydzień 3, Wzorzec Adapter 2

@@ -26,7 +26,6 @@ public class OrderFacade {
     // * looping and processing payment for all of them
     public boolean placeOrder(ShoppingBasket basket, String currency) {
 
-
         //Week 4, Pattern Flyweight 1 Oliwier Majewski
         CurrencyType currencyType = CurrencyType.fromString(currency);
         if (currencyType == null) {

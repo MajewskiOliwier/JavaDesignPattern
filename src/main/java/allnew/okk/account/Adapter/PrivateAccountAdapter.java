@@ -25,5 +25,10 @@ public class PrivateAccountAdapter implements AccountDisplayable{
     public String GetAccountType() {
         return "PRIVATE";
     }
+
+    @Override
+    public boolean hasValidPaymentMethod() {
+        return privateAccount.getPaymentGateway() != null;
+    }
 }
 //Koniec Tydzień 3, Wzorzec Adapter 2
