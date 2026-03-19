@@ -19,6 +19,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private ProductCondition condition;
     private TaxPolicy taxPolicy;
     private AccountDisplayable accountDisplayable;
+    private Integer ID;
 
     public BaseProduct(Builder<?> b) {
         this.name = b.name;
@@ -28,6 +29,11 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         this.condition = b.condition;
         this.taxPolicy = b.taxPolicy;
         this.accountDisplayable = b.accountDisplayable;
+        this.ID = b.ID;
+    }
+
+    public Integer getID() {
+        return ID != null ? ID : null;
     }
 
     // Tydzień 2, Wzorzec Builder 1
@@ -40,7 +46,12 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         private ProductCondition condition = ProductCondition.NONE;
         private TaxPolicy taxPolicy;
         private AccountDisplayable accountDisplayable;
+        private Integer ID;
 
+        public T setID(Integer ID) {
+            this.ID = ID;
+            return self();
+        }
         public T setName(String name) {
             this.name = name;
             return self();
@@ -99,6 +110,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
                 "Category: " + category + "\n" +
                 "Condition: " + condition;
     }
+
 
     @Override
     public double getPrice(){
