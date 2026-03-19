@@ -3,6 +3,7 @@ package allnew.okk;
 import allnew.okk.Currency.Flyweight.CurrencyRegistry;
 import allnew.okk.Currency.Flyweight.CurrencyType;
 import allnew.okk.Order.Facade.OrderFacade;
+import allnew.okk.Order.Memento.Order;
 import allnew.okk.Order.Proxy.OrderFacadeProxy;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.account.Adapter.CompanyAccountAdapter;
@@ -73,6 +74,15 @@ class Week3OliwierTests {
         basket.addItem(privateProduct1WithWrap);
         return basket;
     }
+
+    Order buildOrder() {
+        return new Order(buildBasket(), privateAccountAdapter);
+    }
+
+    Order buildOrderWithValidAccount() {
+        return new Order(buildBasket(), validAccount);
+    }
+
     // ---------------------------------------------------------------
     // Facade Tests
     // ---------------------------------------------------------------
@@ -81,7 +91,7 @@ class Week3OliwierTests {
     void testPlaceOrderFacadeWithPayUReturnsTrueWhenAllPaymentsSucceed() {
         OrderFacade facade = new OrderFacade(new PayUAdapter());
 
-        boolean result = facade.placeOrder(buildBasket(), "PLN");
+        boolean result = facade.placeOrder(buildOrder(), "PLN");
 
         assertTrue(result, "placeOrder should return true when all PayU payments succeed");
     }
@@ -91,34 +101,33 @@ class Week3OliwierTests {
 
         OrderFacade facade = new OrderFacade(new Przelewy24Adapter());
 
-        boolean result = facade.placeOrder(buildBasket(), "PLN");
+        boolean result = facade.placeOrder(buildOrder(), "PLN");
 
         assertTrue(result, "placeOrder should return true when all Przelewy24 payments succeed");
     }
 
     @Test
     void testPlaceOrderWithEmptyBasketReturnsTrue() {
-        ShoppingBasket basket = new ShoppingBasket();
-
+        Order emptyOrder = new Order(new ShoppingBasket(), privateAccountAdapter);
         OrderFacade facade = new OrderFacade(new PayUAdapter());
 
-        boolean result = facade.placeOrder(basket, "PLN");
+        boolean result = facade.placeOrder(emptyOrder, "PLN");
 
         assertTrue(result, "placeOrder should return true for an empty basket");
     }
 
     @Test
     void testPlaceOrderWorksWithDifferentCurrencies() {
-        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "PLN"));
-        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "EUR"));
-        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "USD"));
+        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildOrder(), "PLN"));
+        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildOrder(), "EUR"));
+        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildOrder(), "USD"));
     }
 
     @Test
     void testBothAdaptersProduceSameResultForSameBasket() {
 
-        boolean payuResult       = new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "PLN");
-        boolean przelewy24Result = new OrderFacade(new Przelewy24Adapter()).placeOrder(buildBasket(), "PLN");
+        boolean payuResult       = new OrderFacade(new PayUAdapter()).placeOrder(buildOrder(), "PLN");
+        boolean przelewy24Result = new OrderFacade(new Przelewy24Adapter()).placeOrder(buildOrder(), "PLN");
 
         assertEquals(payuResult, przelewy24Result, "Both adapters should produce the same result for the same basket");
     }
@@ -214,25 +223,25 @@ class Week3OliwierTests {
 
     @Test
     void testProxyAllowsOrderWhenAccountHasValidPaymentMethod() {
-        boolean result = proxy.placeOrder(buildBasket(), validAccount, "PLN");
+        boolean result = proxy.placeOrder(buildOrderWithValidAccount(), validAccount, "PLN");
         assertTrue(result, "Proxy should allow placeOrder when account has a valid payment method");
     }
 
     @Test
     void testProxyAllowsOrderWithPrzelewy24WhenAccountHasValidPaymentMethod() {
-        boolean result = proxyPrzelewy.placeOrder(buildBasket(), validAccount, "PLN");
+        boolean result = proxyPrzelewy.placeOrder(buildOrderWithValidAccount(), validAccount, "PLN");
         assertTrue(result, "Proxy should allow placeOrder with Przelewy24 when account has a valid payment method");
     }
 
     @Test
     void testProxyAllowsOrderWithEUR() {
-        boolean result = proxy.placeOrder(buildBasket(), validAccount, "EUR");
+        boolean result = proxy.placeOrder(buildOrderWithValidAccount(), validAccount, "EUR");
         assertTrue(result, "Proxy should allow placeOrder with EUR currency");
     }
 
     @Test
     void testProxyAllowsOrderWithUSD() {
-        boolean result = proxy.placeOrder(buildBasket(), validAccount, "USD");
+        boolean result = proxy.placeOrder(buildOrderWithValidAccount(), validAccount, "USD");
         assertTrue(result, "Proxy should allow placeOrder with USD currency");
     }
 }

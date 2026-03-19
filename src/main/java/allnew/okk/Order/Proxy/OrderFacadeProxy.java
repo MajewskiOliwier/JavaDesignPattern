@@ -1,6 +1,7 @@
 package allnew.okk.Order.Proxy;
 
 import allnew.okk.Order.Facade.OrderFacade;
+import allnew.okk.Order.Memento.Order;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.ShoppingBasket;
 
@@ -13,7 +14,7 @@ public class OrderFacadeProxy {
         this.orderFacade = orderFacade;
     }
 
-    public boolean placeOrder(ShoppingBasket basket, AccountDisplayable customer, String currency) {
+    public boolean placeOrder(Order order, AccountDisplayable customer, String currency) {
 
         // Check 1 — valid payment method
         if (!customer.hasValidPaymentMethod()) {
@@ -22,7 +23,7 @@ public class OrderFacadeProxy {
         }
 
         // All checks passed — delegate to the real facade
-        return orderFacade.placeOrder(basket, currency);
+        return orderFacade.placeOrder(order, currency);
     }
 }
 // End Week 4, Pattern Proxy 3 Oliwier Majewski
