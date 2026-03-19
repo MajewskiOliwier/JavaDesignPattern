@@ -9,12 +9,15 @@ import allnew.okk.account.Adapter.PrivateAccountAdapter;
 import allnew.okk.account.Factory.AccountFactory;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
+import allnew.okk.basket.Command.AddToBasketCommand;
+import allnew.okk.basket.Command.RemoveLastProductFromBasketCommand;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.payment.Adapter.PayUAdapter;
 import allnew.okk.product.Decorator.GiftWrapDecorator;
 import allnew.okk.product.model.CompanyProduct;
 import allnew.okk.product.model.PrivateProduct;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -143,5 +146,140 @@ public class Week4OliwierTests {
         facade.placeOrder(buildOrder(), "PLN");
 
         assertTrue(facade.getStatusHistory().size() <= 5,"History should never exceed 5 snapshots");
+    }
+
+    // ---------------------------------------------------------------
+    // Commanbd Tests
+    // ---------------------------------------------------------------
+
+
+    CompanyProduct laptop;
+    CompanyProduct laptop2;
+    PrivateProduct chleb;
+    ShoppingBasket basket;
+    @BeforeEach
+    void setUp() {
+        basket = new ShoppingBasket();
+
+        laptop = new CompanyProduct.Builder()
+                .setName("Laptop1")
+                .setPrice(199.00)
+                .setCompanyName("Asus")
+                .setNIP("1234567890")
+                .setAccountDisplayable(companyAccountAdapter)
+                .build();
+
+        laptop2 = new CompanyProduct.Builder()
+                .setName("Laptop2")
+                .setPrice(51.00)
+                .setCompanyName("Asus")
+                .setNIP("1234567890")
+                .setAccountDisplayable(companyAccountAdapter)
+                .build();
+
+        chleb = new PrivateProduct.Builder()
+                .setName("Chleb")
+                .setPrice(50.00)
+                .setSellerName("Oliwier")
+                .setAccountDisplayable(privateAccountAdapter)
+                .build();
+    }
+    CompanyProduct buildLaptop() {
+        return new CompanyProduct.Builder()
+                .setName("Laptop1")
+                .setPrice(199.00)
+                .setCompanyName("Asus")
+                .setNIP("1234567890")
+                .setAccountDisplayable(companyAccountAdapter)
+                .build();
+    }
+
+    PrivateProduct buildChleb() {
+        return new PrivateProduct.Builder()
+                .setName("Chleb")
+                .setPrice(50.00)
+                .setSellerName("Oliwier")
+                .setAccountDisplayable(privateAccountAdapter)
+                .build();
+    }
+
+    @Test
+    void testAddCommandAddsItemToBasket() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop()));
+        assertEquals(1, basket.getChildren().size(),
+                "Basket should have 1 item after AddToBasketCommand");
+    }
+
+    @Test
+    void testAddCommandIncreasesBasketSize() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop()));
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
+        assertEquals(2, basket.getChildren().size(),
+                "Basket should have 2 items after two AddToBasketCommands");
+    }
+
+    @Test
+    void testRemoveCommandRemovesItemFromBasket() {
+        ShoppingBasket basket = new ShoppingBasket();
+        CompanyProduct laptop = buildLaptop();
+        basket.executeCommand(new AddToBasketCommand(basket, laptop));
+        basket.executeCommand(new RemoveLastProductFromBasketCommand(basket, laptop));
+        assertFalse(basket.getChildren().contains(laptop),"Basket should not contain laptop after RemoveFromBasketCommand");
+    }
+
+    @Test
+    void testUndoAddRemovesItemFromBasket() {
+        ShoppingBasket basket = new ShoppingBasket();
+        CompanyProduct laptop = buildLaptop();
+        basket.executeCommand(new AddToBasketCommand(basket, laptop));
+        basket.undo();
+        assertFalse(basket.getChildren().contains(laptop), "Undo of AddToBasketCommand should remove laptop from basket");
+    }
+
+    @Test
+    void testUndoRemoveRestoresItemToBasket() {
+        ShoppingBasket basket = new ShoppingBasket();
+        CompanyProduct laptop = buildLaptop();
+        basket.executeCommand(new AddToBasketCommand(basket, laptop));
+        basket.executeCommand(new RemoveLastProductFromBasketCommand(basket, laptop));
+        basket.undo();
+        assertTrue(basket.getChildren().contains(laptop), "Undo of RemoveFromBasketCommand should restore laptop to basket");
+    }
+
+    @Test
+    void testMultipleUndosRestoreBasketToEmpty() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop()));
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
+        basket.undo();
+        basket.undo();
+        assertTrue(basket.getChildren().isEmpty(), "Basket should be empty after undoing all add commands");
+    }
+
+    @Test
+    void testUndoOnEmptyBasketHistoryReturnsFalse() {
+        ShoppingBasket basket = new ShoppingBasket();
+        assertFalse(basket.undo(), "Undo should return false when basket history is empty");
+    }
+
+    @Test
+    void testBasketPriceIsCorrectAfterUndo() {
+        ShoppingBasket basket = new ShoppingBasket();
+        basket.executeCommand(new AddToBasketCommand(basket, buildLaptop())); // 199.00
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));  // 50.00
+        basket.undo();                                                         // remove chleb
+        assertEquals(199.00, basket.getPrice(), 0.01, "Basket price should reflect only remaining items after undo");
+    }
+
+    @Test
+    void testHistorySizeMatchesExecutedCommands() {
+        ShoppingBasket basket = new ShoppingBasket();
+        CompanyProduct laptop = buildLaptop();
+        basket.executeCommand(new AddToBasketCommand(basket, laptop));
+        basket.executeCommand(new AddToBasketCommand(basket, buildChleb()));
+        basket.executeCommand(new RemoveLastProductFromBasketCommand(basket, laptop));
+        assertEquals(3, basket.historySize(), "History size should match the number of executed commands");
     }
 }

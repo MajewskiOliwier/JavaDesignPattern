@@ -1,17 +1,16 @@
 package allnew.okk.basket.composite;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Command.BasketCommand;
 import allnew.okk.basket.Iterator.BasketIterator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //Week 3, Pattern Composite Oliwier Majewski
 public class ShoppingBasket implements PurchasableItem, Iterable<PurchasableItem>{
     List<PurchasableItem> items = new ArrayList<>();
+    private final List<BasketCommand> commandHistory = new ArrayList<>();
 
     @Override
     public double getPrice() {
@@ -79,5 +78,29 @@ public class ShoppingBasket implements PurchasableItem, Iterable<PurchasableItem
     public void addItem(PurchasableItem item) {
         items.add(item);  // Products moved into this list
     }
+
+    //Week 5, Pattern Command 1 Oliwier Majewski
+    public void executeCommand(BasketCommand command) {
+        command.Execute();
+        commandHistory.addLast(command);
+    }
+
+    public boolean undo() {
+        if (commandHistory.isEmpty()) {
+            System.out.println("Nothing to undo");
+            return false;
+        }
+        commandHistory.removeLast().undo();
+        return true;
+    }
+
+    public int historySize() {
+        return commandHistory.size();
+    }
+
+    public void removeItem(PurchasableItem item) {
+        items.remove(item);
+    }
+    //End Week 5, Pattern Command 1 Oliwier Majewski
 }
 //End Week 3, Pattern Composite Oliwier Majewski
