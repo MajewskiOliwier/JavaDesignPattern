@@ -1,14 +1,16 @@
 package allnew.okk.basket.composite;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.basket.Iterator.BasketIterator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 //Week 3, Pattern Composite Oliwier Majewski
-public class ShoppingBasket implements PurchasableItem{
+public class ShoppingBasket implements PurchasableItem, Iterable<PurchasableItem>{
     List<PurchasableItem> items = new ArrayList<>();
 
     @Override
@@ -21,6 +23,13 @@ public class ShoppingBasket implements PurchasableItem{
 
         return totalPrice;
     }
+
+    //Week 5, Pattern Iterator Oliwier Majewski
+    @Override
+    public Iterator<PurchasableItem> iterator() {
+        return new BasketIterator(items);
+    }
+    //End Week 5, Pattern Iterator Oliwier Majewski
 
     @Override
     public String getItemName() {

@@ -38,7 +38,9 @@ public class OrderFacade {
 
         basket.OrganizeBySeller(); //Divides items by the seller
 
-        for (PurchasableItem item : basket.getChildren()) {
+        //Week 5, Pattern Iterator 1 Oliwier Majewski
+        for (PurchasableItem item : basket) {
+        //End Week 5, Pattern Iterator 1 Oliwier Majewski
             float amount = (float) item.getPrice();
             var sellerAccount =  item.getSellerAccount();
 
