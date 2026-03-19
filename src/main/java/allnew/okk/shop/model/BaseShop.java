@@ -3,6 +3,7 @@ package allnew.okk.shop.model;
 import allnew.okk.shop.composite.ShopComponent;
 import allnew.okk.shop.decorator.ShopDisplay;
 import allnew.okk.shop.bridge.NotificationSender;
+import allnew.okk.shop.flyweight.ShopCategory;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +16,13 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     private String name;
     private String description;
     private NotificationSender notificationSender;
+    private ShopCategory category;
 
     public BaseShop(Builder<?> builder) {
         this.name = builder.name;
         this.description = builder.description;
-        this.notificationSender = builder.notificationSender; // ZMIANA
+        this.notificationSender = builder.notificationSender;
+        this.category = builder.category;
     }
 
     // Week 2, Pattern Composite 2
@@ -69,6 +72,7 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
         private String name = "Default Shop";
         private String description = "Default Description";
         private NotificationSender notificationSender; // ZMIANA w Builderze
+        private ShopCategory category = ShopCategory.ELECTRONICS;
 
         public T setName(String name) {
             this.name = name;
