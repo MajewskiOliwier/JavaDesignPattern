@@ -1,5 +1,6 @@
 package allnew.okk.product.Decorator;
 
+import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.PurchasableItem;
 
 // Week 3, Pattern Decorator 2

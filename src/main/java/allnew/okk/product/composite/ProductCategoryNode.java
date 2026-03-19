@@ -1,5 +1,6 @@
 package allnew.okk.product.composite;
 
+import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.PurchasableItem;
 
 import java.util.ArrayList;
@@ -41,6 +42,11 @@ public class ProductCategoryNode implements PurchasableItem {
     @Override
     public String getSellerID() {
         return "";
+    }
+
+    @Override
+    public AccountDisplayable getSellerAccount() {
+        return null;
     }
 
     @Override

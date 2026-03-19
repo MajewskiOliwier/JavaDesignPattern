@@ -1,5 +1,6 @@
 package allnew.okk.product.model;
 
+import allnew.okk.account.Adapter.AccountDisplayable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,6 +37,7 @@ public class CompanyProduct extends BaseProduct {
     public String getSellerID() {
         return NIP;
     }
+
     // Koniec, Tydzień 3, Wzorzec Composite 3
 
     // Tydzień 2, Wzorzec Builder 2

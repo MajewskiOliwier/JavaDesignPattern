@@ -1,20 +1,25 @@
 package allnew.okk.basket.composite;
 
+import allnew.okk.account.Adapter.AccountDisplayable;
+
 import java.util.ArrayList;
 import java.util.List;
 
+//Week 3, Pattern Composite Oliwier Majewski
 public class SellerBasket implements PurchasableItem{
     private List<PurchasableItem> sellerItems = new ArrayList<>();
     private String sellerID;
     private String sellerName;
+    private AccountDisplayable sellerAccount;
 
     public void addItem(PurchasableItem item) {
         sellerItems.add(item);
     }
 
-    public SellerBasket(String sellerID, String sellerName){
+    public SellerBasket(String sellerID, String sellerName, AccountDisplayable sellerAccount){
         this.sellerID = sellerID;
         this.sellerName = sellerName;
+        this.sellerAccount = sellerAccount;
     }
 
     @Override
@@ -48,4 +53,10 @@ public class SellerBasket implements PurchasableItem{
     public String getSellerID() {
         return sellerID;
     }
+
+    @Override
+    public AccountDisplayable getSellerAccount() {
+        return sellerAccount;
+    }
 }
+//End Week 3, Pattern Composite Oliwier Majewski

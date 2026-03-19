@@ -1,5 +1,7 @@
 package allnew.okk;
 
+import allnew.okk.account.Adapter.AccountDisplayable;
+import allnew.okk.account.Adapter.CompanyAccountAdapter;
 import allnew.okk.account.Adapter.PrivateAccountAdapter;
 import allnew.okk.account.Factory.AccountFactory;
 import allnew.okk.account.Prototype.CompanyAccount;
@@ -9,6 +11,7 @@ import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.payment.Adapter.PayUAdapter;
 import allnew.okk.payment.Adapter.PaymentGateway;
+import allnew.okk.payment.Adapter.Przelewy24Adapter;
 import allnew.okk.payment.Bridge.CreditCardPayment;
 import allnew.okk.payment.Strategy.FullRefundStrategy;
 import allnew.okk.payment.Strategy.RefundStrategy;
@@ -24,6 +27,26 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class Week2OliwierTests {
+    PayUAdapter payUAdapter = new PayUAdapter();
+    Przelewy24Adapter przelewy24Adapter = new Przelewy24Adapter();
+
+    PrivateAccount privateAccount = AccountFactory.createPrivateAccount()
+            .Name("Oliwier")
+            .Surname("Majewski")
+            .Email("test@gmail.com")
+            .build();
+
+    CompanyAccount companyAccount = AccountFactory.createCompanyAccount()
+            .Email("asus@gmail.com")
+            .SetLegalName("Asus")
+            .Password("zxcvbnm")
+            .SetVatNumber("1234567890")
+            .Build();
+
+    AccountDisplayable privateAccountAdapter = new PrivateAccountAdapter(privateAccount);
+    AccountDisplayable companyAccountAdapter = new CompanyAccountAdapter(companyAccount);
+
+
     @Test
     void TestCompositeBasketWithDecorator(){
         CompanyProduct companyProduct1 = new CompanyProduct.Builder()
@@ -31,6 +54,7 @@ class Week2OliwierTests {
                 .setPrice(199.00)
                 .setCompanyName("Asus")
                 .setNIP("1234567890")
+                .setAccountDisplayable(companyAccountAdapter)
                 .build();
 
         CompanyProduct companyProduct2 = new CompanyProduct.Builder()
@@ -38,12 +62,14 @@ class Week2OliwierTests {
                 .setPrice(51.00)
                 .setCompanyName("Asus")
                 .setNIP("1234567890")
+                .setAccountDisplayable(companyAccountAdapter)
                 .build();
 
         PrivateProduct privateProduct1 = new PrivateProduct.Builder()
                 .setName("Chleb")
                 .setPrice(50.00)
                 .setSellerName("Oliwier")
+                .setAccountDisplayable(privateAccountAdapter)
                 .build();
 
         PurchasableItem privateProduct1WithWrap = new GiftWrapDecorator(privateProduct1); //Gift extra price is 5

@@ -1,5 +1,6 @@
 package allnew.okk.product.model;
 
+import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.product.bridge.TaxPolicy;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private ProductCategory category;
     private ProductCondition condition;
     private TaxPolicy taxPolicy;
+    private AccountDisplayable accountDisplayable;
 
     public BaseProduct(Builder<?> b) {
         this.name = b.name;
@@ -25,6 +27,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         this.category = b.category;
         this.condition = b.condition;
         this.taxPolicy = b.taxPolicy;
+        this.accountDisplayable = b.accountDisplayable;
     }
 
     // Tydzień 2, Wzorzec Builder 1
@@ -36,6 +39,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         private ProductCategory category = ProductCategory.OTHER;
         private ProductCondition condition = ProductCondition.NONE;
         private TaxPolicy taxPolicy;
+        private AccountDisplayable accountDisplayable;
 
         public T setName(String name) {
             this.name = name;
@@ -66,6 +70,12 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
             this.taxPolicy = taxPolicy;
             return self();
         }
+
+        public T setAccountDisplayable(AccountDisplayable accountDisplayable){
+            this.accountDisplayable = accountDisplayable;
+            return self();
+        }
+
         protected abstract T self();
         public abstract BaseProduct build();
     }
@@ -99,6 +109,11 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     public String getItemName(){
         return name;
     };
+
+    @Override
+    public AccountDisplayable getSellerAccount() {
+        return accountDisplayable;
+    }
 
     // Tydzień 3, Wzorzec Bridge 1
     public double getPriceWithTax() {
