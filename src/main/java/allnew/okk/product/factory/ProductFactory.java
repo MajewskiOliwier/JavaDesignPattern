@@ -28,6 +28,7 @@ public class ProductFactory {
                 .setCondition(ProductCondition.NONE)
                 .setSellerName("Default Seller")
                 .setSellerContact("Default Contact")
+                .setID(0)
                 .build();
     }
 
@@ -41,6 +42,7 @@ public class ProductFactory {
                 .setCondition(ProductCondition.NONE)
                 .setCompanyName("Default Company")
                 .setCompanyContact("Default Contact")
+                .setID(0)
                 .build();
     }
     // Koniec, Tydzień 2, Wzorzec Factory Method
