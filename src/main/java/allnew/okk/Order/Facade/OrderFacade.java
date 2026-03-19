@@ -1,5 +1,8 @@
 package allnew.okk.Order.Facade;
 
+import allnew.okk.Currency.Flyweight.CurrencyFlyweight;
+import allnew.okk.Currency.Flyweight.CurrencyRegistry;
+import allnew.okk.Currency.Flyweight.CurrencyType;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.basket.composite.SellerBasket;
@@ -17,10 +20,22 @@ public class OrderFacade {
         this.paymentGateway = paymentGateway;
     }
 
+
     //this method is responsible for :
     // * organising items by seller name
     // * looping and processing payment for all of them
     public boolean placeOrder(ShoppingBasket basket, String currency) {
+
+
+        //Week 4, Pattern Flyweight 1 Oliwier Majewski
+        CurrencyType currencyType = CurrencyType.fromString(currency);
+        if (currencyType == null) {
+            System.out.println("Unsupported currency: " + currency);
+            return false;
+        }
+
+        CurrencyFlyweight currencyFlyweight = CurrencyRegistry.get(currencyType);
+        //Week 4, Pattern Flyweight 1 Oliwier Majewski
 
         basket.OrganizeBySeller(); //Divides items by the seller
 

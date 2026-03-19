@@ -1,5 +1,7 @@
 package allnew.okk;
 
+import allnew.okk.Currency.Flyweight.CurrencyRegistry;
+import allnew.okk.Currency.Flyweight.CurrencyType;
 import allnew.okk.Order.Facade.OrderFacade;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.account.Adapter.CompanyAccountAdapter;
@@ -38,8 +40,7 @@ class Week3OliwierTests {
     AccountDisplayable privateAccountAdapter = new PrivateAccountAdapter(privateAccount);
     AccountDisplayable companyAccountAdapter = new CompanyAccountAdapter(companyAccount);
 
-    @Test
-    void testPlaceOrderFacadeWithPayUReturnsTrueWhenAllPaymentsSucceed() {
+    ShoppingBasket buildBasket() {
         CompanyProduct companyProduct1 = new CompanyProduct.Builder()
                 .setName("Laptop1")
                 .setPrice(199.00)
@@ -63,55 +64,33 @@ class Week3OliwierTests {
                 .setAccountDisplayable(privateAccountAdapter)
                 .build();
 
-        PurchasableItem privateProduct1WithWrap = new GiftWrapDecorator(privateProduct1); //Gift extra price is 5
+        PurchasableItem privateProduct1WithWrap = new GiftWrapDecorator(privateProduct1);
 
         ShoppingBasket basket = new ShoppingBasket();
         basket.addItem(companyProduct1);
         basket.addItem(companyProduct2);
         basket.addItem(privateProduct1WithWrap);
+        return basket;
+    }
+    // ---------------------------------------------------------------
+    // Facade Tests
+    // ---------------------------------------------------------------
 
+    @Test
+    void testPlaceOrderFacadeWithPayUReturnsTrueWhenAllPaymentsSucceed() {
         OrderFacade facade = new OrderFacade(new PayUAdapter());
 
-        boolean result = facade.placeOrder(basket, "PLN");
+        boolean result = facade.placeOrder(buildBasket(), "PLN");
 
         assertTrue(result, "placeOrder should return true when all PayU payments succeed");
     }
 
     @Test
     void testPlaceOrderFacadeWithPrzelewy24ReturnsTrueWhenAllPaymentsSucceed() {
-        CompanyProduct companyProduct1 = new CompanyProduct.Builder()
-                .setName("Laptop1")
-                .setPrice(199.00)
-                .setCompanyName("Asus")
-                .setNIP("1234567890")
-                .setAccountDisplayable(companyAccountAdapter)
-                .build();
-
-        CompanyProduct companyProduct2 = new CompanyProduct.Builder()
-                .setName("Laptop2")
-                .setPrice(51.00)
-                .setCompanyName("Asus")
-                .setNIP("1234567890")
-                .setAccountDisplayable(companyAccountAdapter)
-                .build();
-
-        PrivateProduct privateProduct1 = new PrivateProduct.Builder()
-                .setName("Chleb")
-                .setPrice(50.00)
-                .setSellerName("Oliwier")
-                .setAccountDisplayable(privateAccountAdapter)
-                .build();
-
-        PurchasableItem privateProduct1WithWrap = new GiftWrapDecorator(privateProduct1); //Gift extra price is 5
-
-        ShoppingBasket basket = new ShoppingBasket();
-        basket.addItem(companyProduct1);
-        basket.addItem(companyProduct2);
-        basket.addItem(privateProduct1WithWrap);
 
         OrderFacade facade = new OrderFacade(new Przelewy24Adapter());
 
-        boolean result = facade.placeOrder(basket, "PLN");
+        boolean result = facade.placeOrder(buildBasket(), "PLN");
 
         assertTrue(result, "placeOrder should return true when all Przelewy24 payments succeed");
     }
@@ -129,76 +108,81 @@ class Week3OliwierTests {
 
     @Test
     void testPlaceOrderWorksWithDifferentCurrencies() {
-        CompanyProduct companyProduct1 = new CompanyProduct.Builder()
-                .setName("Laptop1")
-                .setPrice(199.00)
-                .setCompanyName("Asus")
-                .setNIP("1234567890")
-                .setAccountDisplayable(companyAccountAdapter)
-                .build();
-
-        CompanyProduct companyProduct2 = new CompanyProduct.Builder()
-                .setName("Laptop2")
-                .setPrice(51.00)
-                .setCompanyName("Asus")
-                .setNIP("1234567890")
-                .setAccountDisplayable(companyAccountAdapter)
-                .build();
-
-        PrivateProduct privateProduct1 = new PrivateProduct.Builder()
-                .setName("Chleb")
-                .setPrice(50.00)
-                .setSellerName("Oliwier")
-                .setAccountDisplayable(privateAccountAdapter)
-                .build();
-
-        PurchasableItem privateProduct1WithWrap = new GiftWrapDecorator(privateProduct1); //Gift extra price is 5
-
-        ShoppingBasket basket = new ShoppingBasket();
-        basket.addItem(companyProduct1);
-        basket.addItem(companyProduct2);
-        basket.addItem(privateProduct1WithWrap);
-
-        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(basket, "PLN"));
-        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(basket, "EUR"));
-        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(basket, "USD"));
+        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "PLN"));
+        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "EUR"));
+        assertTrue(new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "USD"));
     }
 
     @Test
     void testBothAdaptersProduceSameResultForSameBasket() {
-        CompanyProduct companyProduct1 = new CompanyProduct.Builder()
-                .setName("Laptop1")
-                .setPrice(199.00)
-                .setCompanyName("Asus")
-                .setNIP("1234567890")
-                .setAccountDisplayable(companyAccountAdapter)
-                .build();
 
-        CompanyProduct companyProduct2 = new CompanyProduct.Builder()
-                .setName("Laptop2")
-                .setPrice(51.00)
-                .setCompanyName("Asus")
-                .setNIP("1234567890")
-                .setAccountDisplayable(companyAccountAdapter)
-                .build();
-
-        PrivateProduct privateProduct1 = new PrivateProduct.Builder()
-                .setName("Chleb")
-                .setPrice(50.00)
-                .setSellerName("Oliwier")
-                .setAccountDisplayable(privateAccountAdapter)
-                .build();
-
-        PurchasableItem privateProduct1WithWrap = new GiftWrapDecorator(privateProduct1); //Gift extra price is 5
-
-        ShoppingBasket basket = new ShoppingBasket();
-        basket.addItem(companyProduct1);
-        basket.addItem(companyProduct2);
-        basket.addItem(privateProduct1WithWrap);
-
-        boolean payuResult       = new OrderFacade(new PayUAdapter()).placeOrder(basket, "PLN");
-        boolean przelewy24Result = new OrderFacade(new Przelewy24Adapter()).placeOrder(basket, "PLN");
+        boolean payuResult       = new OrderFacade(new PayUAdapter()).placeOrder(buildBasket(), "PLN");
+        boolean przelewy24Result = new OrderFacade(new Przelewy24Adapter()).placeOrder(buildBasket(), "PLN");
 
         assertEquals(payuResult, przelewy24Result, "Both adapters should produce the same result for the same basket");
+    }
+
+    // ---------------------------------------------------------------
+    // Flyweight Tests
+    // ---------------------------------------------------------------
+
+    @Test
+    void testCurrencyTypeFromStringReturnsPLN() {
+        CurrencyType result = CurrencyType.fromString("PLN");
+        assertNotNull(result, "fromString should resolve PLN");
+        assertEquals(CurrencyType.PLN, result);
+    }
+
+    @Test
+    void testCurrencyTypeFromStringReturnsEUR() {
+        CurrencyType result = CurrencyType.fromString("EUR");
+        assertNotNull(result, "fromString should resolve EUR");
+        assertEquals(CurrencyType.EUR, result);
+    }
+
+    @Test
+    void testCurrencyTypeFromStringReturnsNullForUnsupported() {
+        CurrencyType result = CurrencyType.fromString("JPY");
+        assertNull(result, "fromString should return null for unsupported currency");
+    }
+
+    @Test
+    void testPLNRateIsOne() {
+        assertEquals(1.0f, CurrencyType.PLN.getRateFromPLN(),
+                "PLN base rate should always be 1.0");
+    }
+
+    @Test
+    void testCurrencyRegistryReturnsSameInstanceForSameCurrency() {
+        var first  = CurrencyRegistry.get(CurrencyType.EUR);
+        var second = CurrencyRegistry.get(CurrencyType.EUR);
+        assertSame(first, second,"CurrencyRegistry should return the same flyweight instance for EUR");
+    }
+
+    @Test
+    void testCurrencyRegistryReturnsDifferentInstancesForDifferentCurrencies() {
+        var eur = CurrencyRegistry.get(CurrencyType.EUR);
+        var usd = CurrencyRegistry.get(CurrencyType.USD);
+        assertNotSame(eur, usd,"CurrencyRegistry should return different instances for EUR and USD");
+    }
+
+    @Test
+    void testPLNConversionDoesNotChangeAmount() {
+        var flyweight = CurrencyRegistry.get(CurrencyType.PLN);
+        assertEquals(100.0f, flyweight.convert(100.0f), 0.01f,"Converting PLN to PLN should not change the amount");
+    }
+
+    @Test
+    void testEURConversionReducesAmount() {
+        var flyweight = CurrencyRegistry.get(CurrencyType.EUR);
+        float converted = flyweight.convert(425.0f);
+        assertEquals(100.0f, converted, 0.01f, "425 PLN should convert to ~100 EUR at rate 4.25");
+    }
+
+    @Test
+    void testUSDConversionReducesAmount() {
+        var flyweight = CurrencyRegistry.get(CurrencyType.USD);
+        float converted = flyweight.convert(395.0f);
+        assertEquals(100.0f, converted, 0.01f, "395 PLN should convert to ~100 USD at rate 3.95");
     }
 }
