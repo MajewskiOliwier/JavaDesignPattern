@@ -4,6 +4,8 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.account.Adapter.CompanyAccountAdapter;
 import allnew.okk.account.Adapter.PrivateAccountAdapter;
 import allnew.okk.account.Factory.AccountFactory;
+import allnew.okk.account.Observer.AccountEvent;
+import allnew.okk.account.Observer.AccountEventBus;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
 import allnew.okk.account.Singleton.CurrentSession;
@@ -41,6 +43,12 @@ public class Week5OliwierTests {
     @BeforeEach
     void setUp() {
         basket = new ShoppingBasket();
+        privateAccount.activate();
+        companyAccount.activate();
+        AccountEventBus.GetInstance().ClearObservers();
+        CurrentSession.getInstance().logout();
+
+        AccountEventBus.GetInstance().Register(CurrentSession.getInstance());
 
         laptop = new CompanyProduct.Builder()
                 .setName("Laptop1")
@@ -214,5 +222,49 @@ public class Week5OliwierTests {
         privateAccount.ban();
         CurrentSession.getInstance().login(privateAccount);
         assertFalse(CurrentSession.getInstance().isPrivateAccount(),"Session should not hold banned account after failed login");
+    }
+
+    // ---------------------------------------------------------------
+    // Observer Tests
+    // ---------------------------------------------------------------
+
+    @Test
+    void testEventBusHasOneObserverAfterSetup() {
+        assertEquals(1, AccountEventBus.GetInstance().GetObserversCount(),
+                "EventBus should have exactly one observer registered after setup");
+    }
+
+    @Test
+    void testRegisterAddsObserver() {
+        int before = AccountEventBus.GetInstance().GetObserversCount();
+        AccountEventBus.GetInstance().Register(CurrentSession.getInstance());
+        assertEquals(before + 1, AccountEventBus.GetInstance().GetObserversCount(),
+                "Registering an observer should increase observer count by 1");
+    }
+
+    @Test
+    void testUnregisterRemovesObserver() {
+        AccountEventBus.GetInstance().Unregister(CurrentSession.getInstance());
+        assertEquals(0, AccountEventBus.GetInstance().GetObserversCount(),
+                "Unregistering CurrentSession should leave bus empty");
+    }
+
+    @Test
+    void testClearRemovesAllObservers() {
+        AccountEventBus.GetInstance().ClearObservers();
+        assertEquals(0, AccountEventBus.GetInstance().GetObserversCount(),
+                "Clear should remove all observers from the bus");
+    }
+
+    @Test
+    void testMultipleBansPublishMultipleEvents() {
+        var receivedEvents = new java.util.ArrayList<AccountEvent>();
+        AccountEventBus.GetInstance().Register((account, event) -> receivedEvents.add(event));
+
+        privateAccount.ban();
+        privateAccount.activate();
+        privateAccount.ban();
+
+        assertEquals(2, receivedEvents.size(),"Two ban() calls should publish two ON_BAN events");
     }
 }

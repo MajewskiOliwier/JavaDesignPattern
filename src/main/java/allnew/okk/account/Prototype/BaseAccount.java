@@ -1,5 +1,7 @@
 package allnew.okk.account.Prototype;
 
+import allnew.okk.account.Observer.AccountEvent;
+import allnew.okk.account.Observer.AccountEventBus;
 import allnew.okk.account.State.AccountState;
 import allnew.okk.account.State.ActiveState;
 import allnew.okk.account.State.BannedState;
@@ -21,7 +23,13 @@ public abstract class BaseAccount {
 
     public void activate()  { this.accountState = new ActiveState(); }
     public void suspend()   { this.accountState = new SuspendedState(); }
-    public void ban()       { this.accountState = new BannedState(); }
+    public void ban()       {
+        this.accountState = new BannedState();
+        // Week 6, Pattern Observer 1 Oliwier Majewski
+        //Sends an event to the AcccountEventBus
+        AccountEventBus.GetInstance().Publish(this, AccountEvent.ONBAN);
+        //End Week 6, Pattern Observer 1 Oliwier Majewski
+    }
 
     public boolean canPlaceOrder() { return accountState.canPlaceOrder(); }
     public boolean canLogin()      { return accountState.canLogin(); }
