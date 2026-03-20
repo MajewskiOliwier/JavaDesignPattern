@@ -11,6 +11,7 @@ import allnew.okk.account.Adapter.PrivateAccountAdapter;
 import allnew.okk.account.Factory.AccountFactory;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
+import allnew.okk.account.Singleton.CurrentSession;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.payment.Adapter.PayUAdapter;
@@ -211,6 +212,9 @@ class Week3OliwierTests {
             .build();
     { //this is instance Initializer block that will run after the Account factory gives us the private account
         accountWithPayment.setPaymentGateway(new PayUAdapter());
+        accountWithPayment.activate();
+        CurrentSession.getInstance().logout();
+        CurrentSession.getInstance().login(accountWithPayment);
     }
     AccountDisplayable validAccount = new PrivateAccountAdapter(accountWithPayment);
 
