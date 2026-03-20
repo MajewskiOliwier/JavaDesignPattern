@@ -9,6 +9,8 @@ import allnew.okk.account.Observer.AccountEventBus;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
 import allnew.okk.account.Singleton.CurrentSession;
+import allnew.okk.account.Template.CompanyRegistrationTemplate;
+import allnew.okk.account.Template.PrivateRegistrationTemplate;
 import allnew.okk.basket.Visitor.TaxCalculatorVisitor;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.product.Decorator.GiftWrapDecorator;
@@ -266,5 +268,97 @@ public class Week5OliwierTests {
         privateAccount.ban();
 
         assertEquals(2, receivedEvents.size(),"Two ban() calls should publish two ON_BAN events");
+    }
+
+    // ---------------------------------------------------------------
+    // Template Tests
+    // ---------------------------------------------------------------
+
+    PrivateRegistrationTemplate privateTemplate = new PrivateRegistrationTemplate();
+    CompanyRegistrationTemplate companyTemplate = new CompanyRegistrationTemplate();
+
+    PrivateAccount buildValidPrivateAccount() {
+        return AccountFactory.createPrivateAccount()
+                .Name("Oliwier")
+                .Surname("Majewski")
+                .Email("oliwier@gmail.com")
+                .Password("password123")
+                .build();
+    }
+
+    CompanyAccount buildValidCompanyAccount() {
+        return AccountFactory.createCompanyAccount()
+                .SetLegalName("Asus")
+                .Email("asus@gmail.com")
+                .Password("password123")
+                .SetVatNumber("1234567890")
+                .Build();
+    }
+
+    @Test
+    void testPrivateRegistrationSucceedsWithValidAccount() {
+        boolean result = privateTemplate.Register(buildValidPrivateAccount());
+        assertTrue(result, "Registration should succeed with valid private account");
+    }
+
+    @Test
+    void testPrivateRegistrationSavesToSession() {
+        privateTemplate.Register(buildValidPrivateAccount());
+        assertTrue(CurrentSession.getInstance().isPrivateAccount(),
+                "CurrentSession should hold the registered private account");
+    }
+
+    @Test
+    void testPrivateRegistrationFailsWithEmptyEmail() {
+        PrivateAccount account = AccountFactory.createPrivateAccount()
+                .Name("Oliwier")
+                .Surname("Majewski")
+                .Email("")
+                .Password("password123")
+                .build();
+
+        assertFalse(privateTemplate.Register(account),
+                "Registration should fail when email is empty");
+    }
+
+    @Test
+    void testPrivateRegistrationFailsWithShortPassword() {
+        PrivateAccount account = AccountFactory.createPrivateAccount()
+                .Name("Oliwier")
+                .Surname("Majewski")
+                .Email("oliwier@gmail.com")
+                .Password("abc")
+                .build();
+
+        assertFalse(privateTemplate.Register(account), "Registration should fail when password is shorter than 6 characters");
+    }
+
+    @Test
+    void testPrivateRegistrationFailsWithEmptyName() {
+        PrivateAccount account = AccountFactory.createPrivateAccount()
+                .Name("")
+                .Surname("Majewski")
+                .Email("oliwier@gmail.com")
+                .Password("password123")
+                .build();
+
+        assertFalse(privateTemplate.Register(account), "Registration should fail when name is empty");
+    }
+
+    @Test
+    void testPrivateTemplateRejectsCompanyAccount() {
+        assertFalse(privateTemplate.Register(buildValidCompanyAccount()),"PrivateRegistrationTemplate should reject a CompanyAccount");
+    }
+
+    @Test
+    void testCompanyRegistrationFailsWithInvalidVatNumber() {
+        CompanyAccount account = AccountFactory.createCompanyAccount()
+                .SetLegalName("Asus")
+                .Email("asus@gmail.com")
+                .Password("password123")
+                .SetVatNumber("123") //vat numbe is too short
+                .Build();
+
+        assertFalse(companyTemplate.Register(account), "Registration should fail when VAT number is not 10 digits");
     }
 }
