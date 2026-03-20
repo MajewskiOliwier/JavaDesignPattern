@@ -1,5 +1,9 @@
 package allnew.okk.account.Prototype;
 
+import allnew.okk.account.State.AccountState;
+import allnew.okk.account.State.ActiveState;
+import allnew.okk.account.State.BannedState;
+import allnew.okk.account.State.SuspendedState;
 import allnew.okk.payment.Adapter.PaymentGateway;
 
 // Week 2, Pattern Prototype 1
@@ -9,6 +13,19 @@ public abstract class BaseAccount {
     protected String password;
     protected String adress;
     protected String phone;
+
+    // Week 6, Pattern State 1 Oliwier Majewski
+    private AccountState accountState = new ActiveState();
+
+    public AccountState getAccountState() { return accountState; }
+
+    public void activate()  { this.accountState = new ActiveState(); }
+    public void suspend()   { this.accountState = new SuspendedState(); }
+    public void ban()       { this.accountState = new BannedState(); }
+
+    public boolean canPlaceOrder() { return accountState.canPlaceOrder(); }
+    public boolean canLogin()      { return accountState.canLogin(); }
+    // End Week 6, Pattern State 5 Oliwier Majewski
 
     //Week 4, Pattern Proxy 1
     protected PaymentGateway paymentGateway;

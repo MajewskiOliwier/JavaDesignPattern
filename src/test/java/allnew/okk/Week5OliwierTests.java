@@ -6,6 +6,7 @@ import allnew.okk.account.Adapter.PrivateAccountAdapter;
 import allnew.okk.account.Factory.AccountFactory;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
+import allnew.okk.account.Singleton.CurrentSession;
 import allnew.okk.basket.Visitor.TaxCalculatorVisitor;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.product.Decorator.GiftWrapDecorator;
@@ -13,7 +14,7 @@ import allnew.okk.product.model.CompanyProduct;
 import allnew.okk.product.model.PrivateProduct;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Week5OliwierTests {
     CompanyAccount companyAccount = AccountFactory.createCompanyAccount()
@@ -64,6 +65,11 @@ public class Week5OliwierTests {
                 .setAccountDisplayable(privateAccountAdapter)
                 .build();
     }
+
+
+    // ---------------------------------------------------------------
+    // Visitor Tests
+    // ---------------------------------------------------------------
 
     @Test
     void testTaxCalculatorVisitorCompanyProductHas23PercentTax() {
@@ -149,5 +155,64 @@ public class Week5OliwierTests {
         basket2.accept(visitor2);
 
         assertEquals(visitor1.getTotalTax(), visitor2.getTotalTax(), 0.01, "Same basket contents should produce same tax with fresh visitor instances");
+    }
+
+    // ---------------------------------------------------------------
+    // State Tests
+    // ---------------------------------------------------------------
+
+    @Test
+    void testAccountStartsAsActive() {
+        assertEquals("ACTIVE", privateAccount.getAccountState().getStateName(), "Account should start in ActiveState");
+    }
+
+    @Test
+    void testCompanyAccountStartsAsActive() {
+        assertEquals("ACTIVE", companyAccount.getAccountState().getStateName(), "Company account should start in ActiveState");
+    }
+
+    @Test
+    void testActiveAccountCanPlaceOrder() {
+        assertTrue(privateAccount.canPlaceOrder(), "Active account should be allowed to place orders");
+    }
+
+    @Test
+    void testSuspendedAccountCannotPlaceOrder() {
+        privateAccount.suspend();
+        assertFalse(privateAccount.canPlaceOrder(),"Suspended account should not be allowed to place orders");
+    }
+
+    @Test
+    void testBannedAccountCannotPlaceOrder() {
+        privateAccount.ban();
+        assertFalse(privateAccount.canPlaceOrder(),"Banned account should not be allowed to place orders");
+    }
+
+    @Test
+    void testLoginSucceedsForActiveAccount() {
+        boolean result = CurrentSession.getInstance().login(privateAccount);
+        assertTrue(result, "Login should succeed for active account");
+    }
+
+    @Test
+    void testLoginSucceedsForSuspendedAccount() {
+        privateAccount.suspend();
+        boolean result = CurrentSession.getInstance().login(privateAccount);
+        assertTrue(result, "Login should succeed for suspended account");
+    }
+
+    @Test
+    void testLoginFailsForBannedAccount() {
+        privateAccount.ban();
+        boolean result = CurrentSession.getInstance().login(privateAccount);
+        assertFalse(result, "Login should fail for banned account");
+    }
+
+    @Test
+    void testBannedAccountSessionIsNullAfterFailedLogin() {
+        CurrentSession.getInstance().logout();
+        privateAccount.ban();
+        CurrentSession.getInstance().login(privateAccount);
+        assertFalse(CurrentSession.getInstance().isPrivateAccount(),"Session should not hold banned account after failed login");
     }
 }

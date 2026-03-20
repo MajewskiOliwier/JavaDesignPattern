@@ -27,8 +27,19 @@ public class CurrentSession {
         this.loggedAccount = account;
     }
 
-    public void login(BaseAccount account){
+
+    public boolean login(BaseAccount account){
+        // Week 6, Pattern State 1 Oliwier Majewski
+        //Now during login there is verification if the user can log in for that particular account
+        if (!account.canLogin()) {
+            System.out.println("Session signleton login is blocked for " + account.GetEmail());
+            return false;
+        }
+        // Week 6, Pattern State 1 Oliwier Majewski
+
+
         this.loggedAccount = account;
+        return true;
     }
 
     public void logout(){
