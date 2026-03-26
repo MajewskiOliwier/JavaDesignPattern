@@ -3,6 +3,7 @@ package allnew.okk.product.model;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.product.bridge.TaxPolicy;
+import allnew.okk.product.memento.ProductPriceMemento;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -111,6 +112,15 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
                 "Condition: " + condition;
     }
 
+    //week 5, pattern Memento 2 Jakub Marciniuk
+    public ProductPriceMemento saveMemento() {
+        return new ProductPriceMemento(price);
+    }
+
+    public void restoreMemento(ProductPriceMemento memento) {
+        this.price = memento.getPrice();
+    }
+    //end week 5, pattern Memento 2
 
     @Override
     public double getPrice(){

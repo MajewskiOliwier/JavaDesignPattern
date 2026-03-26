@@ -3,11 +3,13 @@ package allnew.okk.product.composite;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.Visitor.BasketVisitor;
 import allnew.okk.basket.composite.PurchasableItem;
+import allnew.okk.product.iterator.ProductCategoryIterator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-// Week 3, Pattern Composite
+// Week 3, Pattern Composite Jakub Marciniuk
 public class ProductCategoryNode implements PurchasableItem {
     // Nazwa kategorii, np. "Elektronika", "Odzież", itp.
     private String categoryName;
@@ -83,6 +85,12 @@ public class ProductCategoryNode implements PurchasableItem {
         }
         return leaves;
     }
+
+    // week 5, pattern Iterator 2 Jakub Marciniuk
+    public Iterator<PurchasableItem> iterator(){
+        return new ProductCategoryIterator(this);
+    }
+    // end, week 5, pattern Iterator 2
 
 }
 // End Week 3, Pattern Composite

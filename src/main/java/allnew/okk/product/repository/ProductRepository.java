@@ -1,5 +1,6 @@
 package allnew.okk.product.repository;
 
+import allnew.okk.product.interpreter.ProductSearchExpression;
 import allnew.okk.product.model.BaseProduct;
 
 import java.util.ArrayList;
@@ -57,6 +58,13 @@ public class ProductRepository{
         }
     }
 
+    // week 5, pattern interpreter 5 Jakub Marciniuk
+    public List<BaseProduct> filter(ProductSearchExpression expression){
+        return products.values().stream()
+                .filter(expression::evaluate)
+                .toList();
+    }
+    // end, week 5, pattern interpreter 5
 
 }
 // End, Week 2, Pattern Singleton 2
