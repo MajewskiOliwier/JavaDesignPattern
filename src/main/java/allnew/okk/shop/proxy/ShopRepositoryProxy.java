@@ -42,7 +42,7 @@ public class ShopRepositoryProxy {
         invalidateCache();
     }
 
-    private void invalidateCache() {
+    public void invalidateCache() {
         cachedShops = null;
     }
 }

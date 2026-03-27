@@ -4,6 +4,7 @@ import allnew.okk.shop.composite.ShopComponent;
 import allnew.okk.shop.decorator.ShopDisplay;
 import allnew.okk.shop.bridge.NotificationSender;
 import allnew.okk.shop.flyweight.ShopCategory;
+import allnew.okk.shop.memento.ShopProfileMemento;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -65,6 +66,25 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     }
     // End Week 3, Pattern Bridge 4
 
+
+    // Week 5, Pattern Memento 3
+    // Creates a snapshot of the current shop profile (Originator role).
+    public ShopProfileMemento saveProfileMemento() {
+        return new ShopProfileMemento(this.name, this.description);
+    }
+
+    // Restores the shop profile from a provided snapshot.
+    public void restoreProfileMemento(ShopProfileMemento memento) {
+        if (memento != null) {
+            this.name = memento.getName();
+            this.description = memento.getDescription();
+            System.out.println("Shop profile restored to: " + this.name);
+        }
+    }
+    // End Week 5, Pattern Memento 3
+
+
+
     // Week 2, Pattern Builder 1
     // Generyczny builder z generycznym typowaniem.
     // Dzięki metodzie self() klasy pochodne zwracają własny typ, co umożliwia płynne wywoływanie metod.
@@ -86,6 +106,11 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
 
         public T setNotificationSender(NotificationSender sender) {
             this.notificationSender = sender;
+            return self();
+        }
+
+        public T setCategory(ShopCategory category) {
+            this.category = category;
             return self();
         }
 

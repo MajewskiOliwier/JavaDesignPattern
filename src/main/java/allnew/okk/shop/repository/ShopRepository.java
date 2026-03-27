@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import allnew.okk.shop.interpreter.ShopSearchExpression;
 
 // Week 2, Pattern  Singleton 1
     // Implementacja wzorca Eager Singleton, gdzie instancja tworzona jest natychmiast przy ładowaniu klasy.
@@ -43,6 +46,15 @@ public class ShopRepository {
         shops.clear();
         nextId = 1;
     }
+
+    // Week 5, Pattern Interpreter 5
+    // Applies the interpreter pattern to filter shops based on complex logical expressions.
+    public List<BaseShop> filter(ShopSearchExpression expression) {
+        return shops.values().stream()
+                .filter(expression::evaluate)
+                .collect(Collectors.toList());
+    }
+    // End Week 5, Pattern Interpreter 5
 }
 
 // End Week 2, Pattern  Singleton 1
