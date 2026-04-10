@@ -8,6 +8,8 @@ import java.util.List;
 
 //Week 3, Pattern Composite Oliwier Majewski
 public interface PurchasableItem {
+    void setPrice(double newPrice);
+
     public double getPrice();
     public String getItemName();
     public String getSellerName();
