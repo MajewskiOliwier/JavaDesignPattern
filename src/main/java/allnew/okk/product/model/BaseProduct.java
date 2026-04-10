@@ -4,9 +4,18 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.product.bridge.TaxPolicy;
 import allnew.okk.product.memento.ProductPriceMemento;
+import allnew.okk.product.observer.ProductObserver;
+import allnew.okk.product.state.AvailableState;
+import allnew.okk.product.state.DiscontinuedState;
+import allnew.okk.product.state.OutOfStockState;
+import allnew.okk.product.state.ProductState;
+import allnew.okk.product.strategy.ProductPricingStrategy;
+import allnew.okk.product.strategy.StandardPricingStrategy;
+import allnew.okk.product.visitor.ProductVisitor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Bazowa klasa produktu, zawierająca wspólne właściwości i metody dla różnych typów produktów
@@ -21,7 +30,10 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private TaxPolicy taxPolicy;
     private AccountDisplayable accountDisplayable;
     private Integer ID;
-
+    private final List<ProductObserver> observers = new ArrayList<>();
+    private ProductState productState = new AvailableState();
+    private ProductPricingStrategy pricingStrategy;
+    public abstract void accept(ProductVisitor visitor);
     public BaseProduct(Builder<?> b) {
         this.name = b.name;
         this.description = b.description;
@@ -32,6 +44,41 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         this.accountDisplayable = b.accountDisplayable;
         this.ID = b.ID;
     }
+    // Week 6, Pattern Strategy Marciniuk
+    public double getFinalPrice() {
+        if (pricingStrategy != null) {
+            return pricingStrategy.calculateFinalPrice(getPrice());
+        }
+        return getPrice();
+    }
+    // End Week 6, Pattern Strategy Marciniuk
+    // Week 6, Pattern State Marciniuk
+    public void markAvailable()     { this.productState = new AvailableState(); }
+    public void markOutOfStock()    { this.productState = new OutOfStockState(); }
+    public void markDiscontinued()  { this.productState = new DiscontinuedState(); }
+
+    public boolean canBePurchased() { return productState.canBePurchased(); }
+    public String getStateName()    { return productState.getStateName(); }
+    // End Week 6, Pattern State Marciniuk
+
+    // Week 6, Pattern Observer Marciniuk
+    public void addObserver(ProductObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(ProductObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void setPrice(double newPrice) {
+        double oldPrice = this.price;
+        this.price = newPrice;
+        for (ProductObserver observer : observers) {
+            observer.onPriceChanged(this.name, oldPrice, newPrice);
+        }
+    }
+    // End Week 6, Pattern Observer Marciniuk
 
     public Integer getID() {
         return ID != null ? ID : null;
@@ -48,7 +95,13 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         private TaxPolicy taxPolicy;
         private AccountDisplayable accountDisplayable;
         private Integer ID;
+        private ProductPricingStrategy pricingStrategy = new StandardPricingStrategy();
 
+
+        public T setPricingStrategy(ProductPricingStrategy strategy) {
+            this.pricingStrategy = strategy;
+            return self();
+        }
         public T setID(Integer ID) {
             this.ID = ID;
             return self();

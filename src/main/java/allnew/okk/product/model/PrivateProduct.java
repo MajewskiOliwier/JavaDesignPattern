@@ -1,6 +1,7 @@
 package allnew.okk.product.model;
 
 import allnew.okk.basket.Visitor.BasketVisitor;
+import allnew.okk.product.visitor.ProductVisitor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,7 +67,10 @@ public class PrivateProduct extends BaseProduct {
         }
     }
     // End Week 2, Pattern  Builder 3
-
+    @Override
+    public void accept(ProductVisitor visitor) {
+        visitor.visit(this);
+    }
     public Builder toBuilder() {
         return new Builder()
                 .setID(getID())

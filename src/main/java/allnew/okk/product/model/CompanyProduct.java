@@ -2,6 +2,7 @@ package allnew.okk.product.model;
 
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.Visitor.BasketVisitor;
+import allnew.okk.product.visitor.ProductVisitor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -100,7 +101,10 @@ public class CompanyProduct extends BaseProduct {
         }
     }
     // Koniec, Tydzień 2, Wzorzec Builder 2
-
+    @Override
+    public void accept(ProductVisitor visitor) {
+        visitor.visit(this);
+    }
     public Builder toBuilder() {
         return new Builder()
                 .setID(getID())
