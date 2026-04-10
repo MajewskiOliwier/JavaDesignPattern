@@ -61,5 +61,12 @@ public class ShopNetwork implements ShopComponent, Iterable<ShopComponent> {
     }
 
     // End Week 5, Patter Iterator 2
+
+    @Override
+    public void accept(allnew.okk.shop.visitor.ShopVisitor visitor) {
+        for (ShopComponent child : children) {
+            child.accept(visitor);
+        }
+    }
 }
 // End Week 3, Pattern Composite 3

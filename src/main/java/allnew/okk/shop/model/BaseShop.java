@@ -5,6 +5,16 @@ import allnew.okk.shop.decorator.ShopDisplay;
 import allnew.okk.shop.bridge.NotificationSender;
 import allnew.okk.shop.flyweight.ShopCategory;
 import allnew.okk.shop.memento.ShopProfileMemento;
+import allnew.okk.shop.strategy.ShippingCostStrategy;
+import allnew.okk.shop.strategy.FlatRateShippingStrategy;
+import allnew.okk.shop.observer.ShopObserver;
+import allnew.okk.shop.state.ShopState;
+import allnew.okk.shop.state.OpenState;
+import allnew.okk.shop.state.ClosedState;
+import allnew.okk.shop.state.SuspendedState;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,12 +28,16 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     private String description;
     private NotificationSender notificationSender;
     private ShopCategory category;
+    private ShippingCostStrategy shippingStrategy;
+    private final List<ShopObserver> observers = new ArrayList<>();
+    private ShopState shopState = new OpenState();
 
     public BaseShop(Builder<?> builder) {
         this.name = builder.name;
         this.description = builder.description;
         this.notificationSender = builder.notificationSender;
         this.category = builder.category;
+        this.shippingStrategy = builder.shippingStrategy; // Wstrzyknięcie z Buildera
     }
 
     // Week 2, Pattern Composite 2
@@ -58,10 +72,16 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     // Metoda wysyłająca powiadomienie.
     // Wykorzystuje interfejs, dzięki temu działa zarówno dla SMSów i emaili.
     public void broadcastPromotion(String promoMessage) {
+        // 1. Wysyłanie systemowe (Bridge)
         if (notificationSender != null) {
             notificationSender.sendNotification(this.name, promoMessage);
         } else {
             System.out.println("Sklep " + this.name + " nie ma skonfigurowanego systemu powiadomień.");
+        }
+
+        // 2. Powiadamianie wszystkich subskrybentów sklepu (Observer)
+        for (ShopObserver observer : observers) {
+            observer.update(this.name, promoMessage);
         }
     }
     // End Week 3, Pattern Bridge 4
@@ -83,7 +103,53 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     }
     // End Week 5, Pattern Memento 3
 
+    public double calculateDelivery(double orderTotal, double distanceInKm) {
+        if (shippingStrategy != null) {
+            return shippingStrategy.calculateShippingCost(orderTotal, distanceInKm);
+        }
+        return 0.0; // Domyślnie brak kosztów
+    }
 
+    // Week 6, Pattern Observer 3
+    // Methods to manage subscribers (Attach & Detach)
+    public void addObserver(ShopObserver observer) {
+        if (!observers.contains(observer)) {
+            observers.add(observer);
+            System.out.println("New subscriber added to shop: " + this.name);
+        }
+    }
+
+    public void removeObserver(ShopObserver observer) {
+        observers.remove(observer);
+        System.out.println("Subscriber removed from shop: " + this.name);
+    }
+    // End Week 6, Pattern Observer 3
+
+    // Week 6, Pattern State 5
+    // State management methods allowing the shop to transition between different operational states
+    public void openShop() {
+        this.shopState = new OpenState();
+        System.out.println("Shop " + this.name + " is now OPEN.");
+    }
+
+    public void closeShop() {
+        this.shopState = new ClosedState();
+        System.out.println("Shop " + this.name + " is now CLOSED.");
+    }
+
+    public void suspendShop() {
+        this.shopState = new SuspendedState();
+        System.out.println("Shop " + this.name + " is now SUSPENDED.");
+    }
+
+    // Metoda delegująca odpowiedzialność do konkretnego stanu
+    public boolean canAcceptOrders() {
+        return shopState.canAcceptOrders();
+    }
+    // End Week 6, Pattern State 5
+
+    // Week 6, Pattern Visitor 5
+    public abstract void accept(allnew.okk.shop.visitor.ShopVisitor visitor);
 
     // Week 2, Pattern Builder 1
     // Generyczny builder z generycznym typowaniem.
@@ -93,6 +159,7 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
         private String description = "Default Description";
         private NotificationSender notificationSender; // ZMIANA w Builderze
         private ShopCategory category = ShopCategory.ELECTRONICS;
+        private ShippingCostStrategy shippingStrategy = new FlatRateShippingStrategy(15.0);
 
         public T setName(String name) {
             this.name = name;
@@ -111,6 +178,11 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
 
         public T setCategory(ShopCategory category) {
             this.category = category;
+            return self();
+        }
+
+        public T setShippingStrategy(ShippingCostStrategy shippingStrategy) {
+            this.shippingStrategy = shippingStrategy;
             return self();
         }
 

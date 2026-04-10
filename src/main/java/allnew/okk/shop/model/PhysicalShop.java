@@ -51,6 +51,11 @@ public class PhysicalShop extends BaseShop {
             throw new AssertionError();
         }
     }
+    // Week 6, Pattern Visitor 6
+    @Override
+    public void accept(allnew.okk.shop.visitor.ShopVisitor visitor) {
+        visitor.visit(this);
+    }
 }
 
 // End Week 2, Pattern Prototype 3
