@@ -21,31 +21,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class Week6ShopTests {
 
-    // 1. TEST WZORCA STRATEGY (Strategia)
+    // 1. TEST STRATEGY PATTERN
     @Test
     void testShippingCostStrategies() {
         BaseShop shop = new PhysicalShop.Builder().setName("Sklep Strategiczny").build();
 
-        // Test 1: Płaska stawka (zawsze 15 PLN niezależnie od odległości i ceny)
         shop.setShippingStrategy(new FlatRateShippingStrategy(15.0));
         assertEquals(15.0, shop.calculateDelivery(100.0, 50.0));
 
-        // Test 2: Stawka za kilometr (np. 2 PLN za kilometr)
         shop.setShippingStrategy(new DistanceBasedShippingStrategy(2.0));
         assertEquals(100.0, shop.calculateDelivery(10.0, 50.0)); // 50 km * 2 PLN
 
-        // Test 3: Darmowa dostawa powyżej 200 PLN, inaczej 20 PLN
         shop.setShippingStrategy(new FreeOverThresholdShippingStrategy(200.0, 20.0));
-        assertEquals(20.0, shop.calculateDelivery(150.0, 10.0)); // Poniżej progu
-        assertEquals(0.0, shop.calculateDelivery(250.0, 10.0));  // Powyżej progu
+        assertEquals(20.0, shop.calculateDelivery(150.0, 10.0)); // Below the threshold
+        assertEquals(0.0, shop.calculateDelivery(250.0, 10.0));  // Above the threshold
     }
 
-    // 2. TEST WZORCA OBSERVER (Obserwator)
+    // 2. TEST OBSERVER PATTERN
     @Test
     void testShopObserverNotifications() {
         BaseShop shop = new OnlineShop.Builder().setName("Sklep Obserwowany").build();
 
-        // Tworzymy klasę anonimową (szpiega) zliczającą otrzymane powiadomienia na potrzeby testu
         var spyObserver = new ShopObserver() {
             int count = 0;
             String lastMessage = "";
@@ -59,35 +55,33 @@ public class Week6ShopTests {
 
         shop.addObserver(spyObserver);
 
-        // Wywołujemy promocję
         shop.broadcastPromotion("Wielka wyprzedaż!");
 
-        // Sprawdzamy, czy szpieg otrzymał powiadomienie z poprawnym tekstem
-        assertEquals(1, spyObserver.count, "Obserwator powinien otrzymać dokładnie jedno powiadomienie!");
+        assertEquals(1, spyObserver.count, "The observer should receive exactly one notification!");
         assertEquals("Wielka wyprzedaż!", spyObserver.lastMessage);
     }
 
-    // 3. TEST WZORCA STATE (Stan)
+    // 3. TEST STATE PATTERN
     @Test
     void testShopStateTransitions() {
         BaseShop shop = new PhysicalShop.Builder().setName("Sklep Zmiennostanowy").build();
 
-        // Sklep domyślnie powinien być OTWARTY
-        assertTrue(shop.getShopState() instanceof OpenState, "Sklep nie rodzi się otwarty!");
+        // The shop should be OPEN by default
+        assertTrue(shop.getShopState() instanceof OpenState, "The shop is not initially open!");
         assertTrue(shop.canAcceptOrders());
 
-        // Zmiana na ZAMKNIĘTY
+        // Change to CLOSED
         shop.closeShop();
         assertTrue(shop.getShopState() instanceof ClosedState);
-        assertFalse(shop.canAcceptOrders(), "Zamknięty sklep nie powinien przyjmować zamówień!");
+        assertFalse(shop.canAcceptOrders(), "A closed shop should not accept orders!");
 
-        // Zmiana na ZAWIESZONY
+        // Change to SUSPENDED
         shop.suspendShop();
         assertTrue(shop.getShopState() instanceof SuspendedState);
-        assertFalse(shop.canAcceptOrders(), "Zawieszony sklep nie powinien przyjmować zamówień!");
+        assertFalse(shop.canAcceptOrders(), "A suspended shop should not accept orders!");
     }
 
-    // 4. TEST WZORCA TEMPLATE METHOD (Szablon)
+    // 4. TEST TEMPLATE METHOD PATTERN
     @Test
     void testShopReportTemplates() {
         BaseShop shop = new OnlineShop.Builder().setName("Sklep Raportowy").build();
@@ -95,42 +89,40 @@ public class Week6ShopTests {
         ShopReportTemplate htmlReport = new HtmlShopReport();
         ShopReportTemplate csvReport = new CsvShopReport();
 
-        // Metoda generateReport() używa System.out.println, więc aby test przeszedł pozytywnie,
-        // upewniamy się, że cała sekwencja wykonuje się bez rzucania wyjątków (np. NullPointerException).
         assertDoesNotThrow(() -> {
             htmlReport.generateReport(shop);
             csvReport.generateReport(shop);
         });
     }
 
-    // 5. TEST WZORCA VISITOR (Odwiedzający)
+    // 5. TEST VISITOR PATTERN
     @Test
     void testMaintenanceCostVisitorOnNetwork() {
         ShopNetwork network = new ShopNetwork("Sieć Ogólnopolska");
 
-        // Koszt: 5000 (baza) + 1500 (odbiór paczek) = 6500 PLN
+        // Cost: 5000 (base) + 1500 (drop-off) = 6500 PLN
         network.addShopComponent(new PhysicalShop.Builder()
                 .setName("Stacjonarny Z Paczkami")
                 .setDropOffAvailable(true)
                 .build());
 
-        // Koszt: 5000 PLN (baza, brak paczek)
+        // Cost: 5000 PLN (base, no drop-off)
         network.addShopComponent(new PhysicalShop.Builder()
                 .setName("Stacjonarny Zwykły")
                 .setDropOffAvailable(false)
                 .build());
 
-        // Koszt: 800 PLN (serwery)
+        // Cost: 800 PLN (servers)
         network.addShopComponent(new OnlineShop.Builder()
                 .setName("Internetowy")
                 .build());
 
         MaintenanceCostVisitor visitor = new MaintenanceCostVisitor();
 
-        // Odwiedzamy całą strukturę jednym wezwaniem
+        // Visit the entire structure with a single call
         network.accept(visitor);
 
-        // Oczekiwana suma: 6500 + 5000 + 800 = 12300 PLN
-        assertEquals(12300.0, visitor.getTotalCost(), "Wizytator źle policzył koszty całej sieci!");
+        // Expected total: 6500 + 5000 + 800 = 12300 PLN
+        assertEquals(12300.0, visitor.getTotalCost(), "The visitor incorrectly calculated the costs of the entire network!");
     }
 }
