@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 // Week 4, Pattern Memento 1 Oliwier Majewski
 // this class manages the history stack and enforces the snapshot limit
+
+// Week 6, SRP 1 Oliwier Majewski
 public class OrderStatusHistory {
     private static final int MAX_SNAPSHOTS = 2;
     private final Deque<OrderStatusMemento> history = new ArrayDeque<>();
@@ -34,4 +36,6 @@ public class OrderStatusHistory {
 
     public int size() { return history.size(); }
 }
+
+// End Week 6, SRP 1 Oliwier Majewski
 // End Week 5, Pattern Memento 1 Oliwier Majewski

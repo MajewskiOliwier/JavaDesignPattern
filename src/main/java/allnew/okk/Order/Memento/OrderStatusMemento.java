@@ -5,6 +5,8 @@ import allnew.okk.Order.OrderStatus;
 import java.time.LocalDateTime;
 
 // Week 5, Pattern Memento 1 Oliwier Majewski
+
+// Week 6, SRP Oliwier Majewski
 // This is Class that will hold Order Status in form of snapshot of a single order status at a point in time for Memento Pattern
 public class OrderStatusMemento {
     private final OrderStatus status;
@@ -23,4 +25,6 @@ public class OrderStatusMemento {
         return status + " at " + timestamp;
     }
 }
+
+// End Week 6, SRP Oliwier Majewski
 // End Week 5, Pattern Memento 1 Oliwier Majewski
