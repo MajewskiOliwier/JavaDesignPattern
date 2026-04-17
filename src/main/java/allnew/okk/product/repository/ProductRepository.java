@@ -14,7 +14,11 @@ public class ProductRepository{
     // Singleton - prywatna statyczna instancja klasy oraz prywatny konstruktor
     private final static ProductRepository instance = new ProductRepository();
     private final Map<String, BaseProduct> products = new HashMap<>();
-    private int nextId = 1;
+
+    // Week 6, Single Responsibility Principle
+    // oddzielenie odpowiedzialności za generowanie ID do osobnej klasy
+    private IdGenerator idGenerator = new SequenceIdGenerator("OKK-");
+    // Week 6, open-closed principle, użycie interfejsu i implementacji
     private ProductRepository(){}
 
     public static synchronized ProductRepository getInstance() {
@@ -22,7 +26,7 @@ public class ProductRepository{
     }
 
     public void addProduct(BaseProduct product) {
-        String id = "OKK-" + nextId++;
+        String id = idGenerator.generateId();
         products.put(id, product);
     }
 
@@ -49,7 +53,6 @@ public class ProductRepository{
 
     public void clear() {
         products.clear();
-        nextId = 1;
     }
 
     public void updateProduct(String id, BaseProduct updatedProduct) {
