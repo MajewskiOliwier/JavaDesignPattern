@@ -1,4 +1,13 @@
-//Week 6, Otwarte - zamkniete - 1
+package allnew.okk.account.Builder;
+
+import allnew.okk.account.Builder.AccountBuilder;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+//Week 7, Otwarte - zamkniete - 1
 @FunctionalInterface
 public interface AccountValidator {
     void validate(AccountBuilder<?> builder); // rzuca RuntimeException jeśli błąd
@@ -11,10 +20,6 @@ public interface AccountValidator {
         "password_min_length",  b -> {
             if (b.getPassword() == null || b.getPassword().length() < 8)
                 throw new IllegalStateException("Hasło min. 8 znaków");
-        },
-        "phone_required",       b -> {
-            if (b.getPhone() == null || b.getPhone().isBlank())
-                throw new IllegalStateException("Telefon jest wymagany");
         }
     ));
 
@@ -36,4 +41,4 @@ public interface AccountValidator {
     }
     // End Week 6, Otwarte - zamkniete - 2
 }
-//End Week 6, Otwarte - zamkniete - 1
+//End Week 7, Otwarte - zamkniete - 1

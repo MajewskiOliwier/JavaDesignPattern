@@ -2,6 +2,10 @@ package allnew.okk.account.Builder;
 
 import allnew.okk.account.Prototype.CompanyAccount;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+
 // Week 2, Pattern Builder 1
 //klasa implementujaca klase abstrakcji dla której parametr generyczny T jest CompanyAccountBuilder (ta klasa)
 public class CompanyAccountBuilder extends AccountBuilder<CompanyAccountBuilder>{
@@ -9,16 +13,16 @@ public class CompanyAccountBuilder extends AccountBuilder<CompanyAccountBuilder>
     private String vatNumber;
 
 
-    //Week 6, Otwarte - zamkniete - 1
+    //Week 7, Otwarte - zamkniete - 1
     public CompanyAccountBuilder() {
         super(List.of(
             Validators.EMAIL_REQUIRED,
             Validators.PASSWORD_MIN_LENGTH
         ));
     }
-    //End Week 6, Otwarte - zamkniete - 1
+    //End Week 7, Otwarte - zamkniete - 1
 
-    // Week 6, Otwarte - zamkniete - 2 (sterowanie danymi: mapa pól własnych)
+    // Week 7, Otwarte - zamkniete - 2 (sterowanie danymi: mapa pól własnych)
     private static final Map<String, BiConsumer<CompanyAccountBuilder, String>> COMPANY_FIELDS =
         Map.of(
             "legalName", (b, v) -> b.legalName = v,

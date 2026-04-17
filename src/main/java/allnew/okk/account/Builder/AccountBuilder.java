@@ -1,5 +1,9 @@
 package allnew.okk.account.Builder;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+
 // Week 2, Pattern Builder 3
 //Abstrakcyjna klasa builder
 public abstract class AccountBuilder <T extends  AccountBuilder<T>>{
@@ -75,10 +79,6 @@ public abstract class AccountBuilder <T extends  AccountBuilder<T>>{
 
     // Week 6, Otwarte - zamkniete - 2 (sterowanie danymi)
 
-    protected AccountBuilder(List<AccountValidator> validators) {
-        this.validators = List.copyOf(validators); 
-    }
-
     // Zamiast modyfikować klasę by obsłużyć nowe pole, przekazujesz dane z zewnątrz
     @SuppressWarnings("unchecked")
     public final T applyFields(Map<String, String> fields) {
@@ -95,5 +95,6 @@ public abstract class AccountBuilder <T extends  AccountBuilder<T>>{
 
     public String getEmail() { return email; }
     public String getPassword() { return password; }
+    public String getPhone() { return phone; }
 }
 // End Week 2, Pattern Builder 3

@@ -6,7 +6,7 @@ import allnew.okk.basket.composite.ShoppingBasket;
 
 // Week 5, Pattern Memento 1 Oliwier Majewski
 
-// Week 6, SRP Oliwier Majewski
+// Week 7, SRP Oliwier Majewski
 // This class is part of memento design pattern, and it manages creation and  the mementos
 public class Order {
     private final ShoppingBasket basket;
@@ -38,5 +38,5 @@ public class Order {
     }
 }
 
-// End Week 6, SRP Oliwier Majewski
+// End Week 7, SRP Oliwier Majewski
 // End Week 5, Pattern Memento 1 Oliwier Majewski

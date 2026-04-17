@@ -2,22 +2,26 @@ package allnew.okk.account.Builder;
 
 import allnew.okk.account.Prototype.PrivateAccount;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+
 // Week 2, Pattern Builder 2
 //klasa implementujaca klase abstrakcji dla której parametr generyczny T jest PrivateAccountBuilder (ta klasa)
 public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>{
     private String name;
     private String surname;
 
-    //Week 6, Otwarte - zamkniete - 1
+    //Week 7, Otwarte - zamkniete - 1
     public PrivateAccountBuilder() {
         super(List.of(
             Validators.EMAIL_REQUIRED,
             Validators.PASSWORD_MIN_LENGTH
         ));
     }
-    //Week 6, Otwarte - zamkniete - 1
+    //Week 7, Otwarte - zamkniete - 1
 
-    // Week 6, Otwarte - zamkniete - 2 (sterowanie danymi: mapa pól własnych)
+    // Week 7, Otwarte - zamkniete - 2 (sterowanie danymi: mapa pól własnych)
     private static final Map<String, BiConsumer<PrivateAccountBuilder, String>> PRIVATE_FIELDS =
         Map.of(
             "name",    (b, v) -> b.name    = v,
@@ -33,7 +37,7 @@ public class PrivateAccountBuilder extends AccountBuilder<PrivateAccountBuilder>
         });
         return this;
     }
-    // End Week 6, Otwarte - zamkniete - 2
+    // End Week 7, Otwarte - zamkniete - 2
 
     //metoda zwracająca tą klase, jest wykorzystywana w metodach bazowych klasy AccountBuilder by zwracały one klase PrivateAccountBuilder
     @Override
