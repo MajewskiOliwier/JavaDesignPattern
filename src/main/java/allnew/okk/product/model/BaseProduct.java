@@ -16,7 +16,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // Bazowa klasa produktu, zawierająca wspólne właściwości i metody dla różnych typów produktów
 @Getter
@@ -33,6 +35,19 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private final List<ProductObserver> observers = new ArrayList<>();
     private ProductState productState = new AvailableState();
     private ProductPricingStrategy pricingStrategy;
+
+    // week 6 open-closed, data control Jakub Marciniuk
+    private final Map<String, String> additionalProperties = new HashMap<>();
+    public void setAdditionalProperty(String key, String value) {
+        additionalProperties.put(key, value);
+    }
+
+    public String getAdditionalProperty(String key) {
+        return additionalProperties.get(key);
+    }
+    // end week 6 open-closed, data control Jakub Marciniuk
+
+
     public abstract void accept(ProductVisitor visitor);
     public BaseProduct(Builder<?> b) {
         this.name = b.name;
