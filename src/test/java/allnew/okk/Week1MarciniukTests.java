@@ -5,6 +5,7 @@ import allnew.okk.product.model.ProductCategory;
 import allnew.okk.product.model.CompanyProduct;
 import allnew.okk.product.model.ProductCondition;
 import allnew.okk.product.repository.ProductRepository;
+import allnew.okk.product.service.NameSuffixModifier;
 import allnew.okk.product.service.ProductService;
 import org.junit.jupiter.api.Test;
 
@@ -122,7 +123,7 @@ class Week1MarciniukTests {
         repository.addProduct(product);
 
         try{
-            service.duplicateProduct(repository.getIdByProduct(product));
+            service.duplicateProduct(repository.getIdByProduct(product), new NameSuffixModifier("(Copy)"));
         }catch (CloneNotSupportedException e){
             fail("Klonowanie powinno być obsługiwane, ale wystąpił błąd: " + e.getMessage());
         }
