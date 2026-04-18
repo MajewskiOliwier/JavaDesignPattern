@@ -17,6 +17,8 @@ import allnew.okk.shop.template.ShopReportTemplate;
 import allnew.okk.shop.visitor.MaintenanceCostVisitor;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Week6ShopTests {
@@ -117,7 +119,7 @@ public class Week6ShopTests {
                 .setName("Internetowy")
                 .build());
 
-        MaintenanceCostVisitor visitor = new MaintenanceCostVisitor();
+        MaintenanceCostVisitor visitor = new MaintenanceCostVisitor(Map.of("physical_base", 5000.0, "physical_dropoff", 1500.0, "online_base", 800.0));
 
         // Visit the entire structure with a single call
         network.accept(visitor);

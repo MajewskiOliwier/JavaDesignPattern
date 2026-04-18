@@ -2,6 +2,7 @@ package allnew.okk.shop.command;
 
 import allnew.okk.shop.model.BaseShop;
 
+// Week 7 - Single Responsibility Principle (SRP)
 // Week 5, Pattern Command 3
 // Concrete command responsible for updating a shop's description.
 // It captures the previous state to allow a seamless undo operation.

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+// Week 7 - Single Responsibility Principle (SRP)
 // Week 5, Pattern Iterator 1
 // Iterator that traverses the composite structure of ShopNetwork.
 // It recursively flattens the tree and returns only individual shops (leaves).
