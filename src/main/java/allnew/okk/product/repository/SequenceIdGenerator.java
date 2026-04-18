@@ -1,6 +1,6 @@
 package allnew.okk.product.repository;
 
-// Week 6, open-closed principle, implementation
+// Week 7, open-closed principle (OCP), implementation, jakub marciniuk
 public class SequenceIdGenerator implements IdGenerator {
     private final String prefix;
     private int counter = 1;
@@ -14,4 +14,4 @@ public class SequenceIdGenerator implements IdGenerator {
     }
 
 }
-// End Week 6, open-closed principle, implementation
+// End Week 7, open-closed principle, implementation

@@ -36,7 +36,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     private ProductState productState = new AvailableState();
     private ProductPricingStrategy pricingStrategy;
 
-    // week 6 open-closed, data control Jakub Marciniuk
+    // week 7 open-closed (OCP), data control Jakub Marciniuk
     private final Map<String, String> additionalProperties = new HashMap<>();
     public void setAdditionalProperty(String key, String value) {
         additionalProperties.put(key, value);
@@ -45,7 +45,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     public String getAdditionalProperty(String key) {
         return additionalProperties.get(key);
     }
-    // end week 6 open-closed, data control Jakub Marciniuk
+    // end week 7 open-closed (OCP), data control Jakub Marciniuk
 
 
     public abstract void accept(ProductVisitor visitor);
@@ -172,13 +172,16 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     }
     // Koniec, Tydzień 2, Wzorzec Prototype 1
 
-    public String toString(){
+    // week 7 Single Responsibility Principle SRP, Marciniuk
+    // Usunięto metode toString, za to odpowiada teraz implementacje ProductExporter
+    /*public String toString(){
         return "Name: " + name + "\n" +
                 "Description: " + description + "\n" +
                 "Price: " + price + "\n" +
                 "Category: " + category + "\n" +
                 "Condition: " + condition;
-    }
+    }*/
+    // End week 7 Single Responsibility Principle SRP, Marciniuk
 
     //week 5, pattern Memento 2 Jakub Marciniuk
     public ProductPriceMemento saveMemento() {

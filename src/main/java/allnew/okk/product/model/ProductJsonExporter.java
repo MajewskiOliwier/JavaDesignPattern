@@ -1,7 +1,7 @@
 package allnew.okk.product.model;
 
 
-// Week 6, Open-Closed Principle, implementation
+// Week 7, Open-Closed Principle (OCP), implementation
 public class ProductJsonExporter implements ProductExporter<String> {
 
     @Override

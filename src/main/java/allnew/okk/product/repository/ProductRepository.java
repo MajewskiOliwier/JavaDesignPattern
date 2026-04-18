@@ -15,10 +15,10 @@ public class ProductRepository{
     private final static ProductRepository instance = new ProductRepository();
     private final Map<String, BaseProduct> products = new HashMap<>();
 
-    // Week 6, Single Responsibility Principle
+    // Week 7, Single Responsibility Principle, jakub marciniuk
     // oddzielenie odpowiedzialności za generowanie ID do osobnej klasy
     private IdGenerator idGenerator = new SequenceIdGenerator("OKK-");
-    // Week 6, open-closed principle, użycie interfejsu i implementacji
+    // End Week 7, Single Responsibility Principle
     private ProductRepository(){}
 
     public static synchronized ProductRepository getInstance() {
@@ -26,7 +26,9 @@ public class ProductRepository{
     }
 
     public void addProduct(BaseProduct product) {
+        // Week 7, open-closed principle (OCP) , użycie interfejsu i implementacji, jakub marciniuk
         String id = idGenerator.generateId();
+        // end Week 7, open-closed principle (OCP)
         products.put(id, product);
     }
 

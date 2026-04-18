@@ -1,7 +1,7 @@
 package allnew.okk.product.repository;
 
-// Week 6, open-closed principle, abstraction
+// Week 7, open-closed principle (OCP), abstraction, jakub marciniuk
 public interface IdGenerator {
     String generateId();
 }
-// End Week 6, open-closed principle, abstraction
+// End Week 7, open-closed principle (OCP), abstraction, jakub marciniuk
