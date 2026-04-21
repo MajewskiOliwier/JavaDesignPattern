@@ -19,6 +19,9 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+
+// Week 9 - Maintaining Clean Code Principles
+
 // Week 8 - Liskov Substitution Principle 1 (Klasa bazowa)
 // Klasa bazowa BaseShop definiuje spójny interfejs i zachowanie dla wszystkich typów sklepów.
 
@@ -27,6 +30,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay {
+
+    private static final int SINGLE_SHOP_COUNT = 1;
+    private static final double DEFAULT_FLAT_RATE = 15.0;
+
     private String name;
     private String description;
 
@@ -44,11 +51,10 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
         this.description = builder.description;
         this.notificationSender = builder.notificationSender;
         this.category = builder.category;
-        this.shippingStrategy = builder.shippingStrategy; // Wstrzyknięcie z Buildera
+        this.shippingStrategy = builder.shippingStrategy;
     }
 
     // Week 2, Pattern Composite 2
-    // Implementacja metod z interfejsu ShopComponent dla pojedynczego sklepu.
     @Override
     public String getDetails() {
         return "Sklep: " + name + " (" + description + ")";
@@ -56,13 +62,11 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
 
     @Override
     public int getShopCount() {
-        return 1; // bo pojedynczy sklep zawsze jest jeden
+        return SINGLE_SHOP_COUNT;
     }
     // End Week 3, Pattern Composite 2
 
     // Week 3, Pattern Decorator 2
-    // Zwraca czyste dane sklepu.
-    // Wykorzystywane przy dekoratorach.
     @Override
     public String getDisplayName() {
         return this.name;
@@ -74,56 +78,56 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     }
     // End Week 3, Pattern Decorator 2
 
-
     // Week 3, Pattern Bridge 4
-    // Metoda wysyłająca powiadomienie.
-    // Wykorzystuje interfejs, dzięki temu działa zarówno dla SMSów i emaili.
     public void broadcastPromotion(String promoMessage) {
-        // 1. Wysyłanie systemowe (Bridge)
+        sendSystemNotification(promoMessage);
+        notifySubscribers(promoMessage);
+    }
+
+    private void sendSystemNotification(String promoMessage) {
         if (notificationSender != null) {
             notificationSender.sendNotification(this.name, promoMessage);
         } else {
             System.out.println("Sklep " + this.name + " nie ma skonfigurowanego systemu powiadomień.");
         }
+    }
 
-        // 2. Powiadamianie wszystkich subskrybentów sklepu (Observer)
+    private void notifySubscribers(String promoMessage) {
         for (ShopObserver observer : observers) {
             observer.update(this.name, promoMessage);
         }
     }
     // End Week 3, Pattern Bridge 4
 
-
     // Week 5, Pattern Memento 3
-    // Creates a snapshot of the current shop profile (Originator role).
     public ShopProfileMemento saveProfileMemento() {
         return new ShopProfileMemento(this.name, this.description);
     }
 
-    // Restores the shop profile from a provided snapshot.
     public void restoreProfileMemento(ShopProfileMemento memento) {
-        if (memento != null) {
-            this.name = memento.getName();
-            this.description = memento.getDescription();
-            System.out.println("Shop profile restored to: " + this.name);
+        if (memento == null) {
+            throw new IllegalArgumentException("Nie można przywrócić profilu z pustego memento.");
         }
+        this.name = memento.getName();
+        this.description = memento.getDescription();
+        System.out.println("Shop profile restored to: " + this.name);
     }
     // End Week 5, Pattern Memento 3
 
-    public double calculateDelivery(double orderTotal, double distanceInKm) {
-        if (shippingStrategy != null) {
-            return shippingStrategy.calculateShippingCost(orderTotal, distanceInKm);
+    public double calculateShippingCost(double orderTotal, double distanceInKm) {
+        if (shippingStrategy == null) {
+            throw new IllegalStateException("Brak strategii wysyłki dla sklepu: " + this.name);
         }
-        return 0.0; // Domyślnie brak kosztów
+        return shippingStrategy.calculateShippingCost(orderTotal, distanceInKm);
     }
 
     // Week 6, Pattern Observer 3
-    // Methods to manage subscribers (Attach & Detach)
     public void addObserver(ShopObserver observer) {
-        if (!observers.contains(observer)) {
-            observers.add(observer);
-            System.out.println("New subscriber added to shop: " + this.name);
+        if (observers.contains(observer)) {
+            throw new IllegalArgumentException("Ten subskrybent jest już przypisany do sklepu.");
         }
+        observers.add(observer);
+        System.out.println("New subscriber added to shop: " + this.name);
     }
 
     public void removeObserver(ShopObserver observer) {
@@ -133,7 +137,6 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     // End Week 6, Pattern Observer 3
 
     // Week 6, Pattern State 5
-    // State management methods allowing the shop to transition between different operational states
     public void openShop() {
         this.shopState = new OpenState();
         System.out.println("Shop " + this.name + " is now OPEN.");
@@ -149,7 +152,6 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
         System.out.println("Shop " + this.name + " is now SUSPENDED.");
     }
 
-    // Metoda delegująca odpowiedzialność do konkretnego stanu
     public boolean canAcceptOrders() {
         return shopState.canAcceptOrders();
     }
@@ -159,14 +161,12 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     public abstract void accept(allnew.okk.shop.visitor.ShopVisitor visitor);
 
     // Week 2, Pattern Builder 1
-    // Generyczny builder z generycznym typowaniem.
-    // Dzięki metodzie self() klasy pochodne zwracają własny typ, co umożliwia płynne wywoływanie metod.
     public abstract static class Builder<T extends Builder<T>> {
         private String name = "Default Shop";
         private String description = "Default Description";
-        private NotificationSender notificationSender; // ZMIANA w Builderze
+        private NotificationSender notificationSender;
         private ShopCategory category = ShopCategory.ELECTRONICS;
-        private ShippingCostStrategy shippingStrategy = new FlatRateShippingStrategy(15.0);
+        private ShippingCostStrategy shippingStrategy = new FlatRateShippingStrategy(DEFAULT_FLAT_RATE);
 
         public T setName(String name) {
             this.name = name;
@@ -199,12 +199,11 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
     // End Week 2, Pattern Builder 1
 
     @Override
-    public BaseShop clone() throws CloneNotSupportedException {
+    public BaseShop clone() {
         try {
             return (BaseShop) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError("Klonowanie nie powiodło się");
+            throw new IllegalStateException("Klonowanie nie powiodło się", e);
         }
     }
 }
-// End, Week 2, Pattern Prototype 1

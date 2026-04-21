@@ -7,26 +7,32 @@ import allnew.okk.shop.model.PhysicalShop;
 // Tłumaczy metody niekompatybilnego obiektu PhysicalShop na interfejs wymagany przez CourierShippingPoint.
 public class PhysicalShopShippingAdapter implements CourierShippingPoint {
 
+    private static final String DROP_OFF_PREFIX = "PUNKT ODBIORU: ";
+
     // Nasza europejska wtyczka (Adaptee) - obiekt, który przystosowujemy
-    private PhysicalShop physicalShop;
+    private final PhysicalShop physicalShop;
 
     public PhysicalShopShippingAdapter(PhysicalShop physicalShop) {
+        if (physicalShop == null) {
+            throw new IllegalArgumentException("Sklep stacjonarny nie może być pusty (null).");
+        }
         this.physicalShop = physicalShop;
     }
 
     // Tłumaczenie metod z systemu kuriera na metody naszego sklepu
     @Override
-    public String getPointName() {
-        return "PUNKT ODBIORU: " + physicalShop.getName();
+    public String getName() {
+        return DROP_OFF_PREFIX + physicalShop.getName();
     }
 
     @Override
-    public String getFullAddress() {
+    public String getAddress() {
         return physicalShop.getAddress();
     }
 
     @Override
-    public boolean isAvailableForDropOff() {
-        return physicalShop.isDropOffAvailable();    }
+    public boolean isDropOffAvailable() {
+        return physicalShop.isDropOffAvailable();
+    }
 }
 // End Week 3, Pattern Adapter 1

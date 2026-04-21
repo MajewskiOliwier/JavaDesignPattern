@@ -41,9 +41,9 @@ public class Week3LidakTests {
 
         PhysicalShopShippingAdapter adapter = new PhysicalShopShippingAdapter(physicalShop);
 
-        assertEquals("PUNKT ODBIORU: Sklep Testowy", adapter.getPointName());
-        assertEquals("ul. Testowa 1", adapter.getFullAddress());
-        assertTrue(adapter.isAvailableForDropOff());
+        assertEquals("PUNKT ODBIORU: Sklep Testowy", adapter.getName());
+        assertEquals("ul. Testowa 1", adapter.getAddress());
+        assertTrue(adapter.isDropOffAvailable());
     }
 
     @Test
@@ -143,6 +143,6 @@ public class Week3LidakTests {
 
         assertSame(firstCategory, secondCategory, "Rejestr Flyweight tworzy duplikaty w pamięci!");
 
-        assertEquals("electronics.png", firstCategory.getCategoryIconUrl());
+        assertEquals("electronics.png", firstCategory.getIconUrl());
     }
 }

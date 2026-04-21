@@ -4,10 +4,13 @@ package allnew.okk.shop.bridge;
 // Week 7 - Single Responsibility Principle (SRP)
 // Week 3, Pattern Bridge 2
 // Konkretna implementacja - wysyłanie wiadomości mailowo.
-public class EmailNotificationSender implements NotificationSender {
+public class EmailNotificationSender extends AbstractNotificationSender {
+
+    private static final String NOTIFICATION_TYPE = "EMAIL";
+
     @Override
     public void sendNotification(String shopName, String message) {
-        System.out.println("[EMAIL] Sklep " + shopName + " wysyła wiadomość: " + message);
+        processAndSendMessage(NOTIFICATION_TYPE, shopName, message);
     }
 }
 // End Week 3, Pattern Bridge 2

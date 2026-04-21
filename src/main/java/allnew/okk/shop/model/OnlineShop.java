@@ -1,5 +1,5 @@
 package allnew.okk.shop.model;
-
+// Week 9 - Maintaining Clean Code Principles
 // Week 8 - Liskov Substitution Principle 1 (Klasa pochodna)
 // Klasa OnlineShop może zastąpić BaseShop w każdym miejscu aplikacji
 
@@ -16,7 +16,6 @@ public class OnlineShop extends BaseShop {
     public String getWebsiteUrl() { return websiteUrl; }
 
     // Tydzień 2, Wzorzec Builder 2
-    // Rozszerzenie buildera o pole websiteUrl specyficzne dla sklepu internetowego.
     public static class Builder extends BaseShop.Builder<Builder> {
         private String websiteUrl;
 
@@ -39,11 +38,7 @@ public class OnlineShop extends BaseShop {
 
     @Override
     public OnlineShop clone() {
-        try {
-            return (OnlineShop) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        return (OnlineShop) super.clone();
     }
 
     // Week 6, Pattern Visitor 6
@@ -52,4 +47,3 @@ public class OnlineShop extends BaseShop {
         visitor.visit(this);
     }
 }
-// End Week 2, Pattern  Prototype 2

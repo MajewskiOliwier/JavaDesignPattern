@@ -101,8 +101,7 @@ public class Week5ShopTests {
         assertEquals(1, invoker.getHistorySize());
 
         // Cofamy polecenie
-        boolean undone = invoker.undoLastCommand();
-        assertTrue(undone);
+        invoker.undoLastCommand();
         assertEquals("Opis A", shop.getDescription(), "Command nie cofnął opisu sklepu!");
     }
 

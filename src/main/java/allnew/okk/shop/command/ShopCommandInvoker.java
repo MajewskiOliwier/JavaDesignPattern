@@ -4,43 +4,55 @@ import java.util.ArrayList;
 import java.util.List;
 import allnew.okk.shop.mediator.ShopEvent;
 import allnew.okk.shop.mediator.ShopEventMediator;
+import allnew.okk.shop.model.BaseShop;
 
 // Week 5, Pattern Command 2
 // Invoker class that stores the history of executed commands.
 // It allows for executing new requests and undoing the previous ones.
 public class ShopCommandInvoker {
 
-    private final List<ShopCommand> commandHistory = new ArrayList<>();
+    private static final String LOG_EXECUTE = "[INVOKER] Command executed and added to history.";
+    private static final String LOG_UNDO = "[INVOKER] Last command undone successfully.";
+    private static final int EMPTY_SIZE = 0;
+    private static final int INDEX_OFFSET = 1;
 
+    private final List<ShopCommand> commandHistory = new ArrayList<>();
     private final ShopEventMediator mediator;
+
     public ShopCommandInvoker(ShopEventMediator mediator) {
         this.mediator = mediator;
     }
 
-    // Executes the command and saves it to the history stack
-    public void executeCommand(ShopCommand command, ShopEvent event, allnew.okk.shop.model.BaseShop shop) {
+    public void executeCommand(ShopCommand command, ShopEvent event, BaseShop shop) {
+        performExecution(command);
+        notifyMediatorIfPresent(shop, event);
+    }
+
+    private void performExecution(ShopCommand command) {
         command.execute();
         commandHistory.add(command);
-        System.out.println("[INVOKER] Command executed and added to history.");
+        System.out.println(LOG_EXECUTE);
+    }
 
-        // Powiadomienie Mediatora o zmianie
+    private void notifyMediatorIfPresent(BaseShop shop, ShopEvent event) {
         if (mediator != null) {
             mediator.notify(shop, event);
         }
     }
 
-    // Reverts the last executed command
-    public boolean undoLastCommand() {
-        if (commandHistory.isEmpty()) {
-            System.out.println("[INVOKER] No commands to undo.");
-            return false;
+    public void undoLastCommand() {
+        if (commandHistory.size() == EMPTY_SIZE) {
+            throw new IllegalStateException("Nie ma żadnych komend do cofnięcia.");
         }
 
-        // Retrieve and remove the last command from the list
-        ShopCommand lastCommand = commandHistory.remove(commandHistory.size() - 1);
+        ShopCommand lastCommand = removeLastCommand();
         lastCommand.undo();
-        System.out.println("[INVOKER] Last command undone successfully.");
-        return true;
+        System.out.println(LOG_UNDO);
+    }
+
+    private ShopCommand removeLastCommand() {
+        int lastIndex = commandHistory.size() - INDEX_OFFSET;
+        return commandHistory.remove(lastIndex);
     }
 
     public int getHistorySize() {

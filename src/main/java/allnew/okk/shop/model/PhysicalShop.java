@@ -1,5 +1,5 @@
 package allnew.okk.shop.model;
-
+// Week 9 - Maintaining Clean Code Principles
 // Week 8 - Liskov Substitution Principle 1 (Klasa pochodna)
 // Klasa PhysicalShop może zastąpić BaseShop w każdym miejscu aplikacji
 
@@ -19,8 +19,7 @@ public class PhysicalShop extends BaseShop {
     public boolean isDropOffAvailable() { return isDropOffAvailable; }
 
     // Week 2, Pattern  Builder 3
-    // Rozszerzenie buildera o pole address specyficzne dla sklepu stacjonarnego.
-     public static class Builder extends BaseShop.Builder<Builder> {
+    public static class Builder extends BaseShop.Builder<Builder> {
         private String address;
         private boolean isDropOffAvailable = true;
 
@@ -48,17 +47,12 @@ public class PhysicalShop extends BaseShop {
 
     @Override
     public PhysicalShop clone() {
-        try {
-            return (PhysicalShop) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        return (PhysicalShop) super.clone();
     }
+
     // Week 6, Pattern Visitor 6
     @Override
     public void accept(allnew.okk.shop.visitor.ShopVisitor visitor) {
         visitor.visit(this);
     }
 }
-
-// End Week 2, Pattern Prototype 3

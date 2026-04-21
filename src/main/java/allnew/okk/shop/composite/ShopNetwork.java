@@ -4,66 +4,88 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import allnew.okk.shop.iterator.ShopNetworkIterator;
+import allnew.okk.shop.visitor.ShopVisitor;
+import lombok.Getter;
 
 // Week 3, Pattern Composite 3
 // Klasa reprezentująca Kompozyt (Węzeł) - sieć sklepów lub franczyzę.
 // Może zawierać w sobie pojedyncze sklepy (BaseShop) lub inne sieci (ShopNetwork).
 public class ShopNetwork implements ShopComponent, Iterable<ShopComponent> {
-    private String networkName;
 
-    // Lista przechowująca elementy podrzędne (sklepy lub dziedziczące sieci sklepów)
-    private List<ShopComponent> children = new ArrayList<>();
+    private static final String NETWORK_PREFIX = "Sieć: ";
+    private static final String CHILD_PREFIX = "  - ";
+    private static final String NEW_LINE = "\n";
+    private static final String CHILD_INDENT = "\n  ";
+    private static final int EMPTY_COUNT = 0;
+
+    private final String networkName;
+    // Week 5, Pattern Iterator 2 (Added Iterable interface)
+    @Getter
+    private final List<ShopComponent> children = new ArrayList<>();
 
     public ShopNetwork(String networkName) {
+        if (networkName == null || networkName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nazwa sieci nie może być pusta.");
+        }
         this.networkName = networkName;
     }
 
-    // Metody do zarządzania dziećmi
     public void addShopComponent(ShopComponent component) {
+        if (component == null) {
+            throw new IllegalArgumentException("Komponent sklepu nie może być pusty.");
+        }
         children.add(component);
     }
 
     public void removeShopComponent(ShopComponent component) {
+        if (component == null) {
+            throw new IllegalArgumentException("Komponent sklepu nie może być pusty.");
+        }
+        if (!children.contains(component)) {
+            throw new IllegalStateException("Nie można usunąć komponentu, który nie należy do tej sieci.");
+        }
         children.remove(component);
     }
 
-
-
-    // Delegacja wywołań do wszystkich dzieci i agregacja wyników
     @Override
     public String getDetails() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Sieć: ").append(networkName).append("\n");
-        for (ShopComponent child : children) {
-            builder.append("  - ").append(child.getDetails().replace("\n", "\n  ")).append("\n");
-        }
+        appendNetworkHeader(builder);
+        appendChildrenDetails(builder);
         return builder.toString().trim();
+    }
+
+    private void appendNetworkHeader(StringBuilder builder) {
+        builder.append(NETWORK_PREFIX).append(networkName).append(NEW_LINE);
+    }
+
+    private void appendChildrenDetails(StringBuilder builder) {
+        for (ShopComponent child : children) {
+            String formattedChild = child.getDetails().replace(NEW_LINE, CHILD_INDENT);
+            builder.append(CHILD_PREFIX).append(formattedChild).append(NEW_LINE);
+        }
     }
 
     @Override
     public int getShopCount() {
-        int totalCount = 0;
+        int totalCount = EMPTY_COUNT;
         for (ShopComponent child : children) {
-            // Rekurencyjne wywołanie zliczania w dół struktury drzewiastej
             totalCount += child.getShopCount();
         }
         return totalCount;
-    }
-
-    // Week 5, Pattern Iterator 2 (Added Iterable interface)
-    public List<ShopComponent> getChildren() {
-        return children;
     }
 
     @Override
     public Iterator<ShopComponent> iterator() {
         return new ShopNetworkIterator(this);
     }
-
     // End Week 5, Patter Iterator 2
 
     @Override
-    public void accept(allnew.okk.shop.visitor.ShopVisitor visitor) {
+    public void accept(ShopVisitor visitor) {
+        if (visitor == null) {
+            throw new IllegalArgumentException("Wizytator nie może być pusty.");
+        }
         for (ShopComponent child : children) {
             child.accept(visitor);
         }

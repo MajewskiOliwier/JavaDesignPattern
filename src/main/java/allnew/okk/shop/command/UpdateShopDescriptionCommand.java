@@ -8,31 +8,50 @@ import allnew.okk.shop.model.BaseShop;
 // It captures the previous state to allow a seamless undo operation.
 public class UpdateShopDescriptionCommand implements ShopCommand {
 
+    private static final String LOG_UPDATED = "[COMMAND] Shop description updated to: ";
+    private static final String LOG_REVERTED = "[COMMAND] Shop description reverted to: ";
+
     private final BaseShop shop;
     private final String newDescription;
-    private String oldDescription; // Stores the state before execution
+    private String oldDescription;
 
     public UpdateShopDescriptionCommand(BaseShop shop, String newDescription) {
+        validateInputs(shop, newDescription);
         this.shop = shop;
         this.newDescription = newDescription;
     }
 
+    private void validateInputs(BaseShop shop, String newDescription) {
+        if (shop == null) {
+            throw new IllegalArgumentException("Obiekt sklepu nie może być pusty.");
+        }
+        if (newDescription == null) {
+            throw new IllegalArgumentException("Nowy opis nie może być pusty.");
+        }
+    }
+
     @Override
     public void execute() {
-        // Save the current description before changing it
+        saveCurrentState();
+        applyNewState();
+    }
+
+    private void saveCurrentState() {
         this.oldDescription = shop.getDescription();
-        // Apply the new description
+    }
+
+    private void applyNewState() {
         shop.setDescription(newDescription);
-        System.out.println("[COMMAND] Shop description updated to: " + newDescription);
+        System.out.println(LOG_UPDATED + newDescription);
     }
 
     @Override
     public void undo() {
-        if (oldDescription != null) {
-            // Revert to the saved description
-            shop.setDescription(oldDescription);
-            System.out.println("[COMMAND] Shop description reverted to: " + oldDescription);
+        if (oldDescription == null) {
+            throw new IllegalStateException("Nie można cofnąć komendy, która nie została wcześniej wykonana.");
         }
+        shop.setDescription(oldDescription);
+        System.out.println(LOG_REVERTED + oldDescription);
     }
 }
 // End Week 5, Pattern Command 3

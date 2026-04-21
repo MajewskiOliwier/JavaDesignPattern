@@ -4,9 +4,31 @@ package allnew.okk.shop.bridge;
 // Częściowa implementacja abstrakcji. Zapewnia wspólną logikę dla wszystkich konkretnych typów powiadomień.
 public abstract class AbstractNotificationSender implements NotificationSender {
 
-    // Wspólna metoda dla wszystkich klas pochodnych
+    private static final String LOG_PREFIX = "[LOG] Inicjowanie systemu ";
+    private static final String LOG_SUFFIX = " dla sklepu: ";
+    private static final String MESSAGE_TEMPLATE = "[%s] Sklep %s wysyła wiadomość: %s";
+
+    protected void processAndSendMessage(String type, String shopName, String message) {
+        validateInputs(shopName, message);
+        logNotificationAttempt(type, shopName);
+        deliverMessage(type, shopName, message);
+    }
+
+    private void validateInputs(String shopName, String message) {
+        if (shopName == null || shopName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nazwa sklepu nie może być pusta.");
+        }
+        if (message == null || message.trim().isEmpty()) {
+            throw new IllegalArgumentException("Treść wiadomości nie może być pusta.");
+        }
+    }
+
     protected void logNotificationAttempt(String type, String shopName) {
-        System.out.println("[LOG] Inicjowanie systemu " + type + " dla sklepu: " + shopName);
+        System.out.println(LOG_PREFIX + type + LOG_SUFFIX + shopName);
+    }
+
+    private void deliverMessage(String type, String shopName, String message) {
+        System.out.println(String.format(MESSAGE_TEMPLATE, type, shopName, message));
     }
 
     @Override

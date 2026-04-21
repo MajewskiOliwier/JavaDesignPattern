@@ -9,31 +9,42 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+// Week 9 - Maintaining Clean Code Principles
+
 // Week 7 - Single Responsibility Principle (SRP)
 // Week 5, Pattern Iterator 1
 // Iterator that traverses the composite structure of ShopNetwork.
 // It recursively flattens the tree and returns only individual shops (leaves).
 public class ShopNetworkIterator implements Iterator<ShopComponent> {
 
-    // List to hold the flattened structure
+    private static final int INITIAL_INDEX = 0;
+
     private final List<ShopComponent> flatShopList = new ArrayList<>();
-    private int currentIndex = 0;
+    private int currentIndex = INITIAL_INDEX;
 
     public ShopNetworkIterator(ShopComponent rootNode) {
-        traverse(rootNode);
+        if (rootNode == null) {
+            throw new IllegalArgumentException("Węzeł główny struktury nie może być pusty.");
+        }
+        extractLeaves(rootNode);
     }
 
-    // Recursively visits nodes to extract leaf elements (BaseShop)
-    private void traverse(ShopComponent node) {
+    private void extractLeaves(ShopComponent node) {
         if (node instanceof ShopNetwork networkNode) {
-            // If it's a network, go deeper into its children
-            for (ShopComponent child : networkNode.getChildren()) {
-                traverse(child);
-            }
-        } else if (node instanceof BaseShop) {
-            // If it's a single shop (leaf), add it to our flat list
-            flatShopList.add(node);
+            processNetworkNode(networkNode);
+        } else if (node instanceof BaseShop leafNode) {
+            processLeafNode(leafNode);
         }
+    }
+
+    private void processNetworkNode(ShopNetwork networkNode) {
+        for (ShopComponent child : networkNode.getChildren()) {
+            extractLeaves(child);
+        }
+    }
+
+    private void processLeafNode(BaseShop leafNode) {
+        flatShopList.add(leafNode);
     }
 
     @Override
@@ -44,7 +55,7 @@ public class ShopNetworkIterator implements Iterator<ShopComponent> {
     @Override
     public ShopComponent next() {
         if (!hasNext()) {
-            throw new NoSuchElementException("No more shops to iterate.");
+            throw new NoSuchElementException("Brak kolejnych sklepów do iteracji.");
         }
         return flatShopList.get(currentIndex++);
     }

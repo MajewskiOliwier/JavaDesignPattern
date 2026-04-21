@@ -2,25 +2,31 @@ package allnew.okk.shop.memento;
 
 import java.util.Stack;
 
+// Week 9 - Maintaining Clean Code Principles
+
 // Week 5, Pattern Memento 2
 // Caretaker class responsible for keeping the history of shop profile changes.
 // It manages the mementos but never modifies their internal state.
 public class ShopProfileHistory {
+
+    private static final String LOG_SAVED = "[HISTORIA] Zapisano migawkę profilu sklepu.";
+    private static final String LOG_RESTORING = "[HISTORIA] Przywracanie poprzedniego profilu sklepu...";
+
     private final Stack<ShopProfileMemento> history = new Stack<>();
 
-    // Saves a new snapshot to the history stack
     public void save(ShopProfileMemento memento) {
+        if (memento == null) {
+            throw new IllegalArgumentException("Nie można zapisać pustej migawki w historii.");
+        }
         history.push(memento);
-        System.out.println("[HISTORY] Saved shop profile snapshot.");
+        System.out.println(LOG_SAVED);
     }
 
-    // Retrieves and removes the most recent snapshot for the undo operation
     public ShopProfileMemento undo() {
         if (history.isEmpty()) {
-            System.out.println("[HISTORY] No previous profile state to restore.");
-            return null;
+            throw new IllegalStateException("Brak zapisanych stanów profilu do przywrócenia.");
         }
-        System.out.println("[HISTORY] Restoring previous shop profile...");
+        System.out.println(LOG_RESTORING);
         return history.pop();
     }
 
