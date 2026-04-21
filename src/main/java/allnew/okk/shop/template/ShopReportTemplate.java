@@ -2,6 +2,9 @@ package allnew.okk.shop.template;
 
 import allnew.okk.shop.model.BaseShop;
 
+// Week 8 - Liskov Substitution Principle 2
+// Klasa bazowa dla generatorów raportów. Jej instancje można zamieniać konkretnymi implementacjami (HTML/CSV).
+
 // Week 6, Pattern Template 1
 // Abstract class defining the skeleton of the report generation algorithm.
 public abstract class ShopReportTemplate {

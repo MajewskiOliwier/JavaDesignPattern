@@ -1,5 +1,7 @@
 package allnew.okk.shop.decorator;
 
+// Week 8 - Liskov Substitution Principle 3 (Klasa bazowa)
+
 // Week 3, Pattern Decorator 3
 // Abstrakcyjna klasa dekoratora. Implementuje ten sam interfejs co BaseShop.
 // Przechowuje instancję "owiniętego" obiektu i domyślnie deleguje do niego wszystkie wywołania.

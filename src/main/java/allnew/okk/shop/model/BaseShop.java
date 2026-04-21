@@ -19,6 +19,9 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+// Week 8 - Liskov Substitution Principle 1 (Klasa bazowa)
+// Klasa bazowa BaseShop definiuje spójny interfejs i zachowanie dla wszystkich typów sklepów.
+
 // Week 2, Pattern Prototype 1
 // Implementacja wzorca Prototype poprzez interfejs Cloneable, umożliwiająca tworzenie kopii obiektów sklepów.
 @Getter
@@ -26,6 +29,10 @@ import lombok.Setter;
 public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay {
     private String name;
     private String description;
+
+    // Week 8 - Dependency Inversion Principle 5 (Moduł wysokopoziomowy)
+    // Wstrzykiwanie zależności (Dependency Injection).
+    // BaseShop zależy od abstrakcji, a nie od konkretnej klasy (np. EmailNotificationSender).
     private NotificationSender notificationSender;
     private ShopCategory category;
     private ShippingCostStrategy shippingStrategy;

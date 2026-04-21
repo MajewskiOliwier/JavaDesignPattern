@@ -1,5 +1,8 @@
 package allnew.okk.shop.model;
 
+// Week 8 - Liskov Substitution Principle 1 (Klasa pochodna)
+// Klasa OnlineShop może zastąpić BaseShop w każdym miejscu aplikacji
+
 // Week 2, Pattern Prototype 2
 // Implementacja klonowania dla klasy OnlineShop.
 public class OnlineShop extends BaseShop {

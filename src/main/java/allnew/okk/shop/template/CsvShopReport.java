@@ -1,5 +1,10 @@
 package allnew.okk.shop.template;
 
+
+// Week 8 - Liskov Substitution Principle 2 (Klasa pochodna)
+// Nadpisuje jedynie chronione metody implementacyjne, nie zmieniając zewnętrznego
+// zachowania algorytmu generowania raportu, co pozwala na jej zamienne użycie.
+
 // Week 6, Pattern Template 3
 // Concrete implementation that formats and exports the report as a CSV spreadsheet.
 public class CsvShopReport extends ShopReportTemplate {
