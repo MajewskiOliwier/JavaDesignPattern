@@ -29,14 +29,14 @@ public class Week6ShopTests {
         BaseShop shop = new PhysicalShop.Builder().setName("Sklep Strategiczny").build();
 
         shop.setShippingStrategy(new FlatRateShippingStrategy(15.0));
-        assertEquals(15.0, shop.calculateDelivery(100.0, 50.0));
+        assertEquals(15.0, shop.calculateShippingCost(100.0, 50.0));
 
         shop.setShippingStrategy(new DistanceBasedShippingStrategy(2.0));
-        assertEquals(100.0, shop.calculateDelivery(10.0, 50.0)); // 50 km * 2 PLN
+        assertEquals(100.0, shop.calculateShippingCost(10.0, 50.0)); // 50 km * 2 PLN
 
         shop.setShippingStrategy(new FreeOverThresholdShippingStrategy(200.0, 20.0));
-        assertEquals(20.0, shop.calculateDelivery(150.0, 10.0)); // Below the threshold
-        assertEquals(0.0, shop.calculateDelivery(250.0, 10.0));  // Above the threshold
+        assertEquals(20.0, shop.calculateShippingCost(150.0, 10.0)); // Below the threshold
+        assertEquals(0.0, shop.calculateShippingCost(250.0, 10.0));  // Above the threshold
     }
 
     // 2. TEST OBSERVER PATTERN
