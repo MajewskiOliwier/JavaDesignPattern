@@ -22,7 +22,7 @@ public enum CurrencyType {
         for (CurrencyType c : values()) {
             if (c.name().equalsIgnoreCase(code)) return c;
         }
-        return null; // unsupported currency → OrderFacade returns false
+        throw new IllegalArgumentException("Unsupported currency code: " + code);
     }
 }
 // End Week 4, Pattern Flyweight 1 Oliwier Majewski

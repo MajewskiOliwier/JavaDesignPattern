@@ -23,7 +23,7 @@ public class OrderStatusHistory {
     public OrderStatusMemento undo() {
         if (history.size() < 2) {
             System.out.println("No previous status to restore");
-            return null;
+            throw new IllegalStateException();
         }
 
         history.pop();

@@ -11,6 +11,7 @@ import allnew.okk.payment.Adapter.PaymentGateway;
 // Week 2, Pattern Prototype 1
 //Jest to klasa abstrakcji a nie interfejs z uwagi na istnienie wspólnych pol i metod dla oby typów kont
 public abstract class BaseAccount {
+    protected boolean isBanned = false;
     protected String email;
     protected String password;
     protected String adress;
@@ -28,6 +29,7 @@ public abstract class BaseAccount {
         // Week 6, Pattern Observer 1 Oliwier Majewski
         //Sends an event to the AcccountEventBus
         AccountEventBus.GetInstance().Publish(this, AccountEvent.ONBAN);
+        isBanned = true;
         //End Week 6, Pattern Observer 1 Oliwier Majewski
     }
 
@@ -51,10 +53,11 @@ public abstract class BaseAccount {
         this.phone = phone;
     }
 
-    public String GetEmail() { return email; }
-    public String GetPassword() { return password; }
-    public String GetAdress() { return adress; }
-    public String GetPhone() { return phone; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public String getAdress() { return adress; }
+    public String getPhone() { return phone; }
+    public boolean getIsBanned() { return isBanned; }
     // End Week 2, Pattern Prototype 1
 
     @Override

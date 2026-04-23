@@ -42,7 +42,7 @@ public class CurrentSession implements AccountObserver {
         // Week 6, Pattern State 1 Oliwier Majewski
         //Now during login there is verification if the user can log in for that particular account
         if (!account.canLogin()) {
-            System.out.println("Session signleton login is blocked for " + account.GetEmail());
+            System.out.println("Session signleton login is blocked for " + account.getEmail());
             return false;
         }
         // Week 6, Pattern State 1 Oliwier Majewski
