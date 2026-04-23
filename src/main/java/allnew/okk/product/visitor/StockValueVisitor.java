@@ -1,6 +1,7 @@
 package allnew.okk.product.visitor;
 
 import allnew.okk.product.model.CompanyProduct;
+import allnew.okk.product.model.DigitalProduct;
 import allnew.okk.product.model.PrivateProduct;
 
 // Week 6, pattern visitor Marciniuk
@@ -19,6 +20,13 @@ public class StockValueVisitor implements ProductVisitor {
 
     @Override
     public void visit(CompanyProduct product) {
+        double value = product.getPrice() * COMPANY_COEFFICIENT;
+        System.out.println("StockValue [company]: " + product.getName() + " = " + value + " zł");
+        totalStockValue += value;
+    }
+
+    @Override
+    public void visit(DigitalProduct product) {
         double value = product.getPrice() * COMPANY_COEFFICIENT;
         System.out.println("StockValue [company]: " + product.getName() + " = " + value + " zł");
         totalStockValue += value;

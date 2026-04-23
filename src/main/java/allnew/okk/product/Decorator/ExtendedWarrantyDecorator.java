@@ -22,6 +22,13 @@ public class ExtendedWarrantyDecorator extends ProductDecorator {
     public int getWarrantyMonths() {
         return warrantyMonths;
     }
+
+    @Override
+    public void setPrice(double newPrice) {
+        // Ustawienie ceny bazowego produktu, a koszt gwarancji jest dodawany w metodzie getPrice.
+        wrappedItem.setPrice(newPrice);
+    }
+
     // Nadpisanie metody getPrice, aby uwzględnić koszt przedłużonej gwarancji.
     @Override
     public double getPrice() {

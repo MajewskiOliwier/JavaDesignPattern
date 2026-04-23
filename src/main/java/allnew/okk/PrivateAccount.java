@@ -1,4 +1,8 @@
-public class PrivateAccount extends BaseAccount{
+package allnew.okk;
+
+import allnew.okk.account.Prototype.BaseAccount;
+
+public class PrivateAccount extends BaseAccount {
     private String name;
     private String surname;
     private float savedMoney = 0;

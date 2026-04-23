@@ -15,6 +15,12 @@ public class ExtraDeliveryInsuranceDecorator extends ProductDecorator{
     }
 
     @Override
+    public void setPrice(double newPrice) {
+        // Ustawienie ceny bazowego produktu, a koszt ubezpieczenia jest dodawany w metodzie getPrice.
+        wrappedItem.setPrice(newPrice);
+    }
+
+    @Override
     public double getPrice() {
         return wrappedItem.getPrice() + insurancePrice;
     }

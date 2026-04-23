@@ -19,6 +19,9 @@ public abstract class BaseAccount {
     // Week 6, Pattern State 1 Oliwier Majewski
     private AccountState accountState = new ActiveState();
 
+    public BaseAccount(String email, String password) {
+    }
+
     public AccountState getAccountState() { return accountState; }
 
     public void activate()  { this.accountState = new ActiveState(); }

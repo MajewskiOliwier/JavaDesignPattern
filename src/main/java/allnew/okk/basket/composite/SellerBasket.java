@@ -24,6 +24,12 @@ public class SellerBasket implements PurchasableItem{
     }
 
     @Override
+    public void setPrice(double newPrice) {
+        // Not applicable for a seller basket, as it is a collection of items with their own prices.
+        // The total price is calculated based on the prices of the individual items.
+    }
+
+    @Override
     public double getPrice() {
         double totalPrice = 0;
 

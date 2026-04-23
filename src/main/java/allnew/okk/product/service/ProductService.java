@@ -1,28 +1,55 @@
 package allnew.okk.product.service;
 
 import allnew.okk.product.repository.ProductRepository;
-
-import java.util.ArrayList;
-import java.util.List;
+import allnew.okk.product.model.BaseProduct;
+import allnew.okk.product.exception.ProductExceptions.*;
 
 // Week 2, Pattern Singleton 3
 // klasa singleton odpowiedzialna za zarządzanie produktami, w tym duplikowanie produktów
-public class ProductService {
-    private final ProductRepository productRepository = ProductRepository.getInstance();
+public class ProductService extends AbstractProductService {
     // Singleton - jedna instancja serwisu dla całej aplikacji
-    private final static ProductService instance = new ProductService();
+    private final static ProductService instance = new ProductService(ProductRepository.getInstance());
 
 
 
-    private ProductService(){
+    private ProductService(ProductRepository repository) {
+        super(repository);
     }
 
     public static ProductService getInstance() {
         return instance;
     }
 
-    // Week 2, Pattern Prototype 4
+    @Override
+    public void duplicateProduct(String productId, DuplicationModifier modifier) {
+        BaseProduct original = repository.getProduct(productId);
+        BaseProduct duplicate = cloneOriginalProduct(original);
+        applyCustomModifications(duplicate, modifier);
+        saveDuplicatedProduct(duplicate);
+    }
 
+    private BaseProduct cloneOriginalProduct(BaseProduct original) {
+        try {
+            return original.clone();
+        } catch (CloneNotSupportedException exception) {
+            // Week 9, custom exceptions, jakub marciniuk
+            throw new ProductDuplicationException("Klonowanie nieudane", exception);
+            // End Week 9, custom exceptions, jakub marciniuk
+        }
+    }
+
+    private void applyCustomModifications(BaseProduct product, DuplicationModifier modifier) {
+        if (modifier != null) {
+            modifier.modify(product);
+        }
+    }
+
+    private void saveDuplicatedProduct(BaseProduct duplicate) {
+        repository.addProduct(duplicate);
+    }
+
+    /*
+    // Week 2, Pattern Prototype 4
     public void duplicateProduct(String productId, DuplicationModifier modifier) throws CloneNotSupportedException {
         var originalProduct = productRepository.getProduct(productId);
         if (originalProduct != null) {
@@ -46,6 +73,6 @@ public class ProductService {
         }
     }
     // End Week 2, Pattern Prototype 4
-
+*/
 }
 // End Week 2, Pattern Singleton 3
