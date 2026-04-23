@@ -19,8 +19,8 @@ class Week1OliwierTests {
                 .build();
 
         assertNotNull(account);
-        assertEquals("week1@gmail.com", account.GetEmail());
-        assertEquals("pass123!", account.GetPassword());
+        assertEquals("week1@gmail.com", account.getEmail());
+        assertEquals("pass123!", account.getPassword());
         assertEquals("Oliwier", account.GetName());
         assertEquals("Majewski", account.GetSurname());
         assertEquals(0, account.GetSavedMoney());
@@ -36,8 +36,8 @@ class Week1OliwierTests {
                 .Build();
 
         assertNotNull(account);
-        assertEquals("week1@gmail.com", account.GetEmail());
-        assertEquals("pass123!", account.GetPassword());
+        assertEquals("week1@gmail.com", account.getEmail());
+        assertEquals("pass123!", account.getPassword());
         assertEquals("COMPANY1WEEK", account.GetLegalName());
         assertEquals("1234567890", account.GetVatNumber());
     }
@@ -59,8 +59,8 @@ class Week1OliwierTests {
 
             PrivateAccount p = CurrentSession.getInstance().getAsPrivate();
 
-            assertEquals("week1@gmail.com", p.GetEmail());
-            assertEquals("pass123!", p.GetPassword());
+            assertEquals("week1@gmail.com", p.getEmail());
+            assertEquals("pass123!", p.getPassword());
             assertEquals("Oliwier", p.GetName());
             assertEquals("Majewski", p.GetSurname());
             assertEquals(0, p.GetSavedMoney());
@@ -84,8 +84,8 @@ class Week1OliwierTests {
 
             CompanyAccount c = CurrentSession.getInstance().getAsCompany();
 
-            assertEquals("week1@gmail.com", c.GetEmail());
-            assertEquals("pass123!", c.GetPassword());
+            assertEquals("week1@gmail.com", c.getEmail());
+            assertEquals("pass123!", c.getPassword());
             assertEquals("COMPANY1WEEK", c.GetLegalName());
             assertEquals("1234567890", c.GetVatNumber());
         }
@@ -106,14 +106,14 @@ class Week1OliwierTests {
                 .Build();
 
         assertNotNull(template);
-        assertEquals("week1@gmail.com", template.GetEmail());
-        assertEquals("pass123!", template.GetPassword());
+        assertEquals("week1@gmail.com", template.getEmail());
+        assertEquals("pass123!", template.getPassword());
         assertEquals("COMPANY1WEEK", template.GetLegalName());
         assertEquals("1234567890", template.GetVatNumber());
 
         assertNotNull(subAccount);
-        assertEquals("week1_2@gmail.com", subAccount.GetEmail());
-        assertEquals("pass321!", subAccount.GetPassword());
+        assertEquals("week1_2@gmail.com", subAccount.getEmail());
+        assertEquals("pass321!", subAccount.getPassword());
         assertEquals("COMPANY1WEEK", subAccount.GetLegalName());
         assertEquals("1234567890", subAccount.GetVatNumber());
     }

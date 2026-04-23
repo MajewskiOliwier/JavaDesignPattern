@@ -14,12 +14,12 @@ public class CompanyRegistrationTemplate extends RegistrationTemplate{
             return false;
         }
 
-        if (companyAccount.GetEmail() == null || companyAccount.GetEmail().isBlank()) {
+        if (companyAccount.getEmail() == null || companyAccount.getEmail().isBlank()) {
             System.out.println("Template: email cannot be empty");
             return false;
         }
 
-        if (companyAccount.GetPassword() == null || companyAccount.GetPassword().length() < 6) {
+        if (companyAccount.getPassword() == null || companyAccount.getPassword().length() < 6) {
             System.out.println("Template: password must be at least 6 characters");
             return false;
         }
@@ -34,7 +34,7 @@ public class CompanyRegistrationTemplate extends RegistrationTemplate{
             return false;
         }
 
-        System.out.println("Template: company account validation passed for " + companyAccount.GetEmail());
+        System.out.println("Template: company account validation passed for " + companyAccount.getEmail());
         return true;
     }
 }

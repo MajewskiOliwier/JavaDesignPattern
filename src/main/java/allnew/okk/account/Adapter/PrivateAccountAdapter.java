@@ -19,7 +19,7 @@ public class PrivateAccountAdapter implements AccountDisplayable, LoyaltyEligilb
 
     @Override
     public String GetIdentifier() {
-        return privateAccount.GetEmail();
+        return privateAccount.getEmail();
     }
 
     @Override
