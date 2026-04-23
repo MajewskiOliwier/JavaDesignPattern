@@ -14,4 +14,4 @@ public class SequenceIdGenerator implements IdGenerator {
     }
 
 }
-// End Week 7, open-closed principle, implementation
+// End Week 7, open-closed principle, implementation, jakub marciniuk

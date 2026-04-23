@@ -29,4 +29,4 @@ public class ProductPriceMemento {
     }
 
 }
-// end of week 5, pattern memento
+// end of week 5, pattern memento, jakub marciniuk

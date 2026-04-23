@@ -4,7 +4,7 @@ import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.basket.Visitor.BasketVisitor;
 import allnew.okk.basket.composite.PurchasableItem;
 
-// Week 3, Pattern Decorator 2
+// Week 3, Pattern Decorator 2, jakub marciniuk
 // Dekorator służący do dodania opcji przedłużonej gwarancji do produktu.
 public class ExtendedWarrantyDecorator extends ProductDecorator {
     private final int warrantyMonths = 12;
@@ -57,4 +57,4 @@ public class ExtendedWarrantyDecorator extends ProductDecorator {
     }
     //End Week 6, Pattern Visitor Oliwier Majewski
 }
-// End Week 3, Pattern Decorator 2
+// End Week 3, Pattern Decorator 2, jakub marciniuk

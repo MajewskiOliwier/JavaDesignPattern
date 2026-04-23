@@ -1,12 +1,9 @@
 package allnew.okk.product.strategy;
 
+// Week 8, Liskov Substitution Principle Marciniuk
 // Week 6, pattern strategy Marciniuk
 public class DiscountPricingStrategy implements ProductPricingStrategy {
-    private double discountPercentage;
-
-    public DiscountPricingStrategy(double discountPercentage) {
-        this.discountPercentage = discountPercentage;
-    }
+    private final double discountPercentage = 0.20;
 
     @Override
     public double calculateFinalPrice(double basePrice) {
@@ -14,3 +11,4 @@ public class DiscountPricingStrategy implements ProductPricingStrategy {
     }
 }
 // End Week 6, pattern strategy Marciniuk
+// End Week 8, Liskov Substitution Principle Marciniuk

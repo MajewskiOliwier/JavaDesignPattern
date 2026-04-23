@@ -19,7 +19,7 @@ public class PrivateProduct extends BaseProduct {
         this.sellerContact = b.sellerContact;
     }
 
-    // Week 3, Pattern Composite 3
+    // Week 3, Pattern Composite 3, jakub marciniuk
     @Override
     public String getSellerName() {
         return sellerName;
@@ -38,9 +38,9 @@ public class PrivateProduct extends BaseProduct {
     }
     //End Week 6, Pattern Visitor Oliwier Majewski
 
-    // End Week 3, Pattern Composite 3
+    // End Week 3, Pattern Composite 3, jakub marciniuk
 
-    // Week 2, Pattern  Builder 3
+    // Week 2, Pattern  Builder 3, jakub marciniuk
     // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
         private String sellerName;
@@ -66,7 +66,7 @@ public class PrivateProduct extends BaseProduct {
             return new PrivateProduct(this);
         }
     }
-    // End Week 2, Pattern  Builder 3
+    // End Week 2, Pattern  Builder 3, jakub marciniuk
     @Override
     public void accept(ProductVisitor visitor) {
         visitor.visit(this);
@@ -83,7 +83,7 @@ public class PrivateProduct extends BaseProduct {
                 .setSellerContact(sellerContact);
     }
 
-    // Week 2, Pattern  Prototype 3
+    // Week 2, Pattern  Prototype 3, jakub marciniuk
     @Override
     public PrivateProduct clone() {
         try {
@@ -93,7 +93,7 @@ public class PrivateProduct extends BaseProduct {
             throw new AssertionError();
         }
     }
-    // Week 2, Pattern Prototype 3
+    // Week 2, Pattern Prototype 3, jakub marciniuk
 
     @Override
     public String toString() {

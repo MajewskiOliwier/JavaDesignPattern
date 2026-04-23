@@ -73,4 +73,21 @@ class Week3MarciniukTests {
         proxy.clearProducts();
     }
 
+    @Test
+    void testProductRepositoryProxySecurity() {
+        ProductRepositoryProxy proxy = new ProductRepositoryProxy();
+        ProductFactory factory = ProductFactory.getInstance();
+        proxy.addProduct(factory.createPrivateProduct().toBuilder()
+                .setName("Private Scooter")
+                .setCategory(ProductCategory.AUTOMOTIVE)
+                .setCondition(ProductCondition.NEW)
+                .setPrice(150).build());
+
+        // Próba usunięcia produktu bez odpowiednich uprawnień
+        proxy.removeProduct(proxy.getIdByProduct(proxy.getAllProducts().getFirst()));
+        // W konsoli powinien pojawić się komunikat o analizie uprawnień
+
+        proxy.clearProducts();
+    }
+
 }

@@ -29,7 +29,7 @@ public class CompanyProduct extends BaseProduct {
     }
 
 
-    // Tydzień 3, Wzorzec Composite 3
+    // Week 3, Wzorzec Composite 3, jakub marciniuk
     @Override
     public String getSellerName() {
         return companyName;
@@ -47,9 +47,9 @@ public class CompanyProduct extends BaseProduct {
     }
     //End Week 6, Pattern Visitor Oliwier Majewski
 
-    // Koniec, Tydzień 3, Wzorzec Composite 3
+    // End, Week 3, Wzorzec Composite 3, jakub marciniuk
 
-    // Tydzień 2, Wzorzec Builder 2
+    // Week 2, Wzorzec Builder 2
     // Implementacja wzorca Builder dla produktów
     public static class Builder extends BaseProduct.Builder<Builder> {
         private String companyName;
@@ -100,7 +100,7 @@ public class CompanyProduct extends BaseProduct {
             return new CompanyProduct(this);
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Builder 2
+    // End, Week 2, Wzorzec Builder 2, jakub marciniuk
     @Override
     public void accept(ProductVisitor visitor) {
         visitor.visit(this);
@@ -121,7 +121,7 @@ public class CompanyProduct extends BaseProduct {
                 .setREGON(REGON);
     }
 
-    // Tydzień 2, Wzorzec Prototype 2
+    // Week 2, Wzorzec Prototype 2, jakub marciniuk
     @Override
     public CompanyProduct clone() {
         try {
@@ -131,7 +131,7 @@ public class CompanyProduct extends BaseProduct {
             throw new AssertionError();
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Prototype 2
+    // End Week 2, Wzorzec Prototype 2, jakub marciniuk
 
     @Override
     public String toString() {
