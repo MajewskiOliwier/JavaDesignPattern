@@ -21,7 +21,7 @@ public abstract class RegistrationTemplate {
 
     private void SaveToSession(BaseAccount account) {
         CurrentSession.getInstance().register(account);
-        System.out.println("Template: account registered — " + account.GetEmail());
+        System.out.println("Template: account registered — " + account.getEmail());
     }
 }
 //End Week 6, Pattern Template 1 Oliwier Majewski

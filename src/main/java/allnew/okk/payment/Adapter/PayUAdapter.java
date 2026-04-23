@@ -6,7 +6,9 @@ import allnew.okk.payment.Strategy.RefundStrategy;
 
 // Week 3, Pattern  Adapter 1
 //konkretna implementacja adaptera dla PAYU
-public class PayUAdapter implements PaymentGateway {
+// Week 8 Dependency Inversion Oliwier
+// low-level implementataion used only through PaymentGateway abstraction
+public class PayUAdapter extends AbstractPaymentAdapter {
     private PayUService payUService;
     private String lastTranscationID;
 
@@ -49,4 +51,5 @@ public class PayUAdapter implements PaymentGateway {
         return payUService.checkStatus(transactionID);
     }
 }
+//End Week 8 Dependency Inversion Oliwier
 // End Week 3, Pattern Adapter 1

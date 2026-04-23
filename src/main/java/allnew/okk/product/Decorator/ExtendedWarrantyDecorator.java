@@ -8,7 +8,7 @@ import allnew.okk.basket.composite.PurchasableItem;
 // Dekorator służący do dodania opcji przedłużonej gwarancji do produktu.
 public class ExtendedWarrantyDecorator extends ProductDecorator {
     private final int warrantyMonths = 12;
-    private final double warrantyCost = 100.0;
+    private double warrantyCost = 100.0;
 
     // Konstruktor przyjmujący produkt do dekoracji, liczbę miesięcy gwarancji oraz koszt gwarancji.
     public ExtendedWarrantyDecorator(PurchasableItem wrappedItem) {
@@ -25,8 +25,7 @@ public class ExtendedWarrantyDecorator extends ProductDecorator {
 
     @Override
     public void setPrice(double newPrice) {
-        // Ustawienie ceny bazowego produktu, a koszt gwarancji jest dodawany w metodzie getPrice.
-        wrappedItem.setPrice(newPrice);
+        warrantyCost = newPrice;
     }
 
     // Nadpisanie metody getPrice, aby uwzględnić koszt przedłużonej gwarancji.

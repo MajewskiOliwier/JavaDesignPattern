@@ -1,0 +1,56 @@
+package allnew.okk.shop.aspect;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+// Week 11 - Aspect Oriented Programming (AOP)
+@Aspect
+@Component
+public class ShopManagementAspect {
+
+    private static final String LOG_SERVICE_ENTER = "[AOP LOG] Entering service method: ";
+    private static final String LOG_ERROR_PREFIX = "[AOP ERROR] Exception in ";
+    private static final String LOG_ERROR_SUFFIX = ": ";
+    private static final String LOG_GUARD_PREFIX = "[AOP GUARD] Validating security context for command: ";
+
+    // Aspect 1:  Activity Logging in "Service" package
+    @Pointcut("execution(* allnew.okk.shop.service.*.*(..))")
+    private void shopServiceMethods() {}
+
+    @Before("shopServiceMethods()")
+    public void logServiceActivity(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        logMethodEntry(methodName);
+    }
+
+    private void logMethodEntry(String methodName) {
+        System.out.println(LOG_SERVICE_ENTER + methodName);
+    }
+
+    // Aspect 2: Global Exception Logging
+    @AfterThrowing(pointcut = "execution(* allnew.okk.shop..*(..))", throwing = "exception")
+    public void handleShopExceptions(JoinPoint joinPoint, Exception exception) {
+        String location = joinPoint.getSignature().toShortString();
+        logException(location, exception);
+    }
+
+    private void logException(String location, Exception exception) {
+        System.err.println(LOG_ERROR_PREFIX + location + LOG_ERROR_SUFFIX + exception.getMessage());
+    }
+
+    // Aspect 3: Security & State Validation Guard
+    // Automatically checks context before command execution.
+    @Before("execution(* allnew.okk.shop.command.ShopCommand.execute(..))")
+    public void validateCommandExecution(JoinPoint joinPoint) {
+        String commandName = joinPoint.getSignature().toShortString();
+        logSecurityCheck(commandName);
+    }
+
+    private void logSecurityCheck(String commandName) {
+        System.out.println(LOG_GUARD_PREFIX + commandName);
+    }
+}

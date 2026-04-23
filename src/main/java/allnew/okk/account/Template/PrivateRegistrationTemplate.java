@@ -14,12 +14,12 @@ public class PrivateRegistrationTemplate extends RegistrationTemplate{
             return false;
         }
 
-        if (privateAccount.GetEmail() == null || privateAccount.GetEmail().isBlank()) {
+        if (privateAccount.getEmail() == null || privateAccount.getEmail().isBlank()) {
             System.out.println("Template: email cannot be empty");
             return false;
         }
 
-        if (privateAccount.GetPassword() == null || privateAccount.GetPassword().length() < 6) {
+        if (privateAccount.getPassword() == null || privateAccount.getPassword().length() < 6) {
             System.out.println("Template: password must be at least 6 characters");
             return false;
         }
@@ -34,7 +34,7 @@ public class PrivateRegistrationTemplate extends RegistrationTemplate{
             return false;
         }
 
-        System.out.println("Template: private account validation passed for " + privateAccount.GetEmail());
+        System.out.println("Template: private account validation passed for " + privateAccount.getEmail());
         return true;
     }
 }

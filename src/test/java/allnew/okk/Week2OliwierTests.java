@@ -3,6 +3,7 @@ package allnew.okk;
 import allnew.okk.account.Adapter.AccountDisplayable;
 import allnew.okk.account.Adapter.CompanyAccountAdapter;
 import allnew.okk.account.Adapter.PrivateAccountAdapter;
+import allnew.okk.account.Builder.AccountBuilder;
 import allnew.okk.account.Factory.AccountFactory;
 import allnew.okk.account.Prototype.CompanyAccount;
 import allnew.okk.account.Prototype.PrivateAccount;
@@ -22,6 +23,8 @@ import allnew.okk.product.model.CompanyProduct;
 import allnew.okk.product.model.PrivateProduct;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.parameters.P;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -116,4 +119,31 @@ class Week2OliwierTests {
         assertTrue(payment.pay(250f, "PLN", privateAccountAdapter));
         assertTrue(paymentGateway.processPayment(250f, privateAccountAdapter, "PLN"));
     }
+
+    //Week 8 Podstawienie liskova Oliwier
+    private void configureBaseFields(AccountBuilder<?> builder) {
+        builder
+                .Email("test@example.com")
+                .Password("secret123")
+                .Adress("ul. Testowa 1")
+                .Phone("123456789");
+    }
+
+    @Test
+    void TestLSP_BuildersAreInterchangeable() {
+        // LSP: metoda przyjmuje typ bazowy AccountBuilder<?>, obie podklasy zachowują się identycznie i są zamienne.
+        AccountBuilder<?> companyBuilder  = AccountFactory.createCompanyAccount();
+        AccountBuilder<?> privateBuilder  = AccountFactory.createPrivateAccount();
+
+        List<AccountBuilder<?>> builders = List.of(companyBuilder, privateBuilder);
+
+        for (AccountBuilder<?> builder : builders) {
+            configureBaseFields(builder);
+
+            assertEquals("test@example.com", builder.getEmail());
+            assertEquals("secret123",        builder.getPassword());
+            assertEquals("123456789",        builder.getPhone());
+        }
+    }
+    //End Week 8 Podstawienie liskova Oliwier
 }

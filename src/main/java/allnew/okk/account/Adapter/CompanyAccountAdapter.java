@@ -23,11 +23,6 @@ public class CompanyAccountAdapter implements AccountDisplayable{
     }
 
     @Override
-    public String GetAccountType() {
-        return "COMPANY";
-    }
-
-    @Override
     public boolean hasValidPaymentMethod() {
         return companyAccount.getPaymentGateway() != null;
     }

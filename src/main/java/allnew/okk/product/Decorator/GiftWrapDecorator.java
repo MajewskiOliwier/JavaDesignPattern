@@ -16,8 +16,7 @@ public class GiftWrapDecorator extends ProductDecorator{
 
     @Override
     public void setPrice(double newPrice) {
-        // Ustawienie ceny bazowego produktu, a koszt opakowania jest dodawany w metodzie getPrice.
-        wrappedItem.setPrice(newPrice);
+        giftWrapPrice = (float)newPrice;
     }
 
     @Override

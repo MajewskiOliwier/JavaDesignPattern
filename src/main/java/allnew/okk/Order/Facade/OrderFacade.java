@@ -36,54 +36,60 @@ public class OrderFacade {
     public boolean placeOrder(Order order, String currency) {
 
         //Week 4, Pattern Flyweight 1 Oliwier Majewski
-        CurrencyType currencyType = CurrencyType.fromString(currency);
-        if (currencyType == null) {
+        try {
+            CurrencyType currencyType = CurrencyType.fromString(currency);
+
+            CurrencyFlyweight currencyFlyweight = CurrencyRegistry.get(currencyType);
+            //Week 4, Pattern Flyweight 1 Oliwier Majewski
+
+            //Week 5, Pattern Memento 1 Oliwier Majewski
+            statusHistory.save(order.saveMemento());
+            //End Week 5, Pattern Memento 1 Oliwier Majewski
+
+            order.getBasket().OrganizeBySeller(); //Divides items by the seller
+
+            //Week 5, Pattern Iterator 1 Oliwier Majewski
+            for (PurchasableItem item : order.getBasket()) {
+                //End Week 5, Pattern Iterator 1 Oliwier Majewski
+                float amount = (float) item.getPrice();
+                var sellerAccount = item.getSellerAccount();
+
+                boolean success = paymentGateway.processPayment(amount, sellerAccount, currency);
+
+                if (!success) {
+                    System.out.println("Payment failed for seller: " + item.getSellerName());
+                    return false;
+                }
+            }
+
+            //Week 5, Pattern Memento 1 Oliwier Majewski
+            order.setStatus(OrderStatus.PAID);
+            statusHistory.save(order.saveMemento());
+            //End Week 5, Pattern Memento 1 Oliwier Majewski
+
+            //Week 5, Pattern Mediator 1 Oliwier Majewski
+            checkoutMediator.notify(order, order.getStatus());
+            //End Week 5, Pattern Mediator 1 Oliwier Majewski
+        }
+        catch (IllegalArgumentException e){
             System.out.println("Unsupported currency: " + currency);
             return false;
         }
-
-        CurrencyFlyweight currencyFlyweight = CurrencyRegistry.get(currencyType);
-        //Week 4, Pattern Flyweight 1 Oliwier Majewski
-
-        //Week 5, Pattern Memento 1 Oliwier Majewski
-        statusHistory.save(order.saveMemento());
-        //End Week 5, Pattern Memento 1 Oliwier Majewski
-
-        order.getBasket().OrganizeBySeller(); //Divides items by the seller
-
-        //Week 5, Pattern Iterator 1 Oliwier Majewski
-        for (PurchasableItem item : order.getBasket()) {
-        //End Week 5, Pattern Iterator 1 Oliwier Majewski
-            float amount = (float) item.getPrice();
-            var sellerAccount =  item.getSellerAccount();
-
-            boolean success = paymentGateway.processPayment(amount, sellerAccount, currency);
-
-            if (!success) {
-                System.out.println("Payment failed for seller: " + item.getSellerName());
-                return false;
-            }
-        }
-
-        //Week 5, Pattern Memento 1 Oliwier Majewski
-        order.setStatus(OrderStatus.PAID);
-        statusHistory.save(order.saveMemento());
-        //End Week 5, Pattern Memento 1 Oliwier Majewski
-
-        //Week 5, Pattern Mediator 1 Oliwier Majewski
-        checkoutMediator.notify(order,order.getStatus());
-        //End Week 5, Pattern Mediator 1 Oliwier Majewski
 
         return true;
     }
 
     //Week 5, Pattern Memento 1 Oliwier Majewski
     public boolean undoLastStatus(Order order) {
-        var memento = statusHistory.undo();
-        if (memento == null)
-            return false;
 
-        order.restoreMemento(memento);
+        try{
+            var memento = statusHistory.undo();
+
+            order.restoreMemento(memento);
+        }
+        catch(IllegalStateException e){
+            return false;
+        }
         return true;
     }
 

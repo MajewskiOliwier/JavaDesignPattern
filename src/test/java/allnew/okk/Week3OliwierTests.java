@@ -15,6 +15,7 @@ import allnew.okk.account.Singleton.CurrentSession;
 import allnew.okk.basket.composite.PurchasableItem;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.payment.Adapter.PayUAdapter;
+import allnew.okk.payment.Adapter.PaymentGateway;
 import allnew.okk.payment.Adapter.Przelewy24Adapter;
 import allnew.okk.product.Decorator.GiftWrapDecorator;
 import allnew.okk.product.model.CompanyProduct;
@@ -153,8 +154,9 @@ class Week3OliwierTests {
 
     @Test
     void testCurrencyTypeFromStringReturnsNullForUnsupported() {
-        CurrencyType result = CurrencyType.fromString("JPY");
-        assertNull(result, "fromString should return null for unsupported currency");
+        assertThrows(IllegalArgumentException.class,
+                () -> CurrencyType.fromString("JPY"),
+                "Should throw exception for unsupported currency");
     }
 
     @Test
@@ -248,4 +250,13 @@ class Week3OliwierTests {
         boolean result = proxy.placeOrder(buildOrderWithValidAccount(), validAccount, "USD");
         assertTrue(result, "Proxy should allow placeOrder with USD currency");
     }
+
+    // Week 8 Dependency Inversion Oliwier
+    @Test
+    void TestDIP_PaymentGatewayAbstraction() {
+        // high-level module depends on abstraction, not on concrete implementation
+        PaymentGateway gateway = new PayUAdapter();
+        assertTrue(gateway.processPayment(100f, privateAccountAdapter, "PLN"));
+    }
+    // End Week 8 Dependency Inversion Oliwier
 }
