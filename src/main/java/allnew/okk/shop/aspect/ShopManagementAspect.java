@@ -12,27 +12,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShopManagementAspect {
 
-    private static final String LOG_SERVICE_ENTER = "[AOP LOG] Entering service method: ";
+    private static final String LOG_FACADE_ENTER = "[AOP LOG] Entering facade method: ";
     private static final String LOG_ERROR_PREFIX = "[AOP ERROR] Exception in ";
     private static final String LOG_ERROR_SUFFIX = ": ";
     private static final String LOG_GUARD_PREFIX = "[AOP GUARD] Validating security context for command: ";
 
-    // Aspect 1:  Activity Logging in "Service" package
-    @Pointcut("execution(* allnew.okk.shop.service.*.*(..))")
-    private void shopServiceMethods() {}
+    // Aspect 1: Activity Logging
+    @Pointcut("execution(* allnew.okk.shop.facade.*.*(..))")
+    private void shopFacadeMethods() {}
 
-    @Before("shopServiceMethods()")
-    public void logServiceActivity(JoinPoint joinPoint) {
+    @Before("shopFacadeMethods()")
+    public void logFacadeActivity(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         logMethodEntry(methodName);
     }
 
     private void logMethodEntry(String methodName) {
-        System.out.println(LOG_SERVICE_ENTER + methodName);
+        System.out.println(LOG_FACADE_ENTER + methodName);
     }
 
     // Aspect 2: Global Exception Logging
-    @AfterThrowing(pointcut = "execution(* allnew.okk.shop..*(..))", throwing = "exception")
+    @AfterThrowing(pointcut = "execution(* allnew.okk.shop.facade..*(..)) || execution(* allnew.okk.shop.command..*(..))", throwing = "exception")
     public void handleShopExceptions(JoinPoint joinPoint, Exception exception) {
         String location = joinPoint.getSignature().toShortString();
         logException(location, exception);
@@ -43,7 +43,6 @@ public class ShopManagementAspect {
     }
 
     // Aspect 3: Security & State Validation Guard
-    // Automatically checks context before command execution.
     @Before("execution(* allnew.okk.shop.command.ShopCommand.execute(..))")
     public void validateCommandExecution(JoinPoint joinPoint) {
         String commandName = joinPoint.getSignature().toShortString();
