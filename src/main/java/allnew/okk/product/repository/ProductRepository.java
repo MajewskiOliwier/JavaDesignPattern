@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// Week 2, Pattern Singleton 2
+// Week 2, Pattern Singleton 2, jakub marciniuk
 // repozytorium produktów, implementujące wzorzec singleton, przechowujące produkty w pamięci
 public class ProductRepository extends AbstractProductRepository {
     // Singleton - prywatna statyczna instancja klasy oraz prywatny konstruktor
@@ -19,7 +19,7 @@ public class ProductRepository extends AbstractProductRepository {
     // Week 7, Single Responsibility Principle, jakub marciniuk
     // oddzielenie odpowiedzialności za generowanie ID do osobnej klasy
     private final IdGenerator idGenerator = new SequenceIdGenerator("OKK-");
-    // End Week 7, Single Responsibility Principle
+    // End Week 7, Single Responsibility Principle, jakub marciniuk
     private ProductRepository(){}
 
     public static synchronized ProductRepository getInstance() {
@@ -35,7 +35,7 @@ public class ProductRepository extends AbstractProductRepository {
     public void addProduct(BaseProduct product) {
         // Week 7, open-closed principle (OCP) , użycie interfejsu i implementacji, jakub marciniuk
         String uniqueId = generateNewId();
-        // end Week 7, open-closed principle (OCP)
+        // end Week 7, open-closed principle (OCP), jakub marciniuk
         products.put(uniqueId, product);
     }
 
@@ -95,7 +95,7 @@ public class ProductRepository extends AbstractProductRepository {
                 .filter(expression::evaluate)
                 .toList();
     }
-    // end, week 5, pattern interpreter 5
+    // end, week 5, pattern interpreter 5, jakub marciniuk
 
 }
-// End, Week 2, Pattern Singleton 2
+// End, Week 2, Pattern Singleton 2, jakub marciniuk

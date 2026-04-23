@@ -22,7 +22,7 @@ public class ProductCommandInvoker {
     public void executeCommand(ProductCommand command, ProductEvent event) {
         command.execute();
         commandHistory.add(command);
-        // week 5, pattern mediator 3
+        // week 5, pattern mediator 3, jakub marciniuk
         if(mediator != null) {
             mediator.notify(product, event);
         }

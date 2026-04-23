@@ -2,7 +2,7 @@ package allnew.okk.product.bridge;
 
 import java.util.List;
 
-// Week 3 , Pattern Bridge
+// Week 3 , Pattern Bridge, jakub marciniuk
 public interface TaxPolicy {
     double calculateTax(double price);
     double calculateTotalPrice(double price);

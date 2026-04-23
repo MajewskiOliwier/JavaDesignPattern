@@ -99,7 +99,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         return ID != null ? ID : null;
     }
 
-    // Tydzień 2, Wzorzec Builder 1
+    // Week 2, Wzorzec Builder 1, jakub marciniuk
     // Implementacja wzorca Builder dla produktów, z domyślnymi wartościami i generycznym typowaniem, umożliwiającym łatwe tworzenie różnych typów produktów z różnymi właściwościami.
     public abstract static class Builder<T extends Builder<T>> {
         private static final double DEFAULT_PRICE = 0.0;
@@ -163,9 +163,9 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
         protected abstract T self();
         public abstract BaseProduct build();
     }
-    // Koniec, Tydzień 2, Wzorzec Builder 1
+    // End, Week 2, Wzorzec Builder 1, jakub marciniuk
 
-    // Tydzień 2, Wzorzec Prototype 1
+    // Week 2, Wzorzec Prototype 1, jakub marciniuk
     @Override
     public BaseProduct clone() throws CloneNotSupportedException {
         try {
@@ -174,7 +174,7 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
             throw new AssertionError();
         }
     }
-    // Koniec, Tydzień 2, Wzorzec Prototype 1
+    // End, Week 2, Wzorzec Prototype 1, jakub marciniuk
 
     // week 7 Single Responsibility Principle SRP, Marciniuk
     // Usunięto metode toString, za to odpowiada teraz implementacje ProductExporter

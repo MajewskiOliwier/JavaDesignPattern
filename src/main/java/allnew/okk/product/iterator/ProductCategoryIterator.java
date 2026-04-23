@@ -41,4 +41,4 @@ public class ProductCategoryIterator implements Iterator<PurchasableItem> {
         return items.get(currentIndex++);
     }
 }
-// end of week 4, pattern iterator
+// end of week 4, pattern iterator, jakub marciniuk
