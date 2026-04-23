@@ -15,6 +15,9 @@ public class ShoppingBasket implements PurchasableItem, Iterable<PurchasableItem
     private final List<BasketCommand> commandHistory = new ArrayList<>();
 
     @Override
+    public void setPrice(double newPrice) {}
+
+    @Override
     public double getPrice() {
         double totalPrice = 0;
 

@@ -28,6 +28,9 @@ public class ProductCategoryNode implements PurchasableItem {
     }
 
     @Override
+    public void setPrice(double newPrice) {}
+
+    @Override
     public double getPrice() {
         return 0;
     }

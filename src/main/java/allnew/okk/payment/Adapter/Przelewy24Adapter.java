@@ -6,7 +6,7 @@ import allnew.okk.payment.Strategy.RefundStrategy;
 
 // Week 3, Pattern  Adapter 1
 //konkretna implementacja adaptera dla PAYU
-public class Przelewy24Adapter implements PaymentGateway {
+public class Przelewy24Adapter extends AbstractPaymentAdapter {
     private Przelewy24Service przelewy24Service;
     private String lastTranscationID;
 

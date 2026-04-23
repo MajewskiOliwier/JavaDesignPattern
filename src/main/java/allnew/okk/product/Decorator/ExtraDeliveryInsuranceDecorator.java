@@ -15,6 +15,11 @@ public class ExtraDeliveryInsuranceDecorator extends ProductDecorator{
     }
 
     @Override
+    public void setPrice(double newPrice) {
+        insurancePrice = (float)newPrice;
+    }
+
+    @Override
     public double getPrice() {
         return wrappedItem.getPrice() + insurancePrice;
     }

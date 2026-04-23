@@ -15,6 +15,11 @@ public class GiftWrapDecorator extends ProductDecorator{
     }
 
     @Override
+    public void setPrice(double newPrice) {
+        giftWrapPrice = (float)newPrice;
+    }
+
+    @Override
     public double getPrice() {
         return wrappedItem.getPrice() + giftWrapPrice;
     }

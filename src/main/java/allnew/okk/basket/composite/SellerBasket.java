@@ -24,6 +24,9 @@ public class SellerBasket implements PurchasableItem{
     }
 
     @Override
+    public void setPrice(double newPrice) {}
+
+    @Override
     public double getPrice() {
         double totalPrice = 0;
 

@@ -23,11 +23,6 @@ public class PrivateAccountAdapter implements AccountDisplayable, LoyaltyEligilb
     }
 
     @Override
-    public String GetAccountType() {
-        return "PRIVATE";
-    }
-
-    @Override
     public boolean hasValidPaymentMethod() {
         return privateAccount.getPaymentGateway() != null;
     }
