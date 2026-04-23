@@ -154,8 +154,9 @@ class Week3OliwierTests {
 
     @Test
     void testCurrencyTypeFromStringReturnsNullForUnsupported() {
-        CurrencyType result = CurrencyType.fromString("JPY");
-        assertNull(result, "fromString should return null for unsupported currency");
+        assertThrows(IllegalArgumentException.class,
+                () -> CurrencyType.fromString("JPY"),
+                "Should throw exception for unsupported currency");
     }
 
     @Test
