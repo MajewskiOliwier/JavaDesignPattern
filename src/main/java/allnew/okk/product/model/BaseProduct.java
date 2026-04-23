@@ -102,9 +102,13 @@ public abstract class BaseProduct  implements Cloneable, PurchasableItem {
     // Tydzień 2, Wzorzec Builder 1
     // Implementacja wzorca Builder dla produktów, z domyślnymi wartościami i generycznym typowaniem, umożliwiającym łatwe tworzenie różnych typów produktów z różnymi właściwościami.
     public abstract static class Builder<T extends Builder<T>> {
-        private String name = "Default Name";
-        private String description = "Default Description";
-        private double price = 0.0;
+        private static final double DEFAULT_PRICE = 0.0;
+        private static final String DEFAULT_NAME = "Default Name";
+        private static final String DEFAULT_DESC = "Default Description";
+
+        private String name = DEFAULT_NAME;
+        private String description = DEFAULT_DESC;
+        private double price = DEFAULT_PRICE;
         private ProductCategory category = ProductCategory.OTHER;
         private ProductCondition condition = ProductCondition.NONE;
         private TaxPolicy taxPolicy;

@@ -42,6 +42,9 @@ dependencies {
 
 	// Wymagane dla JUnit 5 (Week 10 Clean Code)
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.aspectj:aspectjrt:1.9.20.1'
+	implementation 'org.aspectj:aspectjweaver:1.9.20.1'
 }
 
 tasks.named('test') {

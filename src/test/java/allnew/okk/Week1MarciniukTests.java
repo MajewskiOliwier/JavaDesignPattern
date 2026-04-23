@@ -1,4 +1,5 @@
 package allnew.okk;
+import allnew.okk.product.exception.ProductExceptions;
 import allnew.okk.product.factory.ProductFactory;
 import allnew.okk.product.model.PrivateProduct;
 import allnew.okk.product.model.ProductCategory;
@@ -124,14 +125,14 @@ class Week1MarciniukTests {
 
         try{
             service.duplicateProduct(repository.getIdByProduct(product), new NameSuffixModifier("(Copy)"));
-        }catch (CloneNotSupportedException e){
+        }catch (Exception e){
             fail("Klonowanie powinno być obsługiwane, ale wystąpił błąd: " + e.getMessage());
         }
 
         var productsInRepo = repository.getAllProducts();
         assertEquals(2, productsInRepo.size(), "Powinny być 2 produkty w repozytorium po duplikacji");
-        assertEquals("Test", productsInRepo.get(1).getName());
-        assertEquals("Test (Copy)", productsInRepo.get(0).getName());
+        assertEquals("Test (Copy)", productsInRepo.get(1).getName());
+        assertEquals("Test", productsInRepo.get(0).getName());
         repository.clear();
     }
 
@@ -153,7 +154,9 @@ class Week1MarciniukTests {
         var productId = repository.getIdByProduct(product);
 
         assertTrue(repository.removeProduct(productId), "Produkt powinien zostać usunięty");
-        assertNull(repository.getProduct(productId), "Usunięty produkt nie powinien być dostępny w repozytorium");
+        assertThrows(ProductExceptions.ProductNotFoundException.class,
+                () -> repository.getProduct(productId),
+                "Pobranie usuniętego produktu powinno rzucić wyjątek ProductNotFoundException");
         repository.clear();
     }
 

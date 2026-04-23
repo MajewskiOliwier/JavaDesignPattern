@@ -3,6 +3,7 @@ package allnew.okk.basket.Visitor;
 import allnew.okk.basket.composite.SellerBasket;
 import allnew.okk.basket.composite.ShoppingBasket;
 import allnew.okk.product.model.CompanyProduct;
+import allnew.okk.product.model.DigitalProduct;
 import allnew.okk.product.model.PrivateProduct;
 
 // Week 6, Pattern Visitor
@@ -15,5 +16,7 @@ public interface BasketVisitor {
 
     void visit(CompanyProduct product);
     void visit(PrivateProduct product);
+
+    void visit(DigitalProduct digitalProduct);
 }
 //End Week 6, Pattern Visitor

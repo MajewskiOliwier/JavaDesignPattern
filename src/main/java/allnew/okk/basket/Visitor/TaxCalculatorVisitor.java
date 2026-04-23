@@ -1,6 +1,7 @@
 package allnew.okk.basket.Visitor;
 
 import allnew.okk.product.model.CompanyProduct;
+import allnew.okk.product.model.DigitalProduct;
 import allnew.okk.product.model.PrivateProduct;
 
 public class TaxCalculatorVisitor implements  BasketVisitor{
@@ -17,6 +18,13 @@ public class TaxCalculatorVisitor implements  BasketVisitor{
     @Override
     public void visit(PrivateProduct product) {
         totalTax += product.getPrice() * PRIVATE_TAX_RATE;
+    }
+
+    @Override
+    public void visit(DigitalProduct digitalProduct) {
+        // Assuming digital products have a different tax rate, e.g., 15%
+        double DIGITAL_TAX_RATE = 0.15;
+        totalTax += digitalProduct.getPrice() * DIGITAL_TAX_RATE;
     }
 
     public double getTotalTax() { return totalTax; }
