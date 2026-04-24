@@ -127,4 +127,30 @@ public class Week6ShopTests {
         // Expected total: 6500 + 5000 + 800 = 12300 PLN
         assertEquals(12300.0, visitor.getTotalCost(), "The visitor incorrectly calculated the costs of the entire network!");
     }
+
+    @Test
+    void testCustomerSubscriberAndRemoveObserver() {
+        BaseShop shop = new OnlineShop.Builder().setName("Sklep Obserwowany").build();
+        allnew.okk.shop.observer.CustomerSubscriber subscriber = new allnew.okk.shop.observer.CustomerSubscriber("test@test.pl");
+
+        java.io.ByteArrayOutputStream outCaptor = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream standardOut = System.out;
+        System.setOut(new java.io.PrintStream(outCaptor));
+
+        try {
+            shop.addObserver(subscriber);
+            shop.broadcastPromotion("Promocja 1");
+
+            assertTrue(outCaptor.toString().contains("test@test.pl"));
+            assertTrue(outCaptor.toString().contains("Promocja 1"));
+
+            outCaptor.reset();
+            shop.removeObserver(subscriber);
+            shop.broadcastPromotion("Promocja 2");
+
+            assertFalse(outCaptor.toString().contains("Promocja 2"), "Subskrybent otrzymał powiadomienie po wyrejestrowaniu ze sklepu!");
+        } finally {
+            System.setOut(standardOut);
+        }
+    }
 }

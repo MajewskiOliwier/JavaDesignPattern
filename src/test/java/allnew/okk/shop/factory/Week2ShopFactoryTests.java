@@ -5,7 +5,7 @@ import allnew.okk.shop.model.PhysicalShop;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ShopFactoryTest {
+public class Week2ShopFactoryTests {
 
     @Test
     public void testShopFactoryIsSingleton() {

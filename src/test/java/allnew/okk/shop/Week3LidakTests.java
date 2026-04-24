@@ -145,4 +145,43 @@ public class Week3LidakTests {
 
         assertEquals("electronics.png", firstCategory.getIconUrl());
     }
+
+    @Test
+    void testShopNetworkRemoveComponent() {
+        allnew.okk.shop.composite.ShopNetwork network = new allnew.okk.shop.composite.ShopNetwork("Sieć Testowa");
+        BaseShop shop = new PhysicalShop.Builder().setName("Sklep do usunięcia").build();
+
+        network.addShopComponent(shop);
+        assertEquals(1, network.getShopCount());
+
+        network.removeShopComponent(shop);
+        assertEquals(0, network.getShopCount());
+
+        assertThrows(IllegalStateException.class, () -> network.removeShopComponent(shop),
+                "Powinno rzucić wyjątek przy próbie usunięcia nieistniejącego elementu.");
+    }
+
+    @Test
+    void testShopRepositoryProxyGetSingleShop() {
+        ShopRepositoryProxy proxy = new ShopRepositoryProxy();
+        proxy.clear();
+        BaseShop shop = new OnlineShop.Builder().setName("Pojedynczy Sklep").build();
+        proxy.addShop(shop);
+
+        BaseShop fetchedShop = proxy.getShop("SHOP-1");
+        assertNotNull(fetchedShop);
+        assertEquals("Pojedynczy Sklep", fetchedShop.getName());
+
+        assertThrows(IllegalArgumentException.class, () -> proxy.getShop("SHOP-999"));
+    }
+
+    @Test
+    void testShopCategoryDynamicRegistrationAndGuidelines() {
+        ShopCategoryRegistry.registerCategoryData(allnew.okk.shop.flyweight.ShopCategory.BOOKSTORE, "custom_book.png", "Nowe wytyczne");
+
+        ShopCategoryFlyweight flyweight = ShopCategoryRegistry.get(allnew.okk.shop.flyweight.ShopCategory.BOOKSTORE);
+
+        assertEquals("custom_book.png", flyweight.getIconUrl());
+        assertEquals("Nowe wytyczne", flyweight.getGuidelines(), "Pyłek nie zwraca poprawnych wytycznych!");
+    }
 }

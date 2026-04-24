@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Week 8 - Liskov Substitution Principle 4 - Plik Testowy
-public class LiskovSubstitutionTest {
+// Week 8 - Liskov Substitution Principle Test
+public class Week8LiskovSubstitutionTests {
 
     @Test
     public void testBaseShopSubstitution() {
@@ -29,7 +29,6 @@ public class LiskovSubstitutionTest {
     public void testReportTemplateSubstitution() {
         BaseShop dummyShop = new OnlineShop.Builder().setName("TestShop").build();
 
-        // RShopReportTemplate przetrzymuje konkretne implementacje
         ShopReportTemplate htmlReport = new HtmlShopReport();
         ShopReportTemplate csvReport = new CsvShopReport();
 
@@ -44,13 +43,11 @@ public class LiskovSubstitutionTest {
 
     @Test
     public void testDecoratorSubstitution() {
-        // Klasa bazowa (nieudekorowana)
         ShopDisplay rawShop = new PhysicalShop.Builder()
                 .setName("Biedronka")
                 .setDescription("Dyskont")
                 .build();
 
-        // Klasy pochodne (dekoratory owijające obiekt bazowy)
         ShopDisplay verifiedShop = new VerifiedBadgeDecorator(rawShop);
         ShopDisplay premiumVerifiedShop = new PremiumBadgeDecorator(verifiedShop);
 

@@ -3,7 +3,7 @@ package allnew.okk.shop.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ShopBuilderTest {
+public class Week2ShopBuilderTests {
 
     @Test
     public void testOnlineShopBuilder() {

@@ -34,7 +34,7 @@ public class Week5ShopTests {
         ShopRepository.getInstance().clear();
     }
 
-    // 1. TEST WZORCA MEMENTO (Pamiątka)
+    // 1. TEST MEMENTO
     @Test
     void testShopProfileMemento() {
         BaseShop shop = new PhysicalShop.Builder()
@@ -44,22 +44,18 @@ public class Week5ShopTests {
 
         ShopProfileHistory history = new ShopProfileHistory();
 
-        // Zapisujemy stan (Snapshot)
         history.save(shop.saveProfileMemento());
 
-        // Psujemy opis
         shop.setDescription("Błędny Opis");
         assertEquals("Błędny Opis", shop.getDescription());
 
-        // Cofamy zmiany (Undo)
         ShopProfileMemento lastSnapshot = history.undo();
         shop.restoreProfileMemento(lastSnapshot);
 
-        // Upewniamy się, że wrócił stary opis
         assertEquals("Stary Opis", shop.getDescription(), "Memento nie przywróciło starego opisu!");
     }
 
-    // 2. TEST WZORCA ITERATOR (Iterator)
+    // 2. TEST ITERATOR
     @Test
     void testShopNetworkIterator() {
         ShopNetwork rootNetwork = new ShopNetwork("Globalna Sieć");
@@ -69,7 +65,6 @@ public class Week5ShopTests {
         BaseShop shop2 = new OnlineShop.Builder().setName("Sklep 2").build();
         BaseShop shop3 = new PhysicalShop.Builder().setName("Sklep 3").build();
 
-        // Budujemy drzewo
         localNetwork.addShopComponent(shop2);
         localNetwork.addShopComponent(shop3);
         rootNetwork.addShopComponent(shop1);
@@ -77,7 +72,6 @@ public class Week5ShopTests {
 
         int shopCount = 0;
 
-        // Zwykła pętla for-each używająca pod spodem naszego ShopNetworkIterator
         for (ShopComponent component : rootNetwork) {
             assertTrue(component instanceof BaseShop, "Iterator powinien zwracać tylko pojedyncze sklepy (liście)!");
             shopCount++;
@@ -86,54 +80,45 @@ public class Week5ShopTests {
         assertEquals(3, shopCount, "Iterator nie odwiedził wszystkich sklepów w drzewie!");
     }
 
-    // 3. TEST WZORCA COMMAND (Polecenie)
+    // 3. TEST COMMAND
     @Test
     void testShopCommandAndUndo() {
         BaseShop shop = new PhysicalShop.Builder().setDescription("Opis A").build();
 
-        // Tworzymy Invokera (bez Mediatora dla tego testu)
         ShopCommandInvoker invoker = new ShopCommandInvoker(null);
         ShopCommand updateCommand = new UpdateShopDescriptionCommand(shop, "Opis B");
 
-        // Wykonujemy polecenie
         invoker.executeCommand(updateCommand, ShopEvent.SHOP_UPDATED, shop);
         assertEquals("Opis B", shop.getDescription());
         assertEquals(1, invoker.getHistorySize());
 
-        // Cofamy polecenie
         invoker.undoLastCommand();
         assertEquals("Opis A", shop.getDescription(), "Command nie cofnął opisu sklepu!");
     }
 
-    // 4. TEST WZORCA MEDIATOR (Mediator)
+    // 4. TEST MEDIATOR
     @Test
     void testShopCacheMediator() {
         ShopRepositoryProxy proxy = new ShopRepositoryProxy();
         proxy.clear();
 
         BaseShop shop = new PhysicalShop.Builder().setName("Sklep Testowy").build();
-        proxy.addShop(shop); // to wyczyści cache i doda sklep
+        proxy.addShop(shop);
 
-        // Pierwsze pobranie ze zbudowaniem Cache
         List<BaseShop> firstCall = proxy.getAllShops();
 
-        // Konfigurujemy Mediatora i Invokera
         ShopCacheMediator mediator = new ShopCacheMediator(proxy);
         ShopCommandInvoker invoker = new ShopCommandInvoker(mediator);
 
-        // Uruchamiamy polecenie modyfikujące sklep przez Invokera.
-        // Invoker powinien wysłać event do Mediatora, a Mediator powinien wyczyścić Cache w Proxy.
         ShopCommand command = new UpdateShopDescriptionCommand(shop, "Zmieniono");
         invoker.executeCommand(command, ShopEvent.SHOP_UPDATED, shop);
 
-        // Drugie pobranie danych
         List<BaseShop> secondCall = proxy.getAllShops();
 
-        // Jeśli Mediator zadziałał, druga lista powinna być nowym obiektem w pamięci (stary cache został usunięty)
         assertNotSame(firstCall, secondCall, "Mediator nie wyczyścił pamięci Cache po modyfikacji sklepu!");
     }
 
-    // 5. TEST WZORCA INTERPRETER (Interpreter)
+    // 5. TEST INTERPRETER
     @Test
     void testShopSearchInterpreter() {
         ShopRepository repo = ShopRepository.getInstance();
@@ -143,17 +128,37 @@ public class Week5ShopTests {
         repo.addShop(new OnlineShop.Builder().setName("Zalando").setCategory(ShopCategory.CLOTHING).build());
         repo.addShop(new PhysicalShop.Builder().setName("Biedronka").setCategory(ShopCategory.GROCERY).build());
 
-        // Budujemy zapytanie: (Kategoria == ELECTRONICS) ORAZ (Nazwa zawiera "Media")
         ShopSearchExpression isElectronics = new ShopCategoryExpression(ShopCategory.ELECTRONICS);
         ShopSearchExpression hasMediaInName = new ShopNameContainsExpression("Media");
 
         ShopSearchExpression complexQuery = new ShopAndExpression(isElectronics, hasMediaInName);
 
-        // Filtrujemy
         List<BaseShop> results = repo.filter(complexQuery);
 
         assertEquals(2, results.size(), "Interpreter nie przefiltrował poprawnie bazy danych!");
         assertTrue(results.get(0).getName().contains("Media"));
         assertTrue(results.get(1).getName().contains("Media"));
+    }
+
+    @Test
+    void testShopProfileHistorySizeAndTimestamp() {
+        BaseShop shop = new PhysicalShop.Builder().setName("Sklep do Memento").build();
+        ShopProfileHistory history = new ShopProfileHistory();
+
+        assertEquals(0, history.getHistorySize());
+
+        ShopProfileMemento memento1 = shop.saveProfileMemento();
+        history.save(memento1);
+
+        assertEquals(1, history.getHistorySize());
+        assertNotNull(memento1.getTimestamp(), "Timestamp w Memento nie powinien być null po utworzeniu.");
+
+        ShopProfileMemento memento2 = shop.saveProfileMemento();
+        history.save(memento2);
+
+        assertEquals(2, history.getHistorySize());
+
+        history.undo();
+        assertEquals(1, history.getHistorySize());
     }
 }

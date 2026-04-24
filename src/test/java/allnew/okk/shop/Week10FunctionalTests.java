@@ -12,6 +12,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Week10FunctionalTests {
 
@@ -47,5 +48,30 @@ public class Week10FunctionalTests {
 
         // Verify Lambda impact
         assertEquals("CLOSED", shops.get(0).getShopState().getStateName());
+    }
+
+    @Test
+    void testAdditionalStreamProcessing() {
+        ShopAnalyticsService analyticsService = new ShopAnalyticsService();
+
+        // Test strumienia na stosie
+        java.util.Stack<allnew.okk.shop.memento.ShopProfileMemento> historyStack = new java.util.Stack<>();
+        historyStack.push(new allnew.okk.shop.memento.ShopProfileMemento("Sklep A", "Opis 1"));
+        historyStack.push(new allnew.okk.shop.memento.ShopProfileMemento("Sklep B", "Opis 2"));
+
+        java.util.List<String> names = analyticsService.getHistoryNames(historyStack);
+        assertEquals(2, names.size());
+        assertTrue(names.contains("Sklep A"));
+        assertTrue(names.contains("Sklep B"));
+
+        // Test strumienia na liście Kompozytów (Zliczanie elementów głównych)
+        java.util.List<allnew.okk.shop.composite.ShopComponent> components = new java.util.ArrayList<>();
+        components.add(new PhysicalShop.Builder().setName("Pojedynczy Sklep").build());
+
+        allnew.okk.shop.composite.ShopNetwork network = new allnew.okk.shop.composite.ShopNetwork("Duża Sieć");
+        components.add(network);
+
+        long count = analyticsService.countNetworkComponents(components);
+        assertEquals(2, count, "Strumień źle zliczył główne komponenty na liście!");
     }
 }

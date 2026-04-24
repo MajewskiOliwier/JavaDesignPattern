@@ -54,7 +54,7 @@ public abstract class BaseShop implements Cloneable, ShopComponent, ShopDisplay 
         this.shippingStrategy = builder.shippingStrategy;
     }
 
-    // Week 2, Pattern Composite 2
+    // Week 3, Pattern Composite 2
     @Override
     public String getDetails() {
         return "Sklep: " + name + " (" + description + ")";
