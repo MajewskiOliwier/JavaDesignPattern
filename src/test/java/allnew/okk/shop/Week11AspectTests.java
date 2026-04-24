@@ -76,8 +76,8 @@ public class Week11AspectTests {
     // Verify the aspect of exception handling (Aspect 2)
     @Test
     void testExceptionAspectCapturing() {
-        // Próba podania pustej nazwy do Fasady wyrzuci IllegalArgumentException
-        // Aspekt 2 przechwyci to i wypisze na System.err
+        // Attempting to pass an empty name to Facade will throw an IllegalArgumentException
+        // Aspect 2 will catch this and print it to System.err
         assertThrows(IllegalArgumentException.class, () -> {
             shopFacade.registerStandardOnlineShop(null, "Opis", "url");
         });

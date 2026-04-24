@@ -1,8 +1,9 @@
 package allnew.okk.shop.template;
 // Week 9 - Maintaining Clean Code Principles
-// Week 8 - Liskov Substitution Principle 2 (Klasa pochodna)
-// Nadpisuje jedynie chronione metody implementacyjne, nie zmieniając zewnętrznego
-// zachowania algorytmu generowania raportu, co pozwala na jej zamienne użycie.
+
+// Week 8 - Liskov Substitution Principle 2 (Derived Class)
+// Overrides only protected implementation methods, leaving the external
+// behavior of the report generation algorithm unchanged, allowing for interchangeability.
 
 // Week 6, Pattern Template 2
 // Concrete implementation that formats and exports the report as an HTML document.

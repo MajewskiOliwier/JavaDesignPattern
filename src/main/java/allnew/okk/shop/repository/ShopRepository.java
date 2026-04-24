@@ -12,22 +12,22 @@ import java.util.stream.Collectors;
 import allnew.okk.shop.interpreter.ShopSearchExpression;
 // Week 9 - Maintaining Clean Code Principles
 // Week 2, Pattern  Singleton 1
-// Implementacja wzorca Eager Singleton, gdzie instancja tworzona jest natychmiast przy ładowaniu klasy.
-// Gwarantuje to dostępność obiektu od momentu uruchomienia aplikacji i prostotę implementacji.
+// Implementation of the Eager Singleton pattern, where an instance is created immediately upon class loading.
+// This ensures object availability from the moment the application starts and simplifies implementation.
 public class ShopRepository {
 
     private static final String ID_PREFIX = "SHOP-";
     private static final int INITIAL_ID = 1;
 
-    // Statyczna instancja tworzona jednocześnie z metodą dostępową
-    @Getter
+    // Static instance created simultaneously with the accessor method
+     @Getter
     private final static ShopRepository instance = new ShopRepository();
 
-    // Wewnętrzna baza sklepów
+    // Internal store database
     private final Map<String, BaseShop> shops = new HashMap<>();
     private int nextId = INITIAL_ID;
 
-    // Prywatny konstruktor - blokuje możliwość stworzenia drugiej instancji repozytorium
+    // Private constructor - blocks the ability to create a second instance of the repository
     private ShopRepository() {}
 
     public void addShop(BaseShop shop) {

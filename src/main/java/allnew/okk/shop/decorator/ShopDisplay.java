@@ -1,8 +1,8 @@
 package allnew.okk.shop.decorator;
 
 // Week 3, Pattern Decorator 1
-// Interfejs bazowy określający sposób wyświetlania profilu sklepu.
-// Jest on implementowany zarówno przez podstawowy sklep, jak i jego dekoratory.
+// A base interface that defines how the store profile is displayed.
+// It is implemented by both the base store and its decorators.
 public interface ShopDisplay {
     String getDisplayName();
     String getDisplayDescription();

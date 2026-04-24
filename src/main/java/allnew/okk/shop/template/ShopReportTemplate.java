@@ -3,7 +3,7 @@ package allnew.okk.shop.template;
 import allnew.okk.shop.model.BaseShop;
 // Week 9 - Maintaining Clean Code Principles
 // Week 8 - Liskov Substitution Principle 2
-// Klasa bazowa dla generatorów raportów. Jej instancje można zamieniać konkretnymi implementacjami (HTML/CSV).
+// Base class for report generators. Instances can be replaced with specific implementations (HTML/CSV).
 
 // Week 6, Pattern Template 1
 // Abstract class defining the skeleton of the report generation algorithm.

@@ -3,8 +3,8 @@ package allnew.okk.shop.composite;
 import allnew.okk.shop.visitor.ShopVisitor;
 
 // Week 3, Pattern Composite 1
-// Wspólny interfejs dla pojedynczych sklepów i całych sieci sklepów.
-// Pozwala klientowi traktować je w ten sam, jednolity sposób.
+// A common interface for individual stores and entire chains of stores.
+// Allows customers to treat them in the same, uniform manner.
 public interface ShopComponent {
     String getDetails();
     int getShopCount();

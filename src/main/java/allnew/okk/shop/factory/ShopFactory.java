@@ -7,21 +7,21 @@ import lombok.Getter;
 // Week 9 - Maintaining Clean Code Principles
 
 // Week 2, Pattern Singleton 3
-// Implementacja fabryki jako Singletona.
-// Zapewnia jeden centralny punkt tworzenia obiektów w aplikacji.
+// Implement the factory as a Singleton.
+// Provides a single central point for creating objects in the application.
 public class ShopFactory {
 
     @Getter
     private static final ShopFactory instance = new ShopFactory();
 
     private ShopFactory() {}
-    // Koniec, Tydzień 2, Wzorzec Singleton 3
+    // End, Week 2, Singleton Pattern 3
 
-    // Tydzień 2, Wzorzec Factory 1
-    // Wzorzec Simple Factory z parametrami, inicjalizuje obiekty przez Buildery.
-    // Pozwala na tworzenie różnych typów sklepów (Online/Physical) za pomocą czytelnych metod.
+    // Week 2, Factory Pattern 1
+    // Simple Factory pattern with parameters, initializes objects via Builders.
+    // Allows you to create different types of stores (Online/Physical) using readable methods.
 
-    // Fabryka przyjmująca parametry dla sklepu online
+    // Factory accepting parameters for an online store
     public OnlineShop createOnlineShop(String name, String description, String websiteUrl) {
         validateCommonInputs(name, description);
         validateSpecificInput(websiteUrl, "Adres URL witryny");
@@ -33,8 +33,8 @@ public class ShopFactory {
                 .build();
     }
 
-    // Fabryka przyjmująca parametry dla sklepu stacjonarnego
-    public PhysicalShop createPhysicalShop(String name, String description, String address) {
+    // Factory accepting parameters for a stationary store
+     public PhysicalShop createPhysicalShop(String name, String description, String address) {
         validateCommonInputs(name, description);
         validateSpecificInput(address, "Adres fizyczny sklepu");
 

@@ -8,8 +8,8 @@ import allnew.okk.shop.visitor.ShopVisitor;
 import lombok.Getter;
 
 // Week 3, Pattern Composite 3
-// Klasa reprezentująca Kompozyt (Węzeł) - sieć sklepów lub franczyzę.
-// Może zawierać w sobie pojedyncze sklepy (BaseShop) lub inne sieci (ShopNetwork).
+// A class representing a Composite (Node) - a chain of stores or a franchise.
+// It can contain individual stores (BaseShop) or other networks (ShopNetwork).
 public class ShopNetwork implements ShopComponent, Iterable<ShopComponent> {
 
     private static final String NETWORK_PREFIX = "Sieć: ";

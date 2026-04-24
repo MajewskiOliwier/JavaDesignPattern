@@ -28,8 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class Week5ShopTests {
 
-    // Przed każdym testem czyścimy Singleton, aby testy nie wpływały na siebie nawzajem
-    @BeforeEach
+    // Before each test, we clear the Singleton so that the tests do not affect each other    @BeforeEach
     void setUp() {
         ShopRepository.getInstance().clear();
     }

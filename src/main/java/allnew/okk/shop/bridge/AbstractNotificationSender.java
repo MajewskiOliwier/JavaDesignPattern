@@ -1,8 +1,7 @@
 package allnew.okk.shop.bridge;
-
-// Week 8 - Dependency Inversion Principle 2 (Klasa abstrakcyjna)
-// Częściowa implementacja abstrakcji. Zapewnia wspólną logikę dla wszystkich konkretnych typów powiadomień.
-public abstract class AbstractNotificationSender implements NotificationSender {
+// Week 8 - Dependency Inversion Principle 2 (Abstract Class)
+// A partial implementation of the abstraction. Provides common logic for all concrete notification types.
+ public abstract class AbstractNotificationSender implements NotificationSender {
 
     private static final String LOG_PREFIX = "[LOG] Inicjowanie systemu ";
     private static final String LOG_SUFFIX = " dla sklepu: ";

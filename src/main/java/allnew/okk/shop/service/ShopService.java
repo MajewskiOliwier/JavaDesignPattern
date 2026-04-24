@@ -4,26 +4,25 @@ import allnew.okk.shop.model.BaseShop;
 import allnew.okk.shop.repository.ShopRepository;
 // Week 9 - Maintaining Clean Code Principles
 // Week 2, Pattern Singleton 2
-// Implementacja wzorca Lazy Singleton z mechanizmem Double-Checked Locking.
-// Zapewnia to bezpieczeństwo wielowątkowe i oszczędność zasobów poprzez tworzenie obiektu dopiero przy pierwszym użyciu.
+// Implementation of the Lazy Singleton pattern with Double-Checked Locking.
+// This provides multithreading safety and resource savings by only creating an object on first use.
 public class ShopService {
 
     private static final String DUPLICATE_SUFFIX = " (Filia)";
 
-    // Instancja volatile dla bezpeiczeństwa dla zapewnienia widoczności zmian zmiennych pomiędzy różnymi wątkami
+    // Volatile instance for safety to ensure visibility of variable changes between different threads
     private static volatile ShopService instance;
-
     private final ShopRepository shopRepository;
 
-    // Konstruktor
+    // Constructor
     private ShopService() {
         this.shopRepository = ShopRepository.getInstance();
     }
 
-    // Globalna metoda dostępowa z podwójnym sprawdzaniem
+    // Global access method with check
     public static ShopService getInstance() {
         if (instance == null) {
-            synchronized (ShopService.class) { // gwarantuje, że tylko jeden wątek na raz może wykonywać kod wewnątrz tej sekcji
+            synchronized (ShopService.class) { // guarantees that only one thread at a time can execute code inside this section
                 if (instance == null) {
                     instance = new ShopService();
                 }
@@ -34,8 +33,8 @@ public class ShopService {
     // End Week 2, Pattern  Singleton 2
 
     // Week 2, Pattern  Prototype 4
-    // Praktyczne zastosowanie wzorca Prototype do duplikowania obiektów sklepu.
-    // Wykorzystuje metodę clone() do tworzenia kopii istniejącego obiektu bez wywoływania konstruktora.
+    // A practical application of the Prototype pattern for duplicating store objects.
+    // Uses the clone() method to create a copy of an existing object without calling a constructor.
     public void duplicateShop(String shopId) {
         validateShopId(shopId);
 

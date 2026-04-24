@@ -17,7 +17,6 @@ public class Week2ShopSingletonTests {
 
     @Test
     public void testShopRepositoryIsSingleton() {
-        // Pobieramy instancję dwa razy
         ShopRepository instance1 = ShopRepository.getInstance();
         ShopRepository instance2 = ShopRepository.getInstance();
 

@@ -12,11 +12,11 @@ public class Week8LiskovSubstitutionTests {
 
     @Test
     public void testBaseShopSubstitution() {
-        // obiekty klas pochodnych, ale przypisujemy je do referencji klasy bazowej
+        // Derived class objects, but we assign them to base class references
         BaseShop physicalShop = new PhysicalShop.Builder().setName("Sklep Stacjonarny").build();
         BaseShop onlineShop = new OnlineShop.Builder().setName("Sklep Online").build();
 
-        // uniwersalna metoda zadziała dla obu bez rzutowania
+        // universal method will work for both without casting
         assertTrue(processShop(physicalShop).contains("Sklep Stacjonarny"));
         assertTrue(processShop(onlineShop).contains("Sklep Online"));
     }

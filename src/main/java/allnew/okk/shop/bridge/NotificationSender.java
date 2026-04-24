@@ -1,13 +1,13 @@
 package allnew.okk.shop.bridge;
 
-// Week 8 - Dependency Inversion Principle 1 (Interfejs)
-// Jest to abstrakcja najwyższego poziomu. Moduły wysokopoziomowe (jak BaseShop)
-// zależą wyłącznie od tego interfejsu. "Nie wiedzą", jak fizycznie wysłać wiadomość,
-// wiedzą tylko, że każdy system powiadomień musi posiadać taką metodę.
+// Week 8 - Dependency Inversion Principle 1 (Interface)
+// This is the highest-level abstraction. High-level modules (like BaseShop)
+// depend solely on this interface. They "don't know" how to physically send a message,
+// they only know that every notification system must have such a method.
 
 // Week 3, Pattern Bridge 1
-// Interfejs implementacji we wzorcu Bridge.
-// Definiuje, w jaki sposób sklep komunikuje się z klientami.
+// Implementation interface in the Bridge pattern.
+// Defines how the store communicates with customers.
 public interface NotificationSender {
     void sendNotification(String shopName, String message);
 }

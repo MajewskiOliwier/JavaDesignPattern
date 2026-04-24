@@ -1,13 +1,12 @@
 package allnew.okk.shop.decorator;
 
 // Week 9 - Maintaining Clean Code Principles
-
-// Week 8 - Liskov Substitution Principle 3 (Klasa pochodna)
-// Klasa pochodna dekoratora. Może zastąpić bazowy obiekt ShopDecorator bez wpływu na to, jak klient odczytuje nazwę i opis sklepu.
+// Week 8 - Liskov Substitution Principle 3 (Derived Class)
+// A derived decorator class. It can replace the base ShopDecorator object without affecting how the customer reads the shop name and description.
 
 // Week 3, Pattern Decorator 5
-// Dekorator "Verified"
-// Dodaje ikonę przed nazwą sklepu
+// Decorator "Verified"
+// Adds an icon before the shop name
 public class VerifiedBadgeDecorator extends ShopDecorator {
 
     private static final String BADGE_ICON = "✔️ ";
